@@ -60,6 +60,7 @@ export const Contained: Story = {
     children: 'Button',
   },
 };
+
 export const Outlined: Story = {
   args: {
     variant: 'outlined',
