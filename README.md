@@ -1,3 +1,66 @@
+# Tellescope Storybook
+
+This repo contains UI components and documentation used across the Tellescope platform, built with [React](https://reactjs.org/) and [Storybook](https://storybook.js.org/).
+
+## 📦 Prerequisites (Mac)
+
+Make sure the following tools are installed on your machine:
+
+### 1. Install Homebrew
+Run this command in your Terminal
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+### 2. Install Git
+You can install Git using Homebrew:
+```
+brew install git
+```
+
+To verify
+```
+git --version
+```
+
+Install [NodeJS]{https://nodejs.org/en/download}
+To verify
+```
+node -v
+npm -v
+```
+
+🚀 Getting Started
+1. Clone the Repository (open the Terminal application)
+```
+git clone https://github.com/tellescope/storybook.git
+cd storybook
+npm install
+```
+
+🔀 Working with Branches
+View existing branches:
+```
+git branch -r
+```
+
+Checkout a branch:
+```
+git checkout origin/<branch-name> -b <branch-name>
+```
+
+Example:
+```
+git checkout origin/feature/button-redesign -b feature/button-redesign
+```
+
+📚 Running Storybook Locally
+Once you're on the desired branch and dependencies are installed:
+```
+npm run storybook
+```
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
