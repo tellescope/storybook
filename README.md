@@ -63,11 +63,7 @@ npm run storybook
 
 You should now be done setting up and running Storybook on a Mac. You can now checkout different branches to test them over time without having to follow the previous instructions.
 
-
-
-
-
-
+<br/><br/><br/><br/>
 ### (Storybook Template Overview) React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
