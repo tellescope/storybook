@@ -68,7 +68,7 @@ You should now be done setting up and running Storybook on a Mac. You can now ch
 
 
 
-# React + TypeScript + Vite
+### (Storybook Template Overview) React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
