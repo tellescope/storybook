@@ -1,4 +1,4 @@
-# Tellescope Storybook
+# Mac Instructions
 
 This repo contains UI components and documentation used across the Tellescope platform, built with [React](https://reactjs.org/) and [Storybook](https://storybook.js.org/).
 
@@ -60,6 +60,12 @@ Once you're on the desired branch and dependencies are installed:
 ```
 npm run storybook
 ```
+
+You should now be done setting up and running Storybook on a Mac. You can now checkout different branches to test them over time without having to follow the previous instructions.
+
+
+
+
 
 
 # React + TypeScript + Vite
