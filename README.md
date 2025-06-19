@@ -23,7 +23,7 @@ To verify
 git --version
 ```
 
-Install [NodeJS]{https://nodejs.org/en/download}
+Install [NodeJS](https://nodejs.org/en/download)
 To verify
 ```
 node -v
