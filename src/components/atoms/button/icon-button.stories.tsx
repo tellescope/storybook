@@ -2,13 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { fn } from 'storybook/test';
 
-import { Button } from './button';
+import { IconButton as Comp } from './icon-button';
+import StarIcon from '@mui/icons-material/Star';
 
 
 
 const meta = {
     title: 'ATOMS/Button',
-    component: Button,
+    component: Comp,
     parameters: {
         layout: 'centered',
     },
@@ -21,7 +22,7 @@ const meta = {
     decorators: [
         (Story, context) => {
             // Apply dark background only for inheritWhite buttons
-            const cond = context.args.color === 'inheritWhite' && context.args.appearence !== "contained"
+            const cond = context.args.color === 'inheritWhite'
             return (
                 cond ?
                     <div style={{
@@ -50,16 +51,15 @@ const meta = {
         }
     ],
     args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Comp>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const IconButton: Story = {
     args: {
-        children: 'LABEL',
         color: 'primary',
-        appearence: 'contained',
+        children: <StarIcon />,
         size: "medium",
         disabled: false,
     },

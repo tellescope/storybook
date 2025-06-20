@@ -1,0 +1,26 @@
+import { Meta, Primary, Controls, Story } from "@storybook/addon-docs/blocks";
+
+import * as ButtonStories from "./button.stories";
+import * as ButtonLoadingStories from "./inline-icons.stories";
+
+<Meta of={ButtonLoadingStories} />
+
+# Button
+
+A button is ...
+
+## Props
+
+<Controls of={ButtonLoadingStories.InlineIcons} />
+
+## Stories
+
+### Primary
+
+A button can be of primary importance.
+
+A button can be of secondary importance.
+
+<Story of={ButtonLoadingStories.InlineIcons} />
+
+{/* ... */}

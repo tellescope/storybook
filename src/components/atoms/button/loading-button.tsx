@@ -25,19 +25,19 @@ export const LoadingButton: FC<LoadingButtonProps> = ({
             {...rest}
             startIcon={
                 loading && loadingPosition === 'start' ? (
-                    <CircularProgress color="inherit" size={20} />
+                    <CircularProgress color="inherit" size={16} />
                 ) : undefined
             }
             endIcon={
                 loading && loadingPosition === 'end' ? (
-                    <CircularProgress color="inherit" size={20} />
+                    <CircularProgress color="inherit" size={16} />
                 ) : undefined
             }
             variant={appearence}
         >
             {loading && loadingPosition === 'center' ? (
                 <>
-                    <CircularProgress color="inherit" size={20} sx={{ mr: loadingIndicator ? 2 : null }} />
+                    <CircularProgress color="inherit" size={16} sx={{ mr: loadingIndicator ? "8px" : null }} />
                     {loadingIndicator}
                 </>
             ) : (

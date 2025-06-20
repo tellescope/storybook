@@ -20,6 +20,12 @@ declare module '@mui/material/Button' {
 }
 
 
+declare module '@mui/material/IconButton' {
+    interface IconButtonPropsColorOverrides {
+      inheritWhite: true;
+    }
+}
+
 export const theme = createTheme({
     palette: {
         primary: {
@@ -232,6 +238,146 @@ export const theme = createTheme({
                         },
                         '& .MuiTouchRipple-root': {
                             color: 'rgba(255, 255, 255, 0.3)'
+                        },
+                    },
+                },
+            ],
+        },
+        MuiIconButton: {
+            styleOverrides: {
+                // root: {
+                //     borderRadius: 999,
+                //     fontWeight: 600,
+                // },
+                // sizeLarge: {
+                //     padding: '8px 24px',
+                // },
+                // sizeMedium: {
+                //     padding: '8px 16px',
+                // },
+                // sizeSmall: {
+                //     padding: '4px 12px',
+                // },
+            },
+            variants: [
+                /* Primary Appearance */
+                {
+                    props: { color: 'primary' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(74, 92, 146, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(74, 92, 146, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(74, 92, 146, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Secondary Appearance */
+                {
+                    props: { color: "secondary" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(88, 94, 114, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(88, 94, 114, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(88, 94, 114, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Error Appearance */
+                {
+                    props: { color: "error" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(186, 26, 26, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(186, 26, 26, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(186, 26, 26, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Warning Appearance */
+                {
+                    props: { color: "warning" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(239, 108, 0, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(239, 108, 0, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(239, 108, 0, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Info Appearance */
+                {
+                    props: { color: "info" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(2, 136, 209, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(2, 136, 209, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(2, 136, 209, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* success Appearance */
+                {
+                    props: { color: "success" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(46, 125, 50, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(46, 125, 50, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(46, 125, 50, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Inherit Appearance */
+                {
+                    props: { color: "inherit" },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(0, 0, 0, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(0, 0, 0, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.3)', // pressed
+                        },
+                    },
+                },
+                /* Inherit White Appearance */
+                {
+                    props: { color: "inheritWhite" },
+                    style: {
+                        color: "rgba(255, 255, 255, 1)",
+                        '&:hover': {
+                            backgroundColor: 'rgba(224, 224, 224, 0.04)', // hovered color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(255, 255, 255, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.3)', // pressed
                         },
                     },
                 },
