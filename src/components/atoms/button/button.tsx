@@ -1,20 +1,11 @@
 import { Button as MuiButton } from '@mui/material';
 import type { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 
-// Extend Button component to accept the custom color
-declare module '@mui/material/Button' {
-    interface ButtonPropsColorOverrides {
-        inheritWhite: true;
-    }
-}
-
-
 export interface ButtonProps extends Omit<MuiButtonProps, 'color' | 'variant' | 'size'> {
     children: string;
     appearence?: "contained" | "outlined" | "text";
-    color?: "primary" | "secondary" | "error" | "info" | "success" | "warning" | "inherit" | "inheritWhite";
+    color?: "primary" | "secondary" | "info";
     size?: "large" | "medium" | "small";
-    // radius?: "round",
     onClick?: () => void;
     disabled?: boolean;
 }

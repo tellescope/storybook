@@ -3,16 +3,14 @@ import type { IconButtonProps as MuiIconButtonProps } from '@mui/material/IconBu
 
 // Extend Button component to accept the custom color
 declare module '@mui/material/IconButton' {
-    interface IconButtonPropsColorOverrides {
-        inheritWhite: true;
+    interface IconButtonPropsSizeOverrides {
+        table: true;
     }
 }
 
-
 export interface IconButtonProps extends Omit<MuiIconButtonProps, 'color' | 'variant' | 'size'> {
-    color?: "primary" | "secondary" | "error" | "info" | "success" | "warning" | "inherit" | "inheritWhite";
-    size?: "large" | "medium" | "small";
-    // radius?: "round",
+    color?: "primary" | "secondary" | "info";
+    size?: "large" | "medium" | "small" | "table";
     onClick?: () => void;
     disabled?: boolean;
     children?: React.ReactNode;

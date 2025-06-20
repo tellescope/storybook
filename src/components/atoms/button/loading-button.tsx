@@ -1,10 +1,12 @@
 import { CircularProgress, Button as MuiButton } from '@mui/material';
+import type { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 import type { FC } from 'react';
 
-export interface LoadingButtonProps {
+export interface LoadingButtonProps extends Omit<MuiButtonProps, 'color' | 'variant' | 'size'> {
     appearence?: "contained" | "outlined" | "text"
     size?: "large" | "medium" | "small";
     loading?: boolean;
+    color?: "primary" | "secondary" | "info";
     loadingPosition?: 'start' | 'end' | 'center';
     loadingIndicator?: React.ReactNode | string;
     children?: React.ReactNode;

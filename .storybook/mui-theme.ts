@@ -1,28 +1,9 @@
 // theme.ts
 import { createTheme } from '@mui/material/styles';
 
-declare module '@mui/material/styles' {
-
-    interface Palette {
-        inheritWhite: Palette["primary"];
-    }
-
-    interface PaletteOptions {
-        inheritWhite?: PaletteOptions["primary"];
-    }
-}
-
-// Extend Button component to accept the custom color
-declare module '@mui/material/Button' {
-    interface ButtonPropsColorOverrides {
-        inheritWhite: true;
-    }
-}
-
-
 declare module '@mui/material/IconButton' {
-    interface IconButtonPropsColorOverrides {
-      inheritWhite: true;
+    interface IconButtonPropsSizeOverrides {
+        table: true;
     }
 }
 
@@ -34,21 +15,8 @@ export const theme = createTheme({
         secondary: {
             main: "rgba(88, 94, 114, 1)",
         },
-        error: {
-            main: "rgba(186, 26, 26, 1)",
-        },
-        warning: {
-            main: "rgba(239, 108, 0, 1)",
-        },
         info: {
             main: "rgba(2, 136, 209, 1)",
-        },
-        success: {
-            main: "rgba(46, 125, 50, 1)",
-        },
-        inheritWhite: {
-            main: "rgba(224, 224, 224, 1)",
-            contrastText: "rgba(255, 255, 255, 1)",
         },
         action: {
             disabled: "rgba(0, 0, 0, 0.38)",
@@ -124,42 +92,6 @@ export const theme = createTheme({
                         borderColor: "rgba(88, 94, 114, 0.5)",
                     },
                 },
-                /* Error Appearance */
-                {
-                    props: { variant: 'contained', color: "error" },
-                    style: {
-                        '&:hover': {
-                            backgroundColor: 'rgba(105, 0, 5, 1)', // hovered color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(186, 26, 26, 1)', // pressed
-                        },
-                    },
-                },
-                {
-                    props: { variant: "outlined", color: "error" },
-                    style: {
-                        borderColor: "rgba(186, 26, 26, 0.5)",
-                    },
-                },
-                /* Warning Appearance */
-                {
-                    props: { variant: 'contained', color: "warning" },
-                    style: {
-                        '&:hover': {
-                            backgroundColor: 'rgba(230, 81, 0, 1)', // hovered color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(239, 108, 0, 1)', // pressed
-                        },
-                    },
-                },
-                {
-                    props: { variant: "outlined", color: "warning" },
-                    style: {
-                        borderColor: "rgba(239, 108, 0, 0.5)",
-                    },
-                },
                 /* Info Appearance */
                 {
                     props: { variant: 'contained', color: "info" },
@@ -174,91 +106,25 @@ export const theme = createTheme({
                 },
                 {
                     props: { variant: "outlined", color: "info" },
+
                     style: {
                         borderColor: "rgba(2, 136, 209, 0.5)",
-                    },
-                },
-                /* success Appearance */
-                {
-                    props: { variant: 'contained', color: "success" },
-                    style: {
-                        '&:hover': {
-                            backgroundColor: 'rgba(27, 94, 32, 1)', // hovered color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(46, 125, 50, 1)', // pressed
-                        },
-                    },
-                },
-                {
-                    props: { variant: "outlined", color: "success" },
-                    style: {
-                        borderColor: "rgba(46, 125, 50, 0.5)",
-                    },
-                },
-                /* Inherit White Appearance */
-                {
-                    props: { variant: 'contained', color: "inheritWhite" },
-                    style: {
-                        '&:hover': {
-                            backgroundColor: 'rgba(245, 245, 245, 1)', // hovered color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(224, 224, 224, 1)', // pressed
-                        },
-                    },
-                },
-                {
-                    props: { variant: "outlined", color: "inheritWhite" },
-                    style: {
-                        border: "1px solid rgba(255, 255, 255, 1)",
-                        color: "rgba(255, 255, 255, 1)",
-                        '&:hover': {
-                            backgroundColor: 'rgba(0, 0, 0, 0.04)', // hovered color
-                            borderColor: "rgba(255, 255, 255, 1)",
-                        },
-                        "&:focus": {
-                            backgroundColor : "transparent", // focused color
-                        },
                         '& .MuiTouchRipple-root': {
-                            color: 'rgba(255, 255, 255, 0.3)'
-                        },
+                            color: 'rgba(74, 92, 146, 0.3)'
+                        }
                     },
                 },
                 {
-                    props: { variant: "text", color: "inheritWhite" },
+                    props: { variant: "text", color: "info" },
                     style: {
-                        color: "rgba(255, 255, 255, 1)",
-                        '&:hover': {
-                            backgroundColor: 'rgba(0, 0, 0, 0.04)', // hovered color
-                            borderColor: "rgba(255, 255, 255, 1)",
-                        },
-                        "&:focus": {
-                            backgroundColor : "transparent", // focused color
-                        },
                         '& .MuiTouchRipple-root': {
-                            color: 'rgba(255, 255, 255, 0.3)'
-                        },
+                            color: 'rgba(74, 92, 146, 0.3)'
+                        }
                     },
                 },
             ],
         },
         MuiIconButton: {
-            styleOverrides: {
-                // root: {
-                //     borderRadius: 999,
-                //     fontWeight: 600,
-                // },
-                // sizeLarge: {
-                //     padding: '8px 24px',
-                // },
-                // sizeMedium: {
-                //     padding: '8px 16px',
-                // },
-                // sizeSmall: {
-                //     padding: '4px 12px',
-                // },
-            },
             variants: [
                 /* Primary Appearance */
                 {
@@ -290,36 +156,6 @@ export const theme = createTheme({
                         },
                     },
                 },
-                /* Error Appearance */
-                {
-                    props: { color: "error" },
-                    style: {
-                        "&:hover": {
-                            backgroundColor : "rgba(186, 26, 26, 0.04)", // focused color
-                        },
-                        "&:focus": {
-                            backgroundColor : "rgba(186, 26, 26, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(186, 26, 26, 0.3)', // pressed
-                        },
-                    },
-                },
-                /* Warning Appearance */
-                {
-                    props: { color: "warning" },
-                    style: {
-                        "&:hover": {
-                            backgroundColor : "rgba(239, 108, 0, 0.04)", // focused color
-                        },
-                        "&:focus": {
-                            backgroundColor : "rgba(239, 108, 0, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(239, 108, 0, 0.3)', // pressed
-                        },
-                    },
-                },
                 /* Info Appearance */
                 {
                     props: { color: "info" },
@@ -335,50 +171,29 @@ export const theme = createTheme({
                         },
                     },
                 },
-                /* success Appearance */
+                /* Default Appearance */
                 {
-                    props: { color: "success" },
-                    style: {
-                        "&:hover": {
-                            backgroundColor : "rgba(46, 125, 50, 0.04)", // focused color
-                        },
-                        "&:focus": {
-                            backgroundColor : "rgba(46, 125, 50, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(46, 125, 50, 0.3)', // pressed
-                        },
-                    },
-                },
-                /* Inherit Appearance */
-                {
-                    props: { color: "inherit" },
+                    props: { color: "default" },
                     style: {
                         "&:hover": {
                             backgroundColor : "rgba(0, 0, 0, 0.04)", // focused color
                         },
                         "&:focus": {
-                            backgroundColor : "rgba(0, 0, 0, 0.3)", // focused color
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color
                         },
+                        
                         '&:active': {
-                            backgroundColor: 'rgba(0, 0, 0, 0.3)', // pressed
+                            backgroundColor: 'rgba(0, 0, 0, 0.12)', // pressed
                         },
                     },
                 },
-                /* Inherit White Appearance */
+                /* Default Appearance & Size Table */
                 {
-                    props: { color: "inheritWhite" },
+                    props: { size: "table", color: "default" },
                     style: {
-                        color: "rgba(255, 255, 255, 1)",
-                        '&:hover': {
-                            backgroundColor: 'rgba(224, 224, 224, 0.04)', // hovered color
-                        },
-                        "&:focus": {
-                            backgroundColor : "rgba(255, 255, 255, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.3)', // pressed
-                        },
+                        borderRadius: "5px !important",
+                        width: "24px",
+                        height: "24px",
                     },
                 },
             ],

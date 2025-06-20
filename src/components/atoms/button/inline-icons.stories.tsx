@@ -1,20 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
 import { fn } from 'storybook/test';
-
 import { Button } from './button';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import FileCopyIcon from '@mui/icons-material/FileCopy';
-import { Stack } from '@mui/material';
 
 const meta = {
     title: 'ATOMS/Button',
     component: Button,
     parameters: {
-        layout: 'centered',
-        controls: { hideNoControlsWarning: true, include: [] }, // disables all controls
+        controls: { include: [] }, // disables all controls
         actions: { disable: true }, // disables all actions
     },
     args: { onClick: fn() },
@@ -25,7 +21,6 @@ type Story = StoryObj<typeof meta>;
 
 export const InlineIcons: Story = {
     args: {
-        label: 'LABEL',
         color: "secondary",
         children: 'LABEL',
         appearence: 'contained',
@@ -34,12 +29,14 @@ export const InlineIcons: Story = {
     },
     render: (args) => {
         return (
-            <Stack direction="row" gap={4}>
+            <div style={{ display: 'flex', gap: 8 }}>
                 <Button {...args} color="primary" endIcon={<ArrowForwardIosIcon sx={{ width: 16 }} />}>{args.children}</Button>
                 <Button {...args} color="primary" appearence="text" startIcon={<ArrowBackIosNewIcon sx={{ width: 16 }} />}>{args.children}</Button>
-                <Button {...args} color="secondary" startIcon={<FileCopyIcon sx={{ width: 24 }} />} endIcon={<ArrowDropDownIcon sx={{ fontSize: 30 }} />}>{args.children}</Button>
+                <div>
+                    <Button {...args} color="secondary" startIcon={<FileCopyIcon sx={{ width: 16 }} />} endIcon={<ArrowDropDownIcon sx={{ fontSize: 30 }} />} size="small">{args.children}</Button>
+                </div>
                 <Button {...args} color="info" appearence="outlined" endIcon={<ArrowForwardIosIcon sx={{ width: 16 }} />}>{args.children}</Button>
-            </Stack>
+            </div>
         );
     }
 };

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
 import { fn } from 'storybook/test';
 import { LoadingButton } from './loading-button';
 
@@ -7,7 +6,9 @@ const meta = {
     title: 'ATOMS/Button',
     component: LoadingButton,
     parameters: {
-        layout: 'centered',
+        controls: {
+            exclude: ['onClick', 'children'],
+        },
     },
     argTypes: {
         appearence: {
@@ -25,6 +26,10 @@ const meta = {
         loadingIndicator: {
             control: { type: 'text' },
         },
+        color: {
+            options: ['primary', 'secondary', 'info'],
+            control: { type: 'select' },
+        },
     },
     args: { onClick: fn() },
 
@@ -40,6 +45,7 @@ export const Loading: Story = {
         children: 'Click Me',
         appearence: 'contained',
         size: 'medium',
+        color: 'primary',
         loading: true,
         loadingPosition: 'start',
         loadingIndicator: 'loading...',

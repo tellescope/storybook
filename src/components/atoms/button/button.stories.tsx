@@ -1,54 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
 import { fn } from 'storybook/test';
-
 import { Button } from './button';
-
-
 
 const meta = {
     title: 'ATOMS/Button',
     component: Button,
+    tags: ['autodocs'],
     parameters: {
-        layout: 'centered',
+        controls: {
+            exclude: ['onClick', 'children'],
+        },
     },
     argTypes: {
         color: {
-            options: ['primary', 'secondary', 'error', 'warning', 'info', 'success', 'inherit', "inheritWhite"],
+            options: ['primary', 'secondary', 'info'],
             control: { type: 'select' },
         },
+        appearence: {
+            control: { type: 'select' },
+            options: ['contained', 'outlined', 'text'],
+        },
+        size: {
+            control: { type: 'select' },
+            options: ['large', 'medium', 'small'],
+        },
     },
-    decorators: [
-        (Story, context) => {
-            // Apply dark background only for inheritWhite buttons
-            const cond = context.args.color === 'inheritWhite' && context.args.appearence !== "contained"
-            return (
-                cond ?
-                    <div style={{
-                        padding: "12px 20px",
-                        borderRadius: 10,
-                        backgroundColor: "rgba(0, 0, 0, 0.2)",
-                        display: 'flex',
-                        flexDirection: "column",
-                        gap: "1rem",
-                        alignItems: 'center',
-                    }}>
-                        <small style={{
-                            color: 'rgba(0, 0, 0, 0.6)',
-                            fontSize: '12px',
-                            textAlign: 'center',
-                            maxWidth: '300px',
-                        }}>
-                            ⚪ This layer simulates a white background<br />
-                            to help you visualize how the button color appears.
-                        </small>
-                        <div>
-                            <Story />
-                        </div>
-                    </div> : <Story />
-            );
-        }
-    ],
     args: { onClick: fn() },
 } satisfies Meta<typeof Button>;
 
