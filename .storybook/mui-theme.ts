@@ -1,10 +1,12 @@
 // theme.ts
 import { createTheme } from '@mui/material/styles';
 
+
 declare module '@mui/material/IconButton' {
     interface IconButtonPropsSizeOverrides {
         table: true;
     }
+    
 }
 
 export const theme = createTheme({
@@ -17,6 +19,12 @@ export const theme = createTheme({
         },
         info: {
             main: "rgba(2, 136, 209, 1)",
+        },
+        // error: {
+        //     main: "#BA1A1A"
+        // },
+        error: {
+            main: "#BA1A1A"
         },
         action: {
             disabled: "rgba(0, 0, 0, 0.38)",
@@ -191,12 +199,62 @@ export const theme = createTheme({
                 {
                     props: { size: "table", color: "default" },
                     style: {
-                        borderRadius: "5px !important",
+                        borderRadius: "4px !important",
                         width: "24px",
                         height: "24px",
+                        "&>svg": {
+                            width: "20px",
+                            height: "19px",
+                        },
                     },
                 },
             ],
+        },
+        MuiCheckbox: {
+            variants: [
+                {
+                    props: { color: 'primary' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(74, 92, 146, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(74, 92, 146, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(74, 92, 146, 0.3)', // pressed
+                        },
+                    },
+                },
+                {
+                    props: { color: 'secondary' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(88, 94, 114, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(88, 94, 114, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(88, 94, 114, 0.3)', // pressed
+                        },
+                    },
+                },
+                {
+                    props: { color: 'info' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(2, 136, 209, 0.04)", // focused color
+                        },
+                        "&:focus": {
+                            backgroundColor : "rgba(2, 136, 209, 0.3)", // focused color
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(2, 136, 209, 0.3)', // pressed
+                        },
+                    },
+                }
+            ]
         },
     },
 });

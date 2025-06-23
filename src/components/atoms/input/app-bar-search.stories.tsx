@@ -1,0 +1,25 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { AppbarSearch as Comp } from './app-bar-search';
+import { Stack, Typography } from '@mui/material';
+
+const meta = {
+    title: 'ATOMS/Input',
+    component: Comp,
+} satisfies Meta<typeof Comp>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const AppbarSearch: Story = {
+    render: () => (
+        <Stack sx={(theme) => ({
+            backgroundColor: theme.palette.grey[100],
+            p: 2,
+            maxWidth: 300,
+            gap: 1,
+        })}>
+            <Typography variant="body1">App bar Search</Typography>
+            <Comp />
+        </Stack>
+    ),
+};
