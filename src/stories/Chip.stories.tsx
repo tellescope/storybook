@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { CustomChip } from '../Atoms/feedback/Chip/Chip';
 import Avatar from '@mui/material/Avatar';
 import PersonIcon from '@mui/icons-material/Person';
@@ -12,7 +13,11 @@ const meta = {
   argTypes: {
     chipVariant: {
       control: 'select',
-      options: ['default', 'primary', 'secondary', 'tertiary'],
+      options: ['default', 'primary', 'secondary', 'tertiary', 'error', 'warning', 'info', 'success'],
+    },
+    chipState: {
+      control: 'select',
+      options: ['enabled', 'hovered', 'focused', 'disabled', 'pressed'],
     },
     variant: {
       control: 'select',
@@ -22,216 +27,98 @@ const meta = {
       control: 'select',
       options: ['small', 'medium'],
     },
-    onDelete: {
-      action: 'deleted',
-    },
-    onClick: {
-      action: 'clicked',
-    },
+    label: { control: 'text' },
+    avatar: { control: false },
+    icon: { control: false },
+    onDelete: { action: 'deleted' },
+    onClick: { action: 'clicked' },
   },
+  decorators: [
+    (Story: any) => (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="80px">
+        <Story />
+      </Box>
+    ),
+  ],
 } satisfies Meta<typeof CustomChip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Helper decorator for centering
-const CenterDecorator = (Story: any) => (
-  <Box display="flex" justifyContent="center" alignItems="center">
-    <Story />
-  </Box>
-);
-
-// Default Chip Stories
+// Default Chip
 export const Default: Story = {
   args: {
     label: 'Default Chip',
     chipVariant: 'default',
+    chipState: 'enabled',
     variant: 'filled',
     size: 'medium',
   },
-  decorators: [CenterDecorator],
 };
 
-export const Primary: Story = {
+// Deletable Chip (stateful)
+export const Deletable: Story = {
   args: {
-    label: 'Primary Chip',
-    chipVariant: 'primary',
-    variant: 'filled',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const Secondary: Story = {
-  args: {
-    label: 'Secondary Chip',
-    chipVariant: 'secondary',
-    variant: 'filled',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const Tertiary: Story = {
-  args: {
-    label: 'Tertiary Chip',
-    chipVariant: 'tertiary',
-    variant: 'filled',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-// Outlined Variants
-export const OutlinedDefault: Story = {
-  args: {
-    label: 'Outlined Default',
+    label: 'Deletable Chip',
     chipVariant: 'default',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const OutlinedPrimary: Story = {
-  args: {
-    label: 'Outlined Primary',
-    chipVariant: 'primary',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const OutlinedSecondary: Story = {
-  args: {
-    label: 'Outlined Secondary',
-    chipVariant: 'secondary',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const OutlinedTertiary: Story = {
-  args: {
-    label: 'Outlined Tertiary',
-    chipVariant: 'tertiary',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-// Size Variants
-export const Small: Story = {
-  args: {
-    label: 'Small Chip',
-    chipVariant: 'default',
-    variant: 'filled',
-    size: 'small',
-  },
-  decorators: [CenterDecorator],
-};
-
-export const Medium: Story = {
-  args: {
-    label: 'Medium Chip',
-    chipVariant: 'default',
+    chipState: 'enabled',
     variant: 'filled',
     size: 'medium',
   },
-  decorators: [CenterDecorator],
-};
-
-// Deletable Chips
-export const DeletableDefault: Story = {
-  args: {
-    label: 'Deletable Default',
-    chipVariant: 'default',
-    variant: 'filled',
-    size: 'medium',
-    onDelete: () => {},
+  render: (args) => {
+    const [visible, setVisible] = useState(true);
+    if (!visible) return <></>;
+    return (
+      <CustomChip
+        {...args}
+        onDelete={() => setVisible(false)}
+      />
+    );
   },
-  decorators: [CenterDecorator],
 };
 
-export const DeletablePrimary: Story = {
-  args: {
-    label: 'Deletable Primary',
-    chipVariant: 'primary',
-    variant: 'filled',
-    size: 'medium',
-    onDelete: () => {},
-  },
-  decorators: [CenterDecorator],
-};
-
-export const DeletableOutlined: Story = {
-  args: {
-    label: 'Deletable Outlined',
-    chipVariant: 'default',
-    variant: 'outlined',
-    size: 'medium',
-    onDelete: () => {},
-  },
-  decorators: [CenterDecorator],
-};
-
-// Selectable Chips
+// Selectable Chip (stateful)
 export const Selectable: Story = {
   args: {
     label: 'Selectable Chip',
     chipVariant: 'default',
+    chipState: 'enabled',
     variant: 'filled',
     size: 'medium',
-    onClick: () => {},
   },
-  decorators: [CenterDecorator],
+  render: (args) => {
+    const [selected, setSelected] = useState(false);
+    return (
+      <CustomChip
+        {...args}
+        chipState={selected ? 'pressed' : args.chipState}
+        onClick={() => setSelected((prev) => !prev)}
+        variant={args.variant}
+      />
+    );
+  },
 };
 
-// Avatar Chips
+// Avatar Chip
 export const AvatarChip: Story = {
   args: {
     avatar: <Avatar><PersonIcon /></Avatar>,
     label: 'Avatar Chip',
     chipVariant: 'default',
+    chipState: 'enabled',
     variant: 'filled',
     size: 'medium',
   },
-  decorators: [CenterDecorator],
 };
 
-export const AvatarChipOutlined: Story = {
-  args: {
-    avatar: <Avatar><PersonIcon /></Avatar>,
-    label: 'Avatar Outlined',
-    chipVariant: 'default',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
-};
-
-// Icon Chips
-export const IconChip: Story = {
+// Icon Chip
+export const Icon: Story = {
   args: {
     icon: <StarIcon />,
     label: 'Icon Chip',
     chipVariant: 'default',
+    chipState: 'enabled',
     variant: 'filled',
     size: 'medium',
   },
-  decorators: [CenterDecorator],
-};
-
-export const IconChipOutlined: Story = {
-  args: {
-    icon: <StarIcon />,
-    label: 'Icon Outlined',
-    chipVariant: 'default',
-    variant: 'outlined',
-    size: 'medium',
-  },
-  decorators: [CenterDecorator],
 };
