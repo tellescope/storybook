@@ -5,7 +5,7 @@ import { TextField, FormControlLabel, Checkbox, Box } from '@mui/material';
 import React from 'react';
 
 const meta = {
-  title: 'Molecules/Dialog',
+  title: 'MOLECULES/Dialog',
   component: Dialog,
   parameters: {
     layout: 'centered',
