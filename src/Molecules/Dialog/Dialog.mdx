@@ -1,0 +1,191 @@
+
+import { Meta, Canvas, ArgTypes, Story } from "@storybook/addon-docs/blocks"
+import { Dialog } from './Dialog';
+import * as DialogStories from './Dialog.stories';
+
+<Meta of={DialogStories} />
+
+# Dialog
+
+The Dialog component is a versatile modal dialog built with Material UI v5 that provides a consistent way to display alerts, forms, confirmations, and other interactive content.
+
+## Features
+
+- **Multiple Sizes**: Choose from 5 different sizes (`xs`, `sm`, `md`, `lg`, `xl`) to fit your content
+- **Flexible Actions**: Support for 1-3 action buttons with customizable colors and variants
+- **Full-Width Button**: Optional prominent call-to-action button that spans the full width
+- **Close Button**: Optional close button in the top-right corner for easy dismissal
+- **Dividers**: Optional visual separators between dialog sections for better content organization
+- **Collapsible**: Option to minimize dialog to title bar only, useful for keeping dialogs accessible but out of the way
+- **Rich Content**: Support for custom content including forms, inputs, and other components
+- **Scrollable**: Automatically handles scrolling for long content
+- **Accessibility**: Built-in keyboard navigation and screen reader support via Material UI
+
+## Basic Usage
+
+The simplest dialog requires only `open`, `onClose`, and `title` props. 
+
+**To view the dialog examples:**
+1. Click on any story below to open it in the Canvas
+2. Use the **Controls** panel to toggle `open` from `false` to `true`
+3. The dialog will appear and you can interact with it
+
+<Canvas of={DialogStories.Default} />
+
+## Dialog Sizes
+
+The dialog supports 5 different sizes to accommodate various content needs:
+
+### Extra Small (xs)
+<Canvas  of={DialogStories.ExtraSmall} />
+
+### Small (sm) - Default
+<Canvas of={DialogStories.Small} />
+
+### Medium (md)
+<Canvas of={DialogStories.Medium} />
+
+### Large (lg)
+<Canvas of={DialogStories.Large} />
+
+### Extra Large (xl)
+<Canvas of={DialogStories.ExtraLarge} />
+
+## Action Buttons
+
+### Standard Actions
+Add up to 3 action buttons for user interactions:
+
+<Canvas of={DialogStories.WithActions} />
+
+### Multiple Actions
+Example with three action buttons showing different variants:
+
+<Canvas of={DialogStories.ThreeActions} />
+
+### Full-Width Button
+For prominent call-to-action scenarios:
+
+<Canvas of={DialogStories.WithFullWidthButton} />
+
+## Close Button
+
+Add an optional close button in the top-right corner:
+
+<Canvas of={DialogStories.WithCloseButton} />
+
+## Dividers
+
+Add visual separators between dialog sections for better content organization:
+
+<Canvas of={DialogStories.WithDividers} />
+
+## Collapsible Dialog
+
+Make dialogs collapsible to minimize them to just the title bar, useful for keeping dialogs accessible but out of the way:
+
+### Standard Collapsible
+<Canvas of={DialogStories.Collapsible} />
+
+### Collapsed by Default
+<Canvas of={DialogStories.CollapsedByDefault} />
+
+## Common Use Cases
+
+### Alert Dialog
+<Canvas of={DialogStories.Alert} />
+
+### Confirmation Dialog
+<Canvas of={DialogStories.Confirmation} />
+
+## Props
+
+<ArgTypes of={Dialog} />
+
+## Action Object Interface
+
+The `actions` prop accepts an array of objects with the following structure:
+
+```typescript
+interface DialogAction {
+  label: string;                    // Button text
+  onClick: () => void;              // Click handler
+  color?: 'primary' | 'error' | 'secondary' | 'success' | 'info' | 'warning';
+  variant?: 'contained' | 'outlined' | 'text';
+  disabled?: boolean;               // Whether the button is disabled
+}
+```
+
+## Full-Width Button Interface
+
+The `fullWidthButton` prop accepts an object with the following structure:
+
+```typescript
+interface FullWidthButton {
+  label: string;                    // Button text
+  onClick: () => void;              // Click handler
+  color?: 'primary' | 'error' | 'secondary' | 'success' | 'info' | 'warning';
+  disabled?: boolean;               // Whether the button is disabled
+}
+```
+
+## Custom Content
+
+The Dialog component supports custom content through the `children` prop. This allows you to include forms, inputs, lists, or any other React components:
+
+<Canvas of={DialogStories.WithCustomContent} />
+
+Here's how you can create a dialog with custom form content:
+
+```tsx
+<Dialog
+  open={open}
+  onClose={handleClose}
+  title="Contact Form"
+  description="Please fill out the form below"
+  actions={[
+    { label: 'Cancel', onClick: handleClose, variant: 'text' },
+    { label: 'Submit', onClick: handleSubmit, variant: 'contained' }
+  ]}
+>
+  <TextField
+    fullWidth
+    label="Name"
+    variant="outlined"
+    margin="normal"
+  />
+  <TextField
+    fullWidth
+    label="Email"
+    type="email"
+    variant="outlined"
+    margin="normal"
+  />
+  <TextField
+    fullWidth
+    label="Message"
+    multiline
+    rows={4}
+    variant="outlined"
+    margin="normal"
+  />
+</Dialog>
+```
+
+## Best Practices
+
+1. **Use appropriate sizes**: Choose the size that best fits your content without excessive white space
+2. **Limit actions**: Keep action buttons to 3 or fewer for better usability
+3. **Clear button labels**: Use descriptive labels that clearly indicate what will happen
+4. **Consistent colors**: Use `error` color for destructive actions, `primary` for main actions
+5. **Close button**: Consider adding a close button for non-critical dialogs
+6. **Keyboard support**: The dialog automatically handles Escape key to close
+
+## Accessibility
+
+The Dialog component includes built-in accessibility features:
+
+- **Focus management**: Focus is automatically trapped within the dialog
+- **Keyboard navigation**: Escape key closes the dialog, Tab cycles through interactive elements
+- **Screen reader support**: Proper ARIA labels and roles are automatically applied
+- **Color contrast**: Material UI ensures proper color contrast for all variants 
