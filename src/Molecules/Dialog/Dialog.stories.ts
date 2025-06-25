@@ -44,7 +44,7 @@ const meta = {
       control: 'object',
       description: 'Array of action buttons',
     },
-    scrim: {
+    enableScrim: {
       control: 'boolean',
       description: 'Whether to show the background scrim/backdrop',
     },
@@ -75,7 +75,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     title: 'Default Dialog',
-    scrim: false,
     description: 'This is a default dialog with configurable size, actions, close button, and scrim options.',
   },
 };
@@ -85,6 +84,6 @@ export const Collapsed: Story = {
     title: 'Collapsed Dialog',
     description: 'This dialog starts in collapsed state and can be expanded.',
     collapsible: true,
-    scrim: true,
+    enableScrim: true,
   },
 };

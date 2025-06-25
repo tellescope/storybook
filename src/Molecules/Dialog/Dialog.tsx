@@ -42,7 +42,7 @@ export interface DialogProps {
   collapsible?: boolean;
   children?: React.ReactNode;
   sx?: SxProps<Theme>;
-  scrim?: boolean;
+  enableScrim?: boolean;
 }
  
 const sizeMap = {
@@ -66,7 +66,7 @@ export const Dialog: React.FC<DialogProps> = ({
   collapsible = false,
   children,
   sx,
-  scrim = true,
+  enableScrim = true,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isOpen, setIsOpen] = useState(open);
@@ -88,7 +88,7 @@ export const Dialog: React.FC<DialogProps> = ({
         onClose={handleClose}
         {...(isCollapsed ? {} : sizeMap[size])}
         fullWidth={!isCollapsed}
-        hideBackdrop={!scrim}
+        hideBackdrop={!enableScrim}
         sx={{
           "& .MuiPaper-root": {
             backgroundColor: "#E8E7EF",
