@@ -1,35 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { CheckBox } from './checkbox';
+import { Radio } from './radio';
 
 const meta = {
-    title: 'ATOMS/Checkbox',
-    component: CheckBox,
+    title: 'ATOMS/Radio',
+    component: Radio,
     parameters: {
         controls: {
-            exclude: ['onClick'],
+            exclude: ['onClick', "disabled", "color"],
         },
     },
     argTypes: {
-        color: {
-            options: ['primary', 'secondary', 'info'],
-            control: { type: 'select' },
-        },
         size: {
             control: { type: 'select' },
             options: ['large', 'medium', 'small'],
         },
-
     },
     args: { onClick: fn() },
-} satisfies Meta<typeof CheckBox>;
+} satisfies Meta<typeof Radio>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const CustomLabelWithInfotip: Story = {
     args: {
-        color: 'primary',
         size: "medium",
     },
 };

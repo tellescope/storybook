@@ -1,36 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { Input } from './input';
+import { Radio } from './radio';
 
 const meta = {
-    title: 'ATOMS/Input',
-    component: Input,
+    title: 'ATOMS/Radio',
+    component: Radio,
     parameters: {
         controls: {
-            exclude: ['onClick'],
+            exclude: ['onClick', "checked", "disabled"],
         },
     },
     argTypes: {
-        appearance: {
-            options: ['standard', 'filled', 'outlined', "distinct"],
+        color: {
+            options: ['primary', 'secondary', 'info', 'default'],
             control: { type: 'select' },
         },
         size: {
             control: { type: 'select' },
-            options: ['medium', 'small'],
+            options: ['large', 'medium', 'small'],
         },
-
     },
     args: { onClick: fn() },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Radio>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Checked: Story = {
     args: {
-        appearance: 'standard',
+        color: 'primary',
         size: "medium",
-        label: 'Label',
+        checked: true,
     },
 };

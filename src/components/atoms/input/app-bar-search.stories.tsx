@@ -12,12 +12,12 @@ type Story = StoryObj<typeof meta>;
 
 export const AppbarSearch: Story = {
     render: () => (
-        <Stack sx={(theme) => ({
-            backgroundColor: theme.palette.grey[100],
+        <Stack sx={{
+            backgroundColor: "#DEDEDE",
             p: 2,
             maxWidth: 300,
             gap: 1,
-        })}>
+        }}>
             <Typography variant="body1">App bar Search</Typography>
             <Comp />
         </Stack>

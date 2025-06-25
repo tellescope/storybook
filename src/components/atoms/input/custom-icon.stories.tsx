@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { Input } from './input';
 import InputAdornment from '@mui/material/InputAdornment';
 import StarIcon from '@mui/icons-material/Star';
@@ -8,23 +7,6 @@ import { Stack, Typography } from '@mui/material';
 const meta = {
     title: 'ATOMS/Input',
     component: Input,
-    parameters: {
-        controls: {
-            exclude: ['onClick'],
-        },
-    },
-    argTypes: {
-        appearance: {
-            options: ['standard', 'filled', 'outlined', "distinct"],
-            control: { type: 'select' },
-        },
-        size: {
-            control: { type: 'select' },
-            options: ['medium', 'small'],
-        },
-
-    },
-    args: { onClick: fn() },
 } satisfies Meta<typeof Input>;
 
 export default meta;
@@ -34,7 +16,7 @@ export const CustomIcon: Story = {
     render: () => {
         const appearance: ["standard", "filled", "outlined"] = ["standard", "filled", "outlined"];
         return (
-            <Stack direction={"row"} spacing={2} flexWrap="wrap">
+            <Stack direction={"row"} spacing={4} flexWrap="wrap">
                 <Stack spacing={2}>
                     <Typography variant="h6">Custom icon start</Typography>
                     {
@@ -62,13 +44,11 @@ export const CustomIcon: Story = {
                         disabled={false}
                         label="Label"
                         error={false}
-                        inputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <StarIcon />
-                                </InputAdornment>
-                            ),
-                        }}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <StarIcon />
+                            </InputAdornment>
+                        }
                     />
                 </Stack>
                 <Stack spacing={2}>
@@ -98,6 +78,11 @@ export const CustomIcon: Story = {
                         disabled={false}
                         label="Label"
                         error={false}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <StarIcon />
+                            </InputAdornment>
+                        }
                     />
                 </Stack>
             </Stack>

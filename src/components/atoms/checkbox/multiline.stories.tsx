@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { CheckBox } from './checkbox';
-import { Stack, Typography } from '@mui/material';
+import { FormControlLabel, Typography } from '@mui/material';
 
 const meta = {
     title: 'ATOMS/Checkbox',
@@ -32,16 +32,14 @@ export const Mutliline: Story = {
     args: {
         color: 'primary',
         size: "medium",
-        disabled: false,
     },
     render: (args) => (
-        <Stack direction={"row"} spacing={2} alignItems="center" maxWidth={600}>
-            <CheckBox {...args} />
-            <Typography variant="body2" color="text.secondary">
+        <FormControlLabel sx={{ gap: 1, alignItems: "flex-start" }} control={<CheckBox {...args} defaultChecked />} label={
+            <Typography variant="body2" color="text.secondary" sx={{ userSelect: "none", maxWidth: 450 }}>
                 a longer label and will displayed at a smaller size in order to conserve
                 valuable space.  This can be used to display some disclaimer about
                 terms or conditions that might be a bit too long for a normal label area"
             </Typography>
-        </Stack>
+        } />
     ),
 };

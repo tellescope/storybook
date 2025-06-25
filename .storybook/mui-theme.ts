@@ -9,6 +9,20 @@ declare module '@mui/material/IconButton' {
     
 }
 
+declare module '@mui/material/Radio' {
+    interface RadioPropsSizeOverrides {
+        large: true;
+    }
+    
+}
+
+declare module '@mui/material/Select' {
+    interface SelectPropsVariantOverrides {
+        table: true;
+    }
+}
+
+
 export const theme = createTheme({
     palette: {
         primary: {
@@ -218,12 +232,12 @@ export const theme = createTheme({
                         "&:hover": {
                             backgroundColor : "rgba(74, 92, 146, 0.04)", // focused color
                         },
-                        "&:focus": {
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiCheckbox-root.Mui-checked:active": {
                             backgroundColor : "rgba(74, 92, 146, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(74, 92, 146, 0.3)', // pressed
-                        },
+                        }
                     },
                 },
                 {
@@ -232,12 +246,12 @@ export const theme = createTheme({
                         "&:hover": {
                             backgroundColor : "rgba(88, 94, 114, 0.04)", // focused color
                         },
-                        "&:focus": {
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiCheckbox-root.Mui-checked:active": {
                             backgroundColor : "rgba(88, 94, 114, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(88, 94, 114, 0.3)', // pressed
-                        },
+                        }
                     },
                 },
                 {
@@ -246,15 +260,101 @@ export const theme = createTheme({
                         "&:hover": {
                             backgroundColor : "rgba(2, 136, 209, 0.04)", // focused color
                         },
-                        "&:focus": {
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiCheckbox-root.Mui-checked:active": {
                             backgroundColor : "rgba(2, 136, 209, 0.3)", // focused color
-                        },
-                        '&:active': {
-                            backgroundColor: 'rgba(2, 136, 209, 0.3)', // pressed
-                        },
+                        }
                     },
                 }
             ]
         },
+        MuiRadio: {
+            variants: [
+                {
+                    props: { size: 'large' },
+                    style: {
+                        padding: "9px",
+                        '& .MuiSvgIcon-root': {
+                            width: '24px',
+                            height: '24px',
+                        },
+                    },
+                },
+                {
+                    props: { size: 'medium' },
+                    style: {
+                        '& .MuiSvgIcon-root': {
+                            width: '20px',
+                            height: '20px',
+                        },
+                    },
+                },
+                {
+                    props: { size: 'small' },
+                    style: {
+                        '& .MuiSvgIcon-root': {
+                            width: '16px',
+                            height: '16px',
+                        },
+                    },
+                },
+                {
+                    props: { color: 'default' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(0, 0, 0, 0.04)", // focused color
+                        },
+                        "&:active": {
+                            backgroundColor: "rgba(0, 0, 0, 0.12)", // focus visible color
+                        },
+                        
+                    },
+                },
+                {
+                    props: { color: 'primary' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(74, 92, 146, 0.04)", // focused color
+                        },
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiRadio-root.Mui-checked:active": {
+                            backgroundColor : "rgba(74, 92, 146, 0.3)", // focused color
+                        }
+                    },
+                },
+                {
+                    props: { color: 'secondary' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(88, 94, 114, 0.04)", // focused color
+                        },
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiRadio-root.Mui-checked:active": {
+                            backgroundColor : "rgba(88, 94, 114, 0.3)", // focused color
+                        }
+                    },
+                },
+                {
+                    props: { color: 'info' },
+                    style: {
+                        "&:hover": {
+                            backgroundColor : "rgba(2, 136, 209, 0.04)", // focused color
+                        },
+                        "&:active": {
+                            backgroundColor : "rgba(0, 0, 0, 0.12)", // focused color when Checked : false
+                        },
+                        "&.MuiRadio-root.Mui-checked:active": {
+                            backgroundColor : "rgba(2, 136, 209, 0.3)", // focused color
+                        }
+                    },
+                }
+            ]
+        }
     },
 });

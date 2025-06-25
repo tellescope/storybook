@@ -1,23 +1,11 @@
 import { InputBase, Stack } from '@mui/material';
-import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '../button/icon-button';
 
 
-type BaseProps = {
-    size?: 'medium' | 'small';
-    onClick?: () => void;
-    disabled?: boolean;
-};
 
 
-type RegularTextFieldProps = BaseProps & {
-    appearance?: 'filled' | 'outlined' | 'standard';
-} & Omit<MuiTextFieldProps, 'color' | 'placeholder'>;
-
-export type InputProps = DistinctProps | RegularTextFieldProps;
-
-export const AppbarSearch = (props: InputProps) => {
+export const AppbarSearch = () => {
 
     return (
         <Stack

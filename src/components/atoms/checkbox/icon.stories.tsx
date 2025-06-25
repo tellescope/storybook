@@ -34,7 +34,6 @@ export const Icon: Story = {
     args: {
         color: 'primary',
         size: "medium",
-        disabled: false,
     },
     render: (args) => (
         <Stack direction={"row"} spacing={2} alignItems="center">
