@@ -85,12 +85,6 @@ export const Collapsed: Story = {
     title: 'Collapsed Dialog',
     description: 'This dialog starts in collapsed state and can be expanded.',
     collapsible: true,
-  },
-  argTypes: {
-    scrim: {
-      table: {
-        disable: true,
-      },
-    },
+    scrim: true,
   },
 };
