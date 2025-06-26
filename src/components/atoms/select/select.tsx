@@ -18,7 +18,7 @@ export interface SelectProps extends Omit<MuiSelectProps, 'variant'> {
 const Select = ({ appearance = "standard", ...rest }: SelectProps) => {
     return (
         <FormControl fullWidth variant={appearance}>
-            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <InputLabel id="demo-simple-select-label">Label</InputLabel>
             <MuiSelect
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -26,9 +26,9 @@ const Select = ({ appearance = "standard", ...rest }: SelectProps) => {
                 variant={appearance}
                 {...rest}
             >
-                <MenuItem disableRipple value={10}>Ten</MenuItem>
-                <MenuItem disableRipple value={20}>Twenty</MenuItem>
-                <MenuItem disableRipple value={30}>Thirty</MenuItem>
+                <MenuItem disableRipple value={10}>Option 1</MenuItem>
+                <MenuItem disableRipple value={20}>Option 2</MenuItem>
+                <MenuItem disableRipple value={30}>Option 3</MenuItem>
             </MuiSelect>
         </FormControl>
     );

@@ -5,22 +5,17 @@ declare module '@mui/material/Radio' {
     interface RadioPropsSizeOverrides {
         large: true;
     }
-
 }
 
-export interface ButtonProps extends Omit<MuiRadioProps, 'color' | 'variant' | 'size'> {
+export interface RadioProps extends Omit<MuiRadioProps, 'color' | 'size'> {
     color?: "primary" | "secondary" | "info" | "default";
-    size?: "large" | "medium" | "small"; // Removed "large" as MUI Radio does not support it
-    onClick?: () => void;
-    disabled?: boolean;
-
+    size?: "large" | "medium" | "small"; // Add "large" as MUI Radio does not support it
 }
 
-export const Radio = ({ color = "default", disabled = false, ...rest }: ButtonProps) => (
+export const Radio = ({ color = "default", ...rest }: RadioProps) => (
     <MuiRadio
         disableRipple
         color={color}
-        disabled={disabled}
         {...rest}
     />
 );

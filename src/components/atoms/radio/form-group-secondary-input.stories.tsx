@@ -1,22 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { Radio } from './radio';
+import { FormControl, FormControlLabel, FormHelperText, FormLabel, Stack, Typography } from '@mui/material';
+import Select from '../select/select';
 
 const meta = {
     title: 'ATOMS/Radio',
     component: Radio,
     parameters: {
         controls: {
-            exclude: ['onClick', "disabled", "color"],
+            exclude: ["color"],
         },
     },
     argTypes: {
+        color: { table: { disable: true } }, // This disables the control properly
         size: {
             control: { type: 'select' },
             options: ['large', 'medium', 'small'],
         },
     },
-    args: { onClick: fn() },
 } satisfies Meta<typeof Radio>;
 
 export default meta;
@@ -26,4 +27,27 @@ export const FormGroupSecondaryInput: Story = {
     args: {
         size: "medium",
     },
+    render: (args) => {
+        return (
+            <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 6, }} >
+                <Typography variant="body1" sx={{ fontWeight: 600, color: "text.primary" }}>
+                    Form group
+                </Typography>
+                <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
+                    <FormControl sx={{ width: 300 }}>
+                        <FormLabel id="demo-controlled-radio-buttons-group">Label</FormLabel>
+                        <FormControlLabel
+                            value="End"
+                            control={<Radio
+                                size={args.size}
+                            />}
+                            label="Label"
+                        />
+                        <FormHelperText>Helper Text</FormHelperText>
+                    </FormControl>
+                    <Select appearance="outlined" />
+                </Stack>
+            </Stack>
+        );
+    }
 };

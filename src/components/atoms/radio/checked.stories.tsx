@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { Radio } from './radio';
 
 const meta = {
@@ -7,7 +6,7 @@ const meta = {
     component: Radio,
     parameters: {
         controls: {
-            exclude: ['onClick', "checked", "disabled"],
+            exclude: ["checked"],
         },
     },
     argTypes: {
@@ -20,7 +19,6 @@ const meta = {
             options: ['large', 'medium', 'small'],
         },
     },
-    args: { onClick: fn() },
 } satisfies Meta<typeof Radio>;
 
 export default meta;
