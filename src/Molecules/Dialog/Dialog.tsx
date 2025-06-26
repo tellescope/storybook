@@ -8,7 +8,6 @@ import {
   IconButton,
   Typography,
   Box,
-  Divider,
   type SxProps,
   type Theme,
 } from "@mui/material";
@@ -22,57 +21,40 @@ export interface DialogAction {
   color?: "primary" | "error" | "secondary" | "success" | "info" | "warning";
   variant?: "contained" | "outlined" | "text";
   disabled?: boolean;
+  closeButton?: boolean;
 }
 
 export interface DialogProps {
   open: boolean;
-  onClose: () => void;
-  title: string;
-  description?: string;
   actions?: DialogAction[];
-  fullWidthButton?: {
-    label: string;
-    onClick: () => void;
-    color?: "primary" | "error" | "secondary" | "success" | "info" | "warning";
-    disabled?: boolean;
-  };
-  showCloseButton?: boolean;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  dividers?: boolean;
+  size?: "xs" | "sm" | "md";
   collapsible?: boolean;
   children?: React.ReactNode;
   sx?: SxProps<Theme>;
-  enableScrim?: boolean;
+  background?: boolean;
+  closeButton?: boolean;
 }
- 
+
 const sizeMap = {
   xs: { maxWidth: "xs" as const },
   sm: { maxWidth: "sm" as const },
   md: { maxWidth: "md" as const },
-  lg: { maxWidth: "lg" as const },
-  xl: { maxWidth: "xl" as const },
 };
 
 export const Dialog: React.FC<DialogProps> = ({
   open,
-  onClose,
-  title,
-  description,
   actions = [],
-  fullWidthButton,
-  showCloseButton = false,
   size = "sm",
-  dividers = false,
   collapsible = false,
   children,
   sx,
-  enableScrim = true,
+  background = false,
+  closeButton = false,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isOpen, setIsOpen] = useState(open);
 
   const handleClose = () => {
-    onClose();
     setIsOpen(false);
   };
 
@@ -85,10 +67,9 @@ export const Dialog: React.FC<DialogProps> = ({
       <Button onClick={() => setIsOpen(!isOpen)}>Open Dialog</Button>
       <MuiDialog
         open={isOpen}
-        onClose={handleClose}
         {...(isCollapsed ? {} : sizeMap[size])}
         fullWidth={!isCollapsed}
-        hideBackdrop={!enableScrim}
+        hideBackdrop={!background}
         sx={{
           "& .MuiPaper-root": {
             backgroundColor: "#E8E7EF",
@@ -105,16 +86,13 @@ export const Dialog: React.FC<DialogProps> = ({
         <DialogTitle
           sx={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
             alignItems: "center",
-            pb: isCollapsed ? 1.5 : description ? 1 : 2,
+            pb: isCollapsed ? 1.5 : 2,
             pt: isCollapsed ? 1.5 : 2,
             px: isCollapsed ? 2 : 3,
           }}
         >
-          <Typography variant="h6" component="div">
-            {title}
-          </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
             {collapsible && (
               <IconButton
@@ -127,7 +105,8 @@ export const Dialog: React.FC<DialogProps> = ({
                 {isCollapsed ? <ExpandMoreIcon /> : <ExpandLessIcon />}
               </IconButton>
             )}
-            {showCloseButton && (
+
+            {closeButton && (
               <IconButton
                 aria-label="close"
                 onClick={handleClose}
@@ -143,81 +122,55 @@ export const Dialog: React.FC<DialogProps> = ({
 
         {!isCollapsed && (
           <>
-            {dividers && <Divider />}
-
-            <DialogContent
-              sx={{ pb: fullWidthButton || actions.length > 0 ? 2 : 3 }}
-            >
-              {description && (
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: children ? 2 : 0 }}
-                >
-                  {description}
-                </Typography>
-              )}
-              {children && (
-                <Box sx={{ mt: description ? 0 : 0 }}>{children}</Box>
-              )}
+            <DialogContent sx={{ pb: actions.length > 0 ? 2 : 3 }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ mb: children ? 2 : 0 }}
+              >
+                {children}
+              </Typography>
             </DialogContent>
-
-            {dividers && (fullWidthButton || actions.length > 0) && (
-              <Divider sx={{ mb: 2 }} />
-            )}
           </>
         )}
 
-        {!isCollapsed && (fullWidthButton || actions.length > 0) && (
+        {!isCollapsed && actions.length > 0 && (
           <DialogActions
             sx={{
               px: 3,
               pb: 3,
-              flexDirection: fullWidthButton ? "column" : "row",
-              gap: fullWidthButton ? 1 : 0,
+              flexDirection: "row",
+              gap: 1,
             }}
           >
-            {fullWidthButton && (
-              <Button
-                variant="contained"
-                color={fullWidthButton.color || "primary"}
-                onClick={fullWidthButton.onClick}
-                disabled={fullWidthButton.disabled}
-                fullWidth
-                sx={{ mb: actions.length > 0 ? 1 : 0 }}
-              >
-                {fullWidthButton.label}
-              </Button>
-            )}
-
-            {actions.length > 0 && (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  width: fullWidthButton ? "100%" : "auto",
-                }}
-              >
-                {actions.map((action, index) => (
-                  <Button
-                    key={index}
-                    variant={
-                      action.variant ||
-                      (index === actions.length - 1 ? "contained" : "text")
-                    }
-                    color={action.color || "primary"}
-                    onClick={action.onClick}
-                    disabled={action.disabled}
-                    sx={{ flex: fullWidthButton ? 1 : "none" }}
-                  >
-                    {action.label}
-                  </Button>
-                ))}
-              </Box>
-            )}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                width: "100%",
+                justifyContent: "flex-end",
+              }}
+            >
+              {actions.map((action, index) => (
+                <Button
+                  key={index}
+                  variant={
+                    action.variant ||
+                    (index === actions.length - 1 ? "contained" : "text")
+                  }
+                  color={action.color || "primary"}
+                  onClick={action.onClick}
+                  disabled={action.disabled}
+                  sx={{ flex: "none" }}
+                >
+                  {action.label}
+                </Button>
+              ))}
+            </Box>
           </DialogActions>
         )}
       </MuiDialog>
     </>
   );
 };
+

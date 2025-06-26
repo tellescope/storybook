@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 import { Dialog } from './Dialog';
+import React from 'react';
+import { Typography } from '@mui/material';
 
 const meta = {
   title: 'MOLECULES/Dialog',
@@ -14,39 +16,23 @@ const meta = {
     },
   },
   argTypes: {
-    open: {
-      control: 'boolean',
-      description: 'Whether the dialog is open',
-    },
-    onClose: {
-      action: 'onClose',
-      description: 'Callback fired when the dialog should close',
-    },
-    title: {
-      control: 'text',
-      description: 'The title of the dialog',
-    },
-    description: {
-      control: 'text',
-      description: 'Optional supporting text below the title',
-    },
+
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
       description: 'The size of the dialog',
     },
-    showCloseButton: {
-      control: 'boolean',
-      description: 'Whether to show the close button in the top-right corner',
-      name: 'with close',
-    },
     actions: {
       control: 'object',
       description: 'Array of action buttons',
     },
-    enableScrim: {
+    background: {
       control: 'boolean',
       description: 'Whether to show the background scrim/backdrop',
+    },
+    closeButton: {
+      control: 'boolean',
+      description: 'Whether to show the close button in the top-right corner',
     },
     collapsible: {
       control: 'boolean',
@@ -55,11 +41,11 @@ const meta = {
   },
   args: {
     open: false,
-    onClose: fn(),
-    title: 'Dialog Title',
-    description: 'This is a dialog with configurable options.',
+    // title: 'Dialog Title',
+    // description: 'This is a dialog with configurable options.',
     size: 'sm',
-    showCloseButton: false,
+    background: true,
+    closeButton: true,
     collapsible: false,
     actions: [
       { label: 'Cancel', onClick: fn(), variant: 'text' },
@@ -74,16 +60,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: 'Default Dialog',
-    description: 'This is a default dialog with configurable size, actions, close button, and scrim options.',
+    children: React.createElement(Typography, {}, 'This is a sample dialog description that explains what the dialog is for and provides context to the user.'),
+    background: false,
   },
 };
 
 export const Collapsed: Story = {
   args: {
-    title: 'Collapsed Dialog',
-    description: 'This dialog starts in collapsed state and can be expanded.',
     collapsible: true,
-    enableScrim: true,
+    background: true,
+    children: React.createElement(Typography, {}, 'This dialog starts in collapsed state and can be expanded to show this content.'),
   },
 };

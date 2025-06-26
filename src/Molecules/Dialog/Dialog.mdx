@@ -1,6 +1,6 @@
 import { Meta, Canvas, ArgTypes, Story } from "@storybook/addon-docs/blocks"
 import { Dialog } from './Dialog';
-import * as DialogStories from './Dialog.stories';
+import * as DialogStories from './Dialog.stories.ts';
 
 <Meta of={DialogStories} />
 
@@ -10,25 +10,21 @@ The Dialog component is a versatile modal dialog built with Material UI v5 that 
 
 ## Features
 
-- **Multiple Sizes**: Choose from 5 different sizes (`xs`, `sm`, `md`, `lg`, `xl`) to fit your content
+- **Multiple Sizes**: Choose from 3 different sizes (`xs`, `sm`, `md`) to fit your content
 - **Flexible Actions**: Support for customizable action buttons with different colors and variants
 - **Close Button**: Optional close button in the top-right corner for easy dismissal
 - **Collapsible**: Option to minimize dialog to title bar only, useful for keeping dialogs accessible but out of the way
-- **Scrim Control**: Option to show or hide the background overlay
-- **Rich Content**: Support for custom content including forms, inputs, and other components
-- **Scrollable**: Automatically handles scrolling for long content
-- **Accessibility**: Built-in keyboard navigation and screen reader support via Material UI
+- **Background Control**: Option to show or hide the background overlay/backdrop
+
 
 ## Basic Usage
 
-The simplest dialog requires only `open`, `onClose`, and `title` props. 
+The Dialog component displays with sample content and can be configured using the available controls.
 
 **To view the dialog examples:**
 1. Click on any story below to open it in the Canvas
-2. Use the **Controls** panel to toggle `open` from `false` to `true`
-3. The dialog will appear and you can interact with it
-4. Use the **Controls** panel to adjust size, actions, close button, and scrim settings
-
+2. Use the **Controls** panel to toggle the dialog settings
+3. The dialog will update based on your control selections
 
 <Canvas of={DialogStories.Default} />
 
@@ -40,12 +36,13 @@ Make dialogs collapsible to minimize them to just the title bar, useful for keep
 
 ## Controls
 
-Both stories include the following configurable controls:
+The following controls are available for customizing the dialog:
 
-- **Size**: Choose from xs, sm, md, lg, or xl
+- **Size**: Choose from xs, sm, or md
 - **Actions**: Configure action buttons (array of button objects)
-- **With Close**: Toggle the close button in the top-right corner
-- **Scrim**: Control the background overlay (available for Default story only)
+- **Background**: Toggle the background overlay/backdrop
+- **Close Button**: Toggle the close button in the top-right corner
+- **Collapsible**: Enable collapsible functionality (available in specific stories)
 
 ## Props
 
@@ -62,6 +59,7 @@ interface DialogAction {
   color?: 'primary' | 'error' | 'secondary' | 'success' | 'info' | 'warning';
   variant?: 'contained' | 'outlined' | 'text';
   disabled?: boolean;               // Whether the button is disabled
+  closeButton?: boolean;            // Whether this action includes a close button
 }
 ```
 
@@ -71,22 +69,36 @@ interface DialogAction {
 ```tsx
 <Dialog
   open={open}
-  onClose={handleClose}
-  title="Basic Dialog"
-  description="This is a simple dialog with a title and description."
-/>
+  size="sm"
+  background={true}
+>
+  <Typography>This is a sample dialog description that explains what the dialog is for and provides context to the user.</Typography>
+</Dialog>
 ```
 
 ### Dialog with Actions
 ```tsx
 <Dialog
   open={open}
-  onClose={handleClose}
-  title="Confirm Action"
-  description="Are you sure you want to proceed?"
+  size="md"
+  background={true}
   actions={[
     { label: 'Cancel', onClick: handleClose, variant: 'text' },
     { label: 'Confirm', onClick: handleConfirm, variant: 'contained' }
+  ]}
+/>
+```
+
+### Dialog with Close Button
+```tsx
+<Dialog
+  open={open}
+  size="sm"
+  background={true}
+  closeButton={true}
+  actions={[
+    { label: 'Cancel', onClick: handleClose, variant: 'text' },
+    { label: 'Save', onClick: handleSave, variant: 'contained' }
   ]}
 />
 ```
@@ -95,18 +107,22 @@ interface DialogAction {
 ```tsx
 <Dialog
   open={open}
-  onClose={handleClose}
-  title="Collapsible Dialog"
-  description="This dialog can be collapsed to show only the title bar."
+  size="sm"
+  background={true}
   collapsible={true}
-  defaultCollapsed={true}
-  showCloseButton={true}
+  closeButton={true}
   actions={[
     { label: 'Cancel', onClick: handleClose, variant: 'text' },
-    { label: 'Save', onClick: handleSave, variant: 'contained' }
+    { label: 'Apply', onClick: handleApply, variant: 'contained' }
   ]}
 />
 ```
+
+## Available Sizes
+
+- **xs**: Extra small dialog for minimal content
+- **sm**: Small dialog (default) for standard use cases
+- **md**: Medium dialog for more content or forms
 
 ## Best Practices
 
@@ -115,12 +131,13 @@ interface DialogAction {
 3. **Consistent colors**: Use `error` color for destructive actions, `primary` for main actions
 4. **Close button**: Consider adding a close button for non-critical dialogs
 5. **Collapsible option**: Use collapsible dialogs for non-blocking notifications or secondary information
+6. **Background control**: Use background overlay for modal dialogs, consider disabling for overlay content
 
 ## Accessibility
 
 The Dialog component includes built-in accessibility features:
 
 - **Focus management**: Focus is automatically trapped within the dialog
-- **Keyboard navigation**: Escape key closes the dialog, Tab cycles through interactive elements
+- **Keyboard navigation**: Tab cycles through interactive elements
 - **Screen reader support**: Proper ARIA labels and roles are automatically applied
 - **Color contrast**: Material UI ensures proper color contrast for all variants 
