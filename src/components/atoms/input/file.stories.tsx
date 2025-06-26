@@ -49,14 +49,18 @@ export const File: StoryObj<StoryArgs> = {
     args: {
         status: 'pre-upload',
         files: [],
+        error: false,
+        errorMsg: 'Unsuported file.',
     },
-    render: ({ status, onSelectFiles, onDelete }) => {
+    render: ({ status, onSelectFiles, onDelete, ...rest }) => {
         const files = createFilesFromStatus(status);
         return (
             <FileUpload
+                {...rest}
                 files={files}
                 onSelectFiles={onSelectFiles}
                 onDelete={onDelete}
+
             />
         );
     },

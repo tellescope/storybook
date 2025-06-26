@@ -1,15 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { Input } from './input';
+import { useState, type ChangeEvent } from 'react';
 
 const meta = {
     title: 'ATOMS/Input',
     component: Input,
-    parameters: {
-        controls: {
-            exclude: ['onClick'],
-        },
-    },
     argTypes: {
         appearance: {
             options: ['standard', 'filled', 'outlined', "distinct"],
@@ -21,7 +16,6 @@ const meta = {
         },
 
     },
-    args: { onClick: fn() },
 } satisfies Meta<typeof Input>;
 
 export default meta;
@@ -31,6 +25,32 @@ export const Number: Story = {
     args: {
         appearance: 'standard',
         size: "medium",
-        type: 'number',
+    },
+    render: (args) => {
+        const [value, setValue] = useState('');
+        const [error, setError] = useState(false);
+        const [helperText, setHelperText] = useState('');
+
+        const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const val = e.target.value;
+            setValue(val);
+
+            if (!/^[0-9\s]*$/.test(val)) {
+                setError(true);
+                setHelperText('Only Number is allowed');
+            } else {
+                setError(false);
+                setHelperText('');
+            }
+        };
+        return (
+            <Input
+                {...args}
+                value={value}
+                onChange={handleChange}
+                error={error}
+                helperText={helperText}
+            />
+        )
     },
 };

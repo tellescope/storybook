@@ -22,7 +22,10 @@ const meta = {
             control: { type: 'select' },
             options: ['large', 'medium', 'small'],
         },
-
+        icon: {
+            control: { type: 'select' },
+            options: ['checkmark', "icon"],
+        },
     },
     args: { onClick: fn() },
 } satisfies Meta<typeof CheckBox>;
@@ -34,11 +37,12 @@ export const Icon: Story = {
     args: {
         color: 'primary',
         size: "medium",
+        icon: 'checkmark',
     },
     render: (args) => (
         <Stack direction={"row"} spacing={2} alignItems="center">
-            <CheckBox {...args} icon={<FavoriteIcon />} checkedIcon={<FavoriteIcon />} />
-            <CheckBox {...args} icon={<EmailOutlinedIcon />} checkedIcon={<EmailOutlinedIcon />} />
+            <CheckBox {...args} icon={<FavoriteIcon />} checkedIcon={args.icon === "icon" ? <FavoriteIcon /> : undefined} />
+            <CheckBox {...args} icon={<EmailOutlinedIcon />} checkedIcon={args.icon === "icon" ? <EmailOutlinedIcon /> : undefined} />
         </Stack>
     ),
 };

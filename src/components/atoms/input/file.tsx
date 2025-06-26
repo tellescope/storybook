@@ -25,6 +25,8 @@ export interface FileUploadProps {
     files: FileItem[];
     onDelete?: (name: string) => void;
     onSelectFiles?: (files: FileList) => void;
+    error?: boolean;
+    errorMsg?: string;
 }
 
 const formatSize = (size: number) => {
@@ -33,7 +35,7 @@ const formatSize = (size: number) => {
         : `${Math.round(size / 1024)}kb`;
 };
 
-const FileUpload: React.FC<FileUploadProps> = ({ files, onDelete, onSelectFiles }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ files, onDelete, onSelectFiles, error = false, errorMsg }) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,10 +55,17 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, onDelete, onSelectFiles 
         }}>
             <Box
                 sx={{
-                    border: '1px dashed #DADCE0',
-                    borderRadius: 2,
+                    borderWidth: '1px',
+                    borderStyle: error ? "solid" : 'dashed',
+                    borderColor: error ? 'error.main' : '#DADCE0',
+                    bgcolor: error ? 'rgba(186, 26, 26, 0.04) !important' : 'transparent',
+                    borderRadius: 1,
                     p: 3,
                     maxWidth: 500,
+                    "&:hover": {
+                        borderColor: error ? 'rgba(186, 26, 26, 1)' : 'primary.main',
+                        bgcolor: "rgba(74, 92, 146, 0.08)",
+                    }
                 }}
             >
                 <Stack
@@ -64,9 +73,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, onDelete, onSelectFiles 
                     alignItems="center"
                     textAlign="center"
                     mb={2}
-
                 >
-                    <UploadFileIcon fontSize="large" color="primary" />
+                    <UploadFileIcon fontSize="large" color={error ? "error" : "primary"} />
                     <Typography>
                         <Typography
                             component="span"
@@ -90,9 +98,18 @@ const FileUpload: React.FC<FileUploadProps> = ({ files, onDelete, onSelectFiles 
                         </Typography>{' '}
                         or drag and drop
                     </Typography>
-                    <Typography variant="caption" color="textSecondary">
-                        SVG, PNG, JPG or GIF (max. 3MB)
-                    </Typography>
+                    {
+                        error && errorMsg ? (
+                            <Typography variant="caption" color="error">
+                                {errorMsg}
+                            </Typography>
+                        ) : (
+                            <Typography variant="caption" color="textSecondary">
+                                SVG, PNG, JPG or GIF (max. 3MB)
+                            </Typography>
+                        )
+                    }
+
                     <input
                         type="file"
                         hidden
