@@ -19,12 +19,28 @@ const meta = {
 
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: ['xs', 'sm', 'md'],
       description: 'The size of the dialog',
     },
     actions: {
-      control: 'object',
-      description: 'Array of action buttons',
+      control: 'select',
+      options: ['none', 'one', 'two', 'three'],
+      description: 'Number of action buttons',
+      mapping: {
+        none: [],
+        one: [
+          { label: 'Confirm', onClick: fn(), variant: 'contained' },
+        ],
+        two: [
+          { label: 'Cancel', onClick: fn(), variant: 'text' },
+          { label: 'Confirm', onClick: fn(), variant: 'contained' },
+        ],
+        three: [
+          { label: 'Cancel', onClick: fn(), variant: 'text' },
+          { label: 'Save Draft', onClick: fn(), variant: 'outlined' },
+          { label: 'Publish', onClick: fn(), variant: 'contained' },
+        ],
+      },
     },
     background: {
       control: 'boolean',
@@ -47,10 +63,7 @@ const meta = {
     background: true,
     closeButton: true,
     collapsible: false,
-    actions: [
-      { label: 'Cancel', onClick: fn(), variant: 'text' },
-      { label: 'Confirm', onClick: fn(), variant: 'contained' },
-    ],
+    actions: 'two',
   },
 } satisfies Meta<typeof Dialog>;
 

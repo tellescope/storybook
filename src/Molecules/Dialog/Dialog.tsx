@@ -26,7 +26,7 @@ export interface DialogAction {
 
 export interface DialogProps {
   open: boolean;
-  actions?: DialogAction[];
+  actions?: DialogAction[] | 'none' | 'one' | 'two' | 'three';
   size?: "xs" | "sm" | "md";
   collapsible?: boolean;
   children?: React.ReactNode;
@@ -53,6 +53,33 @@ export const Dialog: React.FC<DialogProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isOpen, setIsOpen] = useState(open);
+
+  // Handle actions mapping
+  const getActionsArray = (): DialogAction[] => {
+    if (Array.isArray(actions)) {
+      return actions;
+    }
+    
+    const actionMappings = {
+      none: [],
+      one: [
+        { label: 'Confirm', onClick: () => {}, variant: 'contained' as const },
+      ],
+      two: [
+        { label: 'Cancel', onClick: () => {}, variant: 'text' as const },
+        { label: 'Confirm', onClick: () => {}, variant: 'contained' as const },
+      ],
+      three: [
+        { label: 'Cancel', onClick: () => {}, variant: 'text' as const },
+        { label: 'Save Draft', onClick: () => {}, variant: 'outlined' as const },
+        { label: 'Publish', onClick: () => {}, variant: 'contained' as const },
+      ],
+    };
+    
+    return actionMappings[actions] || [];
+  };
+
+  const actionsArray = getActionsArray();
 
   const handleClose = () => {
     setIsOpen(false);
@@ -151,7 +178,7 @@ export const Dialog: React.FC<DialogProps> = ({
                 justifyContent: "flex-end",
               }}
             >
-              {actions.map((action, index) => (
+              {actionsArray.map((action, index) => (
                 <Button
                   key={index}
                   variant={
