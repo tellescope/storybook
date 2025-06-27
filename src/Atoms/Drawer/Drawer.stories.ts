@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { fn } from 'storybook/test';
 import { Drawer } from './Drawer';
 import React from 'react';
-import { Typography, List, ListItem, ListItemText, Divider, Button, Box } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 
 const meta = {
   title: 'ATOMS/Drawer',
@@ -43,20 +42,19 @@ const SampleContent = React.createElement(
   Box,
   {},
   React.createElement(Typography, { variant: 'body1', sx: { mb: 2 } }, 'This is a sample drawer with some content.'),
-  React.createElement(Typography, { variant: 'body2', color: 'text.secondary', sx: { mb: 3 } }, 'You can put any content inside the drawer, such as navigation menus, forms, or information panels.'),
+  React.createElement(Typography, { variant: 'body2', color: 'text.secondary', sx: { mb: 3 } }, 'You can put any content inside the drawer.'),
   React.createElement(Button, { variant: 'contained', fullWidth: true }, 'Sample Action')
 );
 
 const PersistentContent = React.createElement(
   Box,
   {},
-  // React.createElement(Typography, { variant: 'body1', sx: { mb: 2 } }, 'This is a sample drawer with some content.'),
+  React.createElement(Typography, { variant: 'body1', sx: { mb: 2 } }, 'This is a sample drawer.'),
 );
 
 export const Default: Story = {
   args: {
     children: SampleContent,
-    width: 248,
   },
 };
 
@@ -64,7 +62,6 @@ export const Fixed: Story = {
   args: {
     children: PersistentContent,
     persistent: true,
-    width: 248,
   },
 };
 
