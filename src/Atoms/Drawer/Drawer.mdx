@@ -1,8 +1,13 @@
 # Drawer
 
-A versatile drawer component that slides in from any side of the screen. Built with Material-UI's Drawer component, it provides a flexible container for navigation menus, forms, settings panels, and other overlay content.
+A versatile drawer component that slides in from the right side of the screen. Built with Material-UI's Drawer component, it provides a flexible container for navigation menus, forms, settings panels, and other overlay content with automatic content-based sizing.
 
 ## Features
+
+- **Auto-sizing**: Automatically adjusts width based on content size
+- **Content-driven layout**: No need to specify fixed widths - the drawer adapts to your content
+- **Two variants**: Absolute (overlay) and Fixed (pushes content)
+
 
 ## Usage
 
@@ -36,7 +41,6 @@ function App() {
   open={open}
   onClose={() => setOpen(false)}
   title="Navigation"
-  width={280}
 >
   <List>
     <ListItem>
@@ -49,5 +53,65 @@ function App() {
       <ListItemText primary="Contact" />
     </ListItem>
   </List>
+</Drawer>
+```
+
+### Wide Content Example
+
+```jsx
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Data Table"
+>
+  <table style={{ width: '600px' }}>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>john@example.com</td>
+        <td>Active</td>
+        <td>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Drawer>
+```
+
+### Persistent Drawer
+
+```jsx
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Settings"
+  persistent={true}
+>
+  <form>
+    <div>
+      <label>Theme</label>
+      <select>
+        <option>Light</option>
+        <option>Dark</option>
+      </select>
+    </div>
+    <div>
+      <label>Language</label>
+      <select>
+        <option>English</option>
+        <option>Spanish</option>
+      </select>
+    </div>
+  </form>
 </Drawer>
 ```

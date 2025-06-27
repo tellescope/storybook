@@ -9,7 +9,6 @@ import {
 
 export interface DrawerProps {
   open: boolean;
-  onClose?: () => void;
   title?: string;
   children?: React.ReactNode;
   persistent?: boolean;
