@@ -4,16 +4,64 @@ import {
   Box,
   Typography,
   Button,
+  styled,
 } from "@mui/material";
 
+const drawerWidth = 240;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginRight: -drawerWidth,
+  position: 'relative',
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: 0,
+      },
+    },
+  ],
+}));
 
 export interface DrawerProps {
-  open: boolean;
+  open?: boolean;
   title?: string;
   children?: React.ReactNode;
   persistent?: boolean;
   hugContents?: boolean;
+  mainContent?: React.ReactNode;
 }
+
+// Demo trigger button component
+const DemoTriggerButton: React.FC<{
+  isOpen: boolean;
+  onToggle: () => void;
+}> = ({ isOpen, onToggle }) => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      p: 2,
+      minHeight: "100px",
+    }}
+  >
+    <Button variant="contained" onClick={onToggle} size="large">
+      {isOpen ? "Close" : "Open"} Drawer
+    </Button>
+  </Box>
+);
 
 // Helper function to get drawer paper styles for right position
 const getDrawerPaperStyles = (persistent?: boolean, hugContents?: boolean) => {
@@ -21,7 +69,7 @@ const getDrawerPaperStyles = (persistent?: boolean, hugContents?: boolean) => {
     // MUI persistent drawer style - no floating effects
     return {
       backgroundColor: "#F4F3FA",
-      width: "fit-content",
+      width: drawerWidth,
       height: hugContents ? "fit-content" : "100vh",
     };
   }
@@ -50,32 +98,13 @@ const getDrawerPaperStyles = (persistent?: boolean, hugContents?: boolean) => {
   return baseStyles;
 };
 
-// Demo trigger button component
-const DemoTriggerButton: React.FC<{
-  isOpen: boolean;
-  onToggle: () => void;
-}> = ({ isOpen, onToggle }) => (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      p: 2,
-      minHeight: "100px",
-    }}
-  >
-    <Button variant="contained" onClick={onToggle} size="large">
-      {isOpen ? "Close" : "Open"} Drawer
-    </Button>
-  </Box>
-);
-
 export const Drawer: React.FC<DrawerProps> = ({
-  open,
+  open = false,
   title,
   children,
   persistent = false,
   hugContents = false,
+  mainContent,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
 
@@ -101,19 +130,18 @@ export const Drawer: React.FC<DrawerProps> = ({
         p: 2,
         display: "flex",
         flexDirection: "column",
-        width: "fit-content",
-        minWidth: "200px", // Minimal width for usability
+        width: "100%",
         boxSizing: "border-box",
       }}
     >
-      <Typography variant="subtitle2" component="h4">
-        {title}
-      </Typography>
+      {title && (
+        <Typography variant="subtitle2" component="h4" sx={{ mb: 2 }}>
+          {title}
+        </Typography>
+      )}
 
       <Box
         sx={{
-          mt: 2,
-          width: "fit-content",
           "& *": {
             boxSizing: "border-box",
           },
@@ -124,11 +152,37 @@ export const Drawer: React.FC<DrawerProps> = ({
     </Box>
   );
 
+  // For persistent drawers, use the proper layout structure
+  if (persistent) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <Main open={isOpen}>
+          <DemoTriggerButton isOpen={isOpen} onToggle={handleToggle} />
+          {mainContent}
+        </Main>
+        <MuiDrawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              backgroundColor: "#F4F3FA",
+            },
+          }}
+          variant="persistent"
+          anchor="right"
+          open={isOpen}
+        >
+          {drawerContent}
+        </MuiDrawer>
+      </Box>
+    );
+  }
+
+  // For temporary drawers, use the original structure
   return (
     <>
-      {/* Demo trigger button - always shown now as per user's changes */}
       <DemoTriggerButton isOpen={isOpen} onToggle={handleToggle} />
-
       <MuiDrawer
         anchor="right"
         open={isOpen}
@@ -136,9 +190,6 @@ export const Drawer: React.FC<DrawerProps> = ({
         variant={drawerVariant}
         hideBackdrop={persistent}
         sx={{
-          ...(persistent && {
-            flexShrink: 0,
-          }),
           zIndex: 1300,
           "& .MuiDrawer-paper": {
             ...getDrawerPaperStyles(persistent, hugContents),
