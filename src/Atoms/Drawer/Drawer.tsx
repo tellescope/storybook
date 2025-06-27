@@ -12,20 +12,16 @@ export interface DrawerProps {
   onClose?: () => void;
   title?: string;
   children?: React.ReactNode;
-  width?: number | undefined;
   persistent?: boolean;
 }
 
 // Helper function to get drawer paper styles for right position
-const getDrawerPaperStyles = (
-  width: number | undefined,
-  persistent?: boolean
-) => {
+const getDrawerPaperStyles = (persistent?: boolean) => {
   if (persistent) {
     // MUI persistent drawer style - no floating effects
     return {
-      width: width,
       backgroundColor: "#F4F3FA",
+      width: "fit-content",
     };
   }
 
@@ -37,14 +33,7 @@ const getDrawerPaperStyles = (
     margin: "16px",
     marginLeft: "0",
     height: "calc(100vh - 32px)",
-  };
-};
-
-// Helper function to get content container dimensions for right drawer
-const getContentDimensions = (width: number | undefined) => {
-  return {
-    width: width,
-    height: "auto",
+    width: "fit-content",
   };
 };
 
@@ -72,7 +61,6 @@ export const Drawer: React.FC<DrawerProps> = ({
   open,
   title,
   children,
-  width,
   persistent = false,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
@@ -92,20 +80,15 @@ export const Drawer: React.FC<DrawerProps> = ({
     }
   };
 
-
-  // Get dimensions for the content container
-  const contentDimensions = getContentDimensions(width);
-
   // Drawer content with consistent padding for both persistent and temporary
   const drawerContent = (
     <Box
       sx={{
-        ...contentDimensions,
         p: 2,
         display: "flex",
         flexDirection: "column",
-        width: "100%",
-        maxWidth: "100%",
+        width: "fit-content",
+        minWidth: "200px", // Minimal width for usability
         boxSizing: "border-box",
       }}
     >
@@ -115,14 +98,9 @@ export const Drawer: React.FC<DrawerProps> = ({
 
       <Box
         sx={{
-          width: "100%",
-          maxWidth: "100%",
-          overflow: "hidden auto",
-          wordWrap: "break-word",
           mt: 2,
-          overflowWrap: "break-word",
+          width: "fit-content",
           "& *": {
-            maxWidth: "100%",
             boxSizing: "border-box",
           },
         }}
@@ -145,12 +123,11 @@ export const Drawer: React.FC<DrawerProps> = ({
         hideBackdrop={persistent}
         sx={{
           ...(persistent && {
-            width: width,
             flexShrink: 0,
           }),
           zIndex: 1300,
           "& .MuiDrawer-paper": {
-            ...getDrawerPaperStyles(width, persistent),
+            ...getDrawerPaperStyles(persistent),
             zIndex: 1300,
           },
         }}
