@@ -21,6 +21,7 @@ export interface DialogAction {
   color?: "primary" | "error" | "secondary" | "success" | "info" | "warning";
   variant?: "contained" | "outlined" | "text";
   disabled?: boolean;
+  title?: string;
   closeButton?: boolean;
 }
 
@@ -29,6 +30,7 @@ export interface DialogProps {
   actions?: DialogAction[] | 'none' | 'one' | 'two' | 'three';
   size?: "xs" | "sm" | "md";
   collapsible?: boolean;
+  title?: string;
   children?: React.ReactNode;
   sx?: SxProps<Theme>;
   background?: boolean;
@@ -46,6 +48,7 @@ export const Dialog: React.FC<DialogProps> = ({
   actions = [],
   size = "sm",
   collapsible = false,
+  title,
   children,
   sx,
   background = false,
@@ -113,13 +116,18 @@ export const Dialog: React.FC<DialogProps> = ({
         <DialogTitle
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "space-between",
             alignItems: "center",
             pb: isCollapsed ? 1.5 : 2,
             pt: isCollapsed ? 1.5 : 2,
             px: isCollapsed ? 2 : 3,
           }}
         >
+          {title && (
+            <Typography variant="h6">
+              {title}
+            </Typography>
+          )}
           <Box sx={{ display: "flex", gap: 1 }}>
             {collapsible && (
               <IconButton

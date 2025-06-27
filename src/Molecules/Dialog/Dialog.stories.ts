@@ -16,7 +16,10 @@ const meta = {
     },
   },
   argTypes: {
-
+    title: {
+      control: 'text',
+      description: 'The title of the dialog',
+    },
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md'],
@@ -57,7 +60,7 @@ const meta = {
   },
   args: {
     open: false,
-    // title: 'Dialog Title',
+    title: 'Dialog Title',
     // description: 'This is a dialog with configurable options.',
     size: 'sm',
     background: true,
@@ -75,6 +78,7 @@ export const Default: Story = {
   args: {
     children: React.createElement(Typography, {}, 'This is a sample dialog description that explains what the dialog is for and provides context to the user.'),
     background: false,
+    title: 'Dialog Title',
   },
 };
 
