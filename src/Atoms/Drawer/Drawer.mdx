@@ -7,7 +7,7 @@ A versatile drawer component that slides in from the right side of the screen. B
 - **Auto-sizing**: Automatically adjusts width based on content size
 - **Content-driven layout**: No need to specify fixed widths - the drawer adapts to your content
 - **Two variants**: Absolute (overlay) and Fixed (pushes content)
-
+- **Hug Contents option**: For Absolute variant, choose between content-hugging or fixed width
 
 ## Usage
 
@@ -34,6 +34,20 @@ function App() {
 }
 ```
 
+### Hug Contents Example
+
+```jsx
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="My Drawer"
+  hugContents={true}
+>
+  <p>Drawer content goes here</p>
+</Drawer>
+```
+
+  
 ### Navigation Drawer
 
 ```jsx
