@@ -4,13 +4,6 @@ A versatile drawer component that slides in from any side of the screen. Built w
 
 ## Features
 
-- **Multi-directional**: Slides in from left, right, top, or bottom
-- **Flexible sizing**: Customizable width/height
-- **Multiple variants**: Temporary, persistent, and permanent
-- **Controlled & Uncontrolled**: Works in both controlled and uncontrolled modes
-- **Accessible**: Includes proper ARIA labels and keyboard navigation
-- **Customizable**: Optional title, close button, and custom content
-
 ## Usage
 
 ### Basic Example
@@ -42,7 +35,6 @@ function App() {
 <Drawer
   open={open}
   onClose={() => setOpen(false)}
-  anchor="left"
   title="Navigation"
   width={280}
 >
@@ -59,94 +51,3 @@ function App() {
   </List>
 </Drawer>
 ```
-
-### Form Drawer
-
-```jsx
-<Drawer
-  open={open}
-  onClose={() => setOpen(false)}
-  anchor="right"
-  title="Contact Form"
-  width={400}
->
-  <form>
-    <TextField label="Name" fullWidth margin="normal" />
-    <TextField label="Email" fullWidth margin="normal" />
-    <TextField 
-      label="Message" 
-      multiline 
-      rows={4} 
-      fullWidth 
-      margin="normal" 
-    />
-    <Button variant="contained" type="submit">
-      Send Message
-    </Button>
-  </form>
-</Drawer>
-```
-
-## Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | `false` | Controls whether the drawer is open |
-| `onClose` | `() => void` | - | Callback fired when the drawer should close |
-| `anchor` | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` | Side of the screen the drawer slides from |
-| `title` | `string` | - | Optional title displayed in the drawer header |
-| `children` | `ReactNode` | - | Content to display inside the drawer |
-| `width` | `number \| string` | `400` | Width of the drawer (or height for top/bottom) |
-| `sx` | `SxProps<Theme>` | - | Custom styles for the drawer content |
-| `showCloseButton` | `boolean` | `true` | Whether to show the close button |
-| `variant` | `'temporary' \| 'persistent' \| 'permanent'` | `'temporary'` | Drawer behavior variant |
-
-## Variants
-
-### Temporary (Default)
-- Closes when clicking the backdrop
-- Overlays content
-- Most common for mobile navigation
-
-### Persistent
-- Stays open until explicitly closed
-- No backdrop click-to-close
-- Good for desktop side navigation
-
-### Permanent
-- Always visible
-- Cannot be closed
-- Used for primary navigation in desktop layouts
-
-## Anchor Positions
-
-- **Left**: Slides in from the left edge (common for navigation)
-- **Right**: Slides in from the right edge (common for details/settings)
-- **Top**: Slides down from the top (good for notifications)
-- **Bottom**: Slides up from the bottom (mobile-friendly actions)
-
-## Accessibility
-
-The Drawer component includes several accessibility features:
-
-- Proper ARIA labels for screen readers
-- Keyboard navigation support
-- Focus management when opening/closing
-- Escape key closes temporary drawers
-
-## Best Practices
-
-1. **Choose the right anchor**: Left for navigation, right for details/forms
-2. **Use appropriate width**: 280-320px for navigation, 400-600px for forms
-3. **Include a title**: Helps users understand the drawer's purpose
-4. **Provide close options**: Always include a way to close the drawer
-5. **Consider mobile**: Test drawer behavior on smaller screens
-6. **Keep content focused**: Don't overload drawers with too much content
-
-## Examples in Design Systems
-
-- **Navigation**: Primary or secondary navigation menus
-- **Filters**: Search and filter controls for data tables
-- **Settings**: User preferences and configuration options
-- **Forms**: Contact forms, user registration, or data entry
-- **Help**: Documentation, tutorials, or support content

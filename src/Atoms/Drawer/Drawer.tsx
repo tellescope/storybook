@@ -4,66 +4,91 @@ import {
   Box,
   Typography,
   Button,
+  styled,
   type DrawerProps as MuiDrawerProps,
 } from "@mui/material";
+
+// Styled DrawerHeader component following MUI pattern
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-start',
+}));
 
 export interface DrawerProps {
   open: boolean;
   onClose?: () => void;
-  anchor?: "left" | "right" | "top" | "bottom";
   title?: string;
   children?: React.ReactNode;
-  width?: number | string;
+  width?: number | undefined;
   variant?: MuiDrawerProps["variant"];
+  persistent?: boolean;
 }
 
-// Helper function to get drawer paper styles based on anchor position
-const getDrawerPaperStyles = (anchor: string) => {
-  const baseStyles = {
+// Helper function to get drawer paper styles for right position
+const getDrawerPaperStyles = (width: number | undefined, persistent?: boolean) => {
+  if (persistent) {
+    // MUI persistent drawer style - no floating effects
+    return {
+      width: width,
+      backgroundColor: "#F4F3FA",
+    };
+  }
+
+  // Floating style for temporary drawers
+  return {
     backgroundColor: "#F4F3FA",
     borderRadius: "16px",
     boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
-  };
-
-  const anchorSpecificStyles = {
-
-    right: {
-      margin: "16px",
-      marginLeft: "0", 
-      height: "calc(100vh - 32px)",
-    },
-  };
-
-  return {
-    ...baseStyles,
-    ...anchorSpecificStyles[anchor as keyof typeof anchorSpecificStyles],
+    margin: "16px",
+    marginLeft: "0", 
+    height: "calc(100vh - 32px)",
   };
 };
 
-// Helper function to get content container dimensions
-const getContentDimensions = (anchor: string, width: number | string) => {
-  const isHorizontal = anchor === "top" || anchor === "bottom";
-  
+// Helper function to get content container dimensions for right drawer
+const getContentDimensions = (width: number | undefined) => {
   return {
-    width: isHorizontal ? "auto" : width,
-    height: isHorizontal ? width : "auto",
+    width: width,
+    height: "auto",
   };
 };
 
-// Header component for the drawer
-const DrawerHeader: React.FC<{
+// Helper component for drawer content header
+const DrawerContentHeader: React.FC<{
   title?: string;
-}> = ({ title }) => {
+  persistent?: boolean;
+}> = ({ title, persistent }) => {
+  
+  if (persistent) {
+    return (
+      <>
+        <DrawerHeader>
+          {title && (
+            <Typography variant="h6" component="h4">
+              {title}
+            </Typography>
+          )}
+        </DrawerHeader>
+      </>
+    );
+  }
+
   if (!title) return null;
 
   return (
     <Box
       sx={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
         mb: 2,
         pb: 1,
       }}
     >
-      <Typography variant="h6" component="h2">
+      <Typography>
         {title}
       </Typography>
     </Box>
@@ -96,28 +121,38 @@ const DemoTriggerButton: React.FC<{
 
 export const Drawer: React.FC<DrawerProps> = ({
   open,
-  anchor = "right",
   title,
   children,
-  width = 248,
+  width,
   variant = "temporary",
+  persistent = false,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
   
+  // Use persistent variant when persistent prop is true
+  const drawerVariant = persistent ? "persistent" : variant;
 
   // Handle toggle for demo button
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
+  // Handle close - only close if not persistent or via explicit close action
   const handleClose = () => {
+    if (!persistent) {
+      setIsOpen(false);
+    }
+  };
+
+  // Explicit close for persistent drawers
+  const handleExplicitClose = () => {
     setIsOpen(false);
   };
 
   // Get dimensions for the content container
-  const contentDimensions = getContentDimensions(anchor, width);
+  const contentDimensions = getContentDimensions(width);
 
-  // Drawer content with header and body
+  // Drawer content with consistent padding for both persistent and temporary
   const drawerContent = (
     <Box
       sx={{
@@ -127,7 +162,10 @@ export const Drawer: React.FC<DrawerProps> = ({
         flexDirection: "column",
       }}
     >
-      <DrawerHeader title={title} />
+      <DrawerContentHeader 
+        title={title} 
+        persistent={persistent}
+      />
       
       <Box sx={{ flex: 1, overflow: "auto" }}>
         {children}
@@ -141,14 +179,19 @@ export const Drawer: React.FC<DrawerProps> = ({
       <DemoTriggerButton isOpen={isOpen} onToggle={handleToggle} />
       
       <MuiDrawer
-        anchor={anchor}
+        anchor="right"
         open={isOpen}
         onClose={handleClose}
-        variant={variant}
+        variant={drawerVariant}
+        hideBackdrop={persistent}
         sx={{
+          ...(persistent && {
+            width: width,
+            flexShrink: 0,
+          }),
           zIndex: 1300,
           "& .MuiDrawer-paper": {
-            ...getDrawerPaperStyles(anchor),
+            ...getDrawerPaperStyles(width, persistent),
             zIndex: 1300,
           },
         }}
