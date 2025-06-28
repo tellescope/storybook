@@ -6,7 +6,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import { Stack } from '@mui/material';
 
 const meta = {
-    title: 'ATOMS/Checkbox',
+    title: 'ATOMS/FormInputs/Checkbox',
     component: CheckBox,
     parameters: {
         controls: {

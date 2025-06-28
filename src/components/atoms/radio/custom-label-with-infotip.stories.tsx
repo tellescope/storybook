@@ -4,7 +4,7 @@ import { FormControl, FormControlLabel, Stack, Typography } from '@mui/material'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const meta = {
-    title: 'ATOMS/Radio',
+    title: 'ATOMS/FormInputs/Radio',
     component: Radio,
     parameters: {
         controls: {

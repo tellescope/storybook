@@ -211,7 +211,7 @@ export const theme = createTheme({
                 },
                 /* Default Appearance & Size Table */
                 {
-                    props: { size: "table", color: "default" },
+                    props: { size: "table"},
                     style: {
                         borderRadius: "4px !important",
                         width: "24px",
@@ -275,16 +275,17 @@ export const theme = createTheme({
                 {
                     props: { size: 'large' },
                     style: {
-                        padding: "9px",
+                        padding: "11.33px",
                         '& .MuiSvgIcon-root': {
-                            width: '24px',
-                            height: '24px',
+                            width: '23.33px',
+                            height: '23.33px',
                         },
                     },
                 },
                 {
                     props: { size: 'medium' },
                     style: {
+                        padding: "11px",
                         '& .MuiSvgIcon-root': {
                             width: '20px',
                             height: '20px',
@@ -294,9 +295,10 @@ export const theme = createTheme({
                 {
                     props: { size: 'small' },
                     style: {
+                        padding: "10.67px",
                         '& .MuiSvgIcon-root': {
-                            width: '16px',
-                            height: '16px',
+                            width: '16.67px',
+                            height: '16.67px',
                         },
                     },
                 },

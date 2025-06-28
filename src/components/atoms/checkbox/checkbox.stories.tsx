@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { CheckBox } from './checkbox';
 
 const meta = {
-    title: 'ATOMS/Checkbox',
+    title: 'ATOMS/FormInputs/Checkbox',
     component: CheckBox,
     parameters: {
         controls: {

@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { Input } from './input';
 
 const meta = {
-    title: 'ATOMS/Input',
+    title: 'ATOMS/FormInputs/Input',
     component: Input,
     parameters: {
         controls: {
@@ -19,7 +19,6 @@ const meta = {
             control: { type: 'select' },
             options: ['medium', 'small'],
         },
-
     },
     args: { onClick: fn() },
 } satisfies Meta<typeof Input>;

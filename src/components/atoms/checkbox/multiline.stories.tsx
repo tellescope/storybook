@@ -4,7 +4,7 @@ import { CheckBox } from './checkbox';
 import { FormControlLabel, Typography } from '@mui/material';
 
 const meta = {
-    title: 'ATOMS/Checkbox',
+    title: 'ATOMS/FormInputs/Checkbox',
     component: CheckBox,
     parameters: {
         controls: {

@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { Input } from './input';
 
 const meta = {
-    title: 'ATOMS/Input',
+    title: 'ATOMS/FormInputs/Input',
     component: Input,
     parameters: {
         controls: {

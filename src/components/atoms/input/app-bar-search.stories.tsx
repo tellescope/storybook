@@ -3,7 +3,7 @@ import { AppbarSearch as Comp } from './app-bar-search';
 import { Stack, Typography } from '@mui/material';
 
 const meta = {
-    title: 'ATOMS/Input',
+    title: 'ATOMS/FormInputs/Input',
     component: Comp,
 } satisfies Meta<typeof Comp>;
 

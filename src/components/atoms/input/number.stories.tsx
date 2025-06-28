@@ -3,7 +3,7 @@ import { Input } from './input';
 import { useState, type ChangeEvent } from 'react';
 
 const meta = {
-    title: 'ATOMS/Input',
+    title: 'ATOMS/FormInputs/Input',
     component: Input,
     argTypes: {
         appearance: {

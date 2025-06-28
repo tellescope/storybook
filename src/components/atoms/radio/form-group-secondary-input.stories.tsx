@@ -4,7 +4,7 @@ import { FormControl, FormControlLabel, FormHelperText, FormLabel, Stack, Typogr
 import Select from '../select/select';
 
 const meta = {
-    title: 'ATOMS/Radio',
+    title: 'ATOMS/FormInputs/Radio',
     component: Radio,
     parameters: {
         controls: {
@@ -43,9 +43,17 @@ export const FormGroupSecondaryInput: Story = {
                             />}
                             label="Label"
                         />
-                        <FormHelperText>Helper Text</FormHelperText>
+                        <FormHelperText sx={{ ml: 0 }}>Helper Text</FormHelperText>
                     </FormControl>
-                    <Select appearance="outlined" />
+                    <Select
+                        label="Label"
+                        options={['Menu Item 1', 'Menu Item 2', 'Menu Item 3']}
+                        variant="standard"
+                        multiple={false}
+                        value={''}
+                        onChange={() => { }}
+                        size="medium"
+                    />
                 </Stack>
             </Stack>
         );

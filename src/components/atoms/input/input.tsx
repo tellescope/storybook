@@ -1,18 +1,21 @@
 import {
     FormControl,
     FormHelperText,
+    InputAdornment,
     TextField as MuiTextField,
 } from '@mui/material';
 import InputDistinct from '@mui/material/OutlinedInput';
 import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
 import type { OutlinedInputProps as MuiInputDistinctProps } from '@mui/material/OutlinedInput';
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type ReactNode } from 'react';
 
 type BaseProps = {
     size?: 'medium' | 'small';
     onClick?: () => void;
     disabled?: boolean;
     defaultValue?: string;
+    startIcon?: ReactNode;
+    endIcon?: ReactNode;
 };
 
 type DistinctProps = BaseProps & {
@@ -22,7 +25,8 @@ type DistinctProps = BaseProps & {
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     error?: boolean;
     helperText?: string;
-} & MuiInputDistinctProps;
+
+} & Omit<MuiInputDistinctProps, 'startAdornment' | 'endAdornment'>;
 
 type RegularTextFieldProps = BaseProps & {
     appearance?: 'filled' | 'outlined' | 'standard';
@@ -52,11 +56,13 @@ export const Input = (props: InputProps) => {
             size = 'medium',
             error,
             helperText,
-            endAdornment,
-            startAdornment,
+            startIcon,
+            endIcon,
             ...rest
         } = props;
 
+        const hasStartAdornment = !!startIcon;
+        const hasEndAdornment = !!endIcon;
         return (
             <FormControl variant="outlined" size={size} error={error}>
                 <InputDistinct
@@ -65,8 +71,19 @@ export const Input = (props: InputProps) => {
                     onChange={handleChange}
                     placeholder={label}
                     notched={false}
-                    endAdornment={endAdornment}
-                    startAdornment={startAdornment}
+                    startAdornment={
+                        startIcon ?
+                            <InputAdornment position="start">
+                                {startIcon}
+                            </InputAdornment> : null
+                    }
+                    endAdornment={
+                        endIcon ?
+                            <InputAdornment position="end">
+                                {endIcon}
+                            </InputAdornment> : null
+                    }
+
                     sx={(theme) => {
                         const isSmall = size === 'small';
                         const isMedium = size === 'medium';
@@ -74,7 +91,8 @@ export const Input = (props: InputProps) => {
                         return {
                             '& .MuiOutlinedInput-notchedOutline': {
                                 borderColor: isSmall ? 'rgba(28, 122, 224, 1)' : '',
-                                borderWidth: '1px !important',
+                                // borderWidth: '1px !important',
+                                borderWidth: isSmall ? '2px' : "1px",
                                 backgroundColor: isSmall ? 'rgba(87, 73, 63, 0.04)' : '',
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
@@ -88,6 +106,7 @@ export const Input = (props: InputProps) => {
                                 borderColor: theme.palette.error.main,
                                 boxShadow: '0px 0px 0 4px rgba(255, 218, 214, 1)',
                                 backgroundColor: isSmall ? 'transparent' : '',
+                                borderWidth: "1px",
                             },
                             '& .MuiOutlinedInput-input::placeholder': {
                                 color: isSmall ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.38)',
@@ -101,6 +120,9 @@ export const Input = (props: InputProps) => {
                             '&.Mui-disabled .MuiInputBase-input': {
                                 '-webkit-text-fill-color': 'rgba(0, 0, 0, 0.6)',
                             },
+                            '& .MuiInputBase-input': {
+                                padding: isSmall ? hasEndAdornment ? "4.5px 0 4.5px 14px" : hasStartAdornment ? "4.5px 14px 4.5px 0" : "4.5px 14px" : undefined // Adjust padding for small size when there are adornments and no adornments
+                            },
                         };
                     }}
                 />
@@ -111,15 +133,16 @@ export const Input = (props: InputProps) => {
 
     const {
         appearance = 'standard',
-        InputProps,
         size,
         error,
         helperText,
+        startIcon,
+        endIcon,
         label = 'Label',
         ...rest
     } = props;
-    const hasAdornment = !!InputProps?.startAdornment;
-    const { x, y } = getPos(appearance);
+    const hasStartAdornment = !!startIcon;
+    const pos = getPos(appearance);
 
     return (
         <FormControl variant={appearance} size={size} error={error}>
@@ -132,24 +155,39 @@ export const Input = (props: InputProps) => {
                 label={label}
                 helperText={helperText}
                 error={error}
-                sx={{
-                    ...(hasAdornment && {
-                        '& .MuiInputLabel-root[data-shrink="false"]': {
-                            transform: `translate(${x}px, ${y}px) scale(1)`,
-                        },
-                    }),
-                    '& .Mui-error.MuiInputLabel-root[data-shrink="false"]': {
-                        color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.6) !important',
-                    },
-                    '& .Mui-focused.MuiInputLabel-outlined.MuiInputLabel-root[data-shrink="false"]': {
-                        color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.87)',
-                    },
-                    '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
-                        borderColor: appearance === 'outlined' ? 'rgba(0, 0, 0, 0.23) !important' : undefined,
-                    },
-                }}
                 InputProps={{
-                    ...InputProps,
+                    startAdornment: startIcon ? (
+                        <InputAdornment position="start">
+                            {startIcon}
+                        </InputAdornment>
+                    ) : null,
+                    endAdornment: endIcon ? (
+                        <InputAdornment position="end">
+                            {endIcon}
+                        </InputAdornment>
+                    ) : null,
+                }}
+                sx={() => {
+                    const isMedium = size === 'medium';
+                    return ({
+                        ...(hasStartAdornment && {
+                            '& .MuiInputLabel-root[data-shrink="false"]': {
+                                transform: isMedium ? `translate(${pos.medium.x}px, ${pos.medium.y}px) scale(1) !important` : `translate(${pos.small.x}px, ${pos.small.y}px) scale(1) !important`,  // adjusted for filled appearance when there is a start adornment
+                            },
+                        }),
+                        '& .Mui-error.MuiInputLabel-root[data-shrink="false"]': {
+                            color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.6) !important',
+                        },
+                        '& .Mui-focused.MuiInputLabel-outlined.MuiInputLabel-root[data-shrink="false"]': {
+                            color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.87)',
+                        },
+                        '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
+                            borderColor: appearance === 'outlined' ? 'rgba(0, 0, 0, 0.23) !important' : undefined,
+                        },
+                        '& .Mui-focused.MuiInputLabel-root.MuiInputLabel-filled[data-shrink="false"]': {
+                            transform: `translate(12px, ${isMedium ? "24px" : "20px"}) scale(1)`, // adjusted for filled appearance
+                        },
+                    })
                 }}
                 {...rest}
                 type="text"
@@ -159,21 +197,35 @@ export const Input = (props: InputProps) => {
 };
 
 const getPos = (appearance: 'filled' | 'outlined' | 'standard') => {
-    let x = 0,
-        y = 0;
+    const pos = {
+        medium: {
+            x: 0,
+            y: 0,
+        },
+        small: {
+            x: 0,
+            y: 0,
+        }
+    }
     switch (appearance) {
         case 'standard':
-            x = 32;
-            y = 20;
+            pos.medium.x = 32;
+            pos.medium.y = 20;
+            pos.small.x = 32;
+            pos.small.y = 20;
             break;
         case 'filled':
-            x = 45;
-            y = 24;
+            pos.medium.x = 45;
+            pos.medium.y = 24;
+            pos.small.x = 45;
+            pos.small.y = 20;
             break;
         case 'outlined':
-            x = 45;
-            y = 16;
+            pos.medium.x = 45;
+            pos.medium.y = 16;
+            pos.small.x = 45;
+            pos.small.y = 9;
             break;
     }
-    return { x, y };
+    return pos;
 };

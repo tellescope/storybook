@@ -7,7 +7,7 @@ type StoryArgs = FileUploadProps & { status: UploadStatus };
 
 // Meta typed with StoryArgs, so argTypes can include 'status'
 const meta = {
-    title: 'Atoms/Input',
+    title: 'ATOMS/FormInputs/Input',
     component: FileUpload,
     parameters: {
         controls: {

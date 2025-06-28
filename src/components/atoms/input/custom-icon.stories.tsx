@@ -1,91 +1,53 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Input } from './input';
-import InputAdornment from '@mui/material/InputAdornment';
 import StarIcon from '@mui/icons-material/Star';
-import { Stack, Typography } from '@mui/material';
+import type { ComponentProps } from 'react';
 
-const meta = {
-    title: 'ATOMS/Input',
+type StoryProps = ComponentProps<typeof Input> & {
+    CustomIcon?: 'start' | 'end';
+};
+
+const meta: Meta<StoryProps> = {
+    title: 'ATOMS/FormInputs/Input',
     component: Input,
-} satisfies Meta<typeof Input>;
+    argTypes: {
+        appearance: {
+            options: ['standard', 'filled', 'outlined', "distinct"],
+            control: { type: 'select' },
+        },
+        size: {
+            control: { type: 'select' },
+            options: ['medium', 'small'],
+        },
+        CustomIcon: {
+            options: ['start', 'end'],
+            control: { type: 'select' },
+        },
+    },
+    args: {
+        CustomIcon: 'start',
+    }
+}
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<StoryProps>;
 
 export const CustomIcon: Story = {
-    render: () => {
-        const appearance: ["standard", "filled", "outlined"] = ["standard", "filled", "outlined"];
+    args: {
+        appearance: "standard",
+        size: "medium",
+    },
+    render: ({ CustomIcon, ...args }: StoryProps) => {
         return (
-            <Stack direction={"row"} spacing={4} flexWrap="wrap">
-                <Stack spacing={2}>
-                    <Typography variant="h6">Custom icon start</Typography>
-                    {
-                        appearance.map((appearance) => (
-                            <Input
-                                key={appearance}
-                                appearance={appearance}
-                                size="medium"
-                                disabled={false}
-                                label="Label"
-                                error={false}
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <StarIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        ))
-                    }
-                    <Input
-                        appearance={"distinct"}
-                        size="medium"
-                        disabled={false}
-                        label="Label"
-                        error={false}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <StarIcon />
-                            </InputAdornment>
-                        }
-                    />
-                </Stack>
-                <Stack spacing={2}>
-                    <Typography variant="h6">Custom icon end</Typography>
-                    {
-                        appearance.map((appearance) => (
-                            <Input
-                                key={appearance}
-                                appearance={appearance}
-                                size="medium"
-                                disabled={false}
-                                label="Label"
-                                error={false}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <StarIcon />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        ))
-                    }
-                    <Input
-                        appearance={"distinct"}
-                        size="medium"
-                        disabled={false}
-                        label="Label"
-                        error={false}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <StarIcon />
-                            </InputAdornment>
-                        }
-                    />
-                </Stack>
-            </Stack>
+            <Input
+                appearance={args.appearance}
+                size={args.size}
+                disabled={false}
+                label="Label"
+                error={false}
+                startIcon={CustomIcon === "start" ? <StarIcon /> : undefined}
+                endIcon={CustomIcon === "end" ? <StarIcon /> : undefined}
+            />
         )
     },
 };
