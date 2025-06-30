@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FormGroup, TextField } from "./FormElements";
-import { MenuItem, Stack } from "@mui/material";
+import { Checkbox, MenuItem, Radio, Select, Stack, Switch } from "@mui/material";
+
+type InputType = "text" | "multiline" | "checkbox" | "radio" | "select" | "switch";
 
 const meta: Meta<typeof FormGroup> = {
   title: "Atoms/FormElements",
@@ -15,6 +17,11 @@ const meta: Meta<typeof FormGroup> = {
     },
   },
   argTypes: {
+    // type: {
+    //   control: { type: "select" },
+    //   options: ["text", "multiline", "checkbox", "radio", "select", "switch"],
+    //   description: "The type of input to display. Default is text",
+    // },
     label: {
       control: "text",
       description: "The label text for the form field",
@@ -38,6 +45,15 @@ const meta: Meta<typeof FormGroup> = {
 export default meta;
 type Story = StoryObj<typeof FormGroup>;
 
+const inputMap: Record<InputType, React.ReactNode> = {
+    text: <TextField variant="filled" placeholder="Enter your email..." />,
+    multiline: <TextField variant="filled" multiline rows={4} placeholder="Enter your message..." />,
+    checkbox: <Checkbox sx={{ justifyContent: "flex-start" }} />,
+    radio: <Radio />,
+    select: <Select />,
+    switch: <Switch />,
+}
+
 export const Default: Story = {
   args: {
     label: "Email Address",
@@ -45,10 +61,11 @@ export const Default: Story = {
     labelSize: "default",
     error: false,
     disabled: false,
+    type: "text",
   },
   render: (args) => (
     <FormGroup {...args}>
-      <TextField variant="filled" placeholder="Enter your email..." />
+      {inputMap[(args.type || "text") as InputType]}
     </FormGroup>
   ),
 };
