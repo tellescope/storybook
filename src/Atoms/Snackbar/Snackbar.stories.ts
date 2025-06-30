@@ -41,7 +41,7 @@ const handleClose = () => {
 
 export const Default: Story = {
   args: {
-    open: true,
+    open: false,
     message: 'This is a default snackbar message',
     severity: 'info',
   },
@@ -49,7 +49,7 @@ export const Default: Story = {
 
 export const WithActions: Story = {
   args: {
-    open: true,
+    open: false,
     message: 'Message sent successfully',
     severity: "info",
     action: React.createElement(
@@ -58,6 +58,7 @@ export const WithActions: Story = {
       React.createElement(Button, { 
         size: 'small',
         variant: 'text',
+        color: 'inherit',
         onClick: handleClose 
       }, 'UNDO'),
       React.createElement(IconButton, {
@@ -72,7 +73,7 @@ export const WithActions: Story = {
 
 export const Alert: Story = {
   args: {
-    open: true,
+    open: false,
     message: 'Warning! Please check your input',
     severity: 'warning',
   },

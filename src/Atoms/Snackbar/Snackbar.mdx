@@ -1,51 +1,51 @@
 # Snackbar
 
-The Snackbar component provides a way to display brief messages to users in a non-intrusive manner.
-
-## Features
-
-- **Multiple severity levels**: Success, Info, Warning, and Error
-- **Customizable positioning**: Top/Bottom and Left/Center/Right
-- **Auto-hide functionality**: Configurable duration
-- **Optional close button**: Can be shown or hidden
-- **Accessible**: Built with Material-UI components
+The Snackbar component provides a way to display brief messages to users in a non-intrusive manner with enhanced visual styling.
 
 ## Basic Usage
 
 ```tsx
-import { Snackbar } from './Snackbar';
-
 <Snackbar
   open={true}
   message="Hello, World!"
   severity="success"
-  duration={6000}
 />
 ```
 
-## Props
+## Action Examples
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | `false` | Whether the snackbar is open |
-| `message` | `string` | `"This is a snackbar message"` | The message to display |
-| `severity` | `"success" \| "info" \| "warning" \| "error"` | `"info"` | The severity level |
-| `duration` | `number` | `6000` | Auto-hide duration in milliseconds |
-| `position` | `{vertical: "top" \| "bottom", horizontal: "left" \| "center" \| "right"}` | `{vertical: "bottom", horizontal: "left"}` | Position on screen |
-| `showCloseButton` | `boolean` | `true` | Whether to show close button |
-| `onClose` | `() => void` | `undefined` | Callback when snackbar closes |
+### Basic Action Button
 
-## Examples
+```tsx
+<Snackbar
+  open={true}
+  message="Message sent"
+  action={<Button color="inherit" size="small">UNDO</Button>}
+/>
+```
 
-### Different Severities
+### Combined Actions with Close Button
+
+```tsx
+<Snackbar
+  open={true}
+  message="File uploaded"
+  action={
+    <React.Fragment>
+      <Button color="inherit" size="small" variant="text" onClick={handleUndo}>
+        UNDO
+      </Button>
+      <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  }
+/>
+```
+
+### Severity Colors
 Use different severity levels to communicate the nature of the message:
-- **Success**: For successful operations
-- **Info**: For general information
-- **Warning**: For cautionary messages
-- **Error**: For error states
-
-### Positioning
-The snackbar can be positioned at different locations on the screen using the `position` prop.
-
-### Custom Duration
-Control how long the snackbar remains visible with the `duration` prop. Set to `null` to prevent auto-hiding. 
+- **Success**: Green - for successful operations
+- **Info**: Blue - for general information
+- **Warning**: Amber - for cautionary messages
+- **Error**: Red - for error states 

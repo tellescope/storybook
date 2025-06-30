@@ -55,13 +55,22 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         open={isOpen}
         autoHideDuration={2000}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        sx={{
+          "& .MuiPaper-root": {
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.25)",
+          },
+        }}
       >
         <Alert
           onClose={() => setIsOpen(false)}
           severity={severity}
           variant="filled"
           color={severity}
-          sx={{ width: "100%" }}
+          sx={{ 
+            width: "100%",
+            boxShadow: "0 12px 48px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.22)",
+            borderRadius: "4px",
+          }}
           action={action}
         >
           {message}
