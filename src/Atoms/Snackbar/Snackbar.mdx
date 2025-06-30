@@ -1,0 +1,51 @@
+# Snackbar
+
+The Snackbar component provides a way to display brief messages to users in a non-intrusive manner.
+
+## Features
+
+- **Multiple severity levels**: Success, Info, Warning, and Error
+- **Customizable positioning**: Top/Bottom and Left/Center/Right
+- **Auto-hide functionality**: Configurable duration
+- **Optional close button**: Can be shown or hidden
+- **Accessible**: Built with Material-UI components
+
+## Basic Usage
+
+```tsx
+import { Snackbar } from './Snackbar';
+
+<Snackbar
+  open={true}
+  message="Hello, World!"
+  severity="success"
+  duration={6000}
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | `false` | Whether the snackbar is open |
+| `message` | `string` | `"This is a snackbar message"` | The message to display |
+| `severity` | `"success" \| "info" \| "warning" \| "error"` | `"info"` | The severity level |
+| `duration` | `number` | `6000` | Auto-hide duration in milliseconds |
+| `position` | `{vertical: "top" \| "bottom", horizontal: "left" \| "center" \| "right"}` | `{vertical: "bottom", horizontal: "left"}` | Position on screen |
+| `showCloseButton` | `boolean` | `true` | Whether to show close button |
+| `onClose` | `() => void` | `undefined` | Callback when snackbar closes |
+
+## Examples
+
+### Different Severities
+Use different severity levels to communicate the nature of the message:
+- **Success**: For successful operations
+- **Info**: For general information
+- **Warning**: For cautionary messages
+- **Error**: For error states
+
+### Positioning
+The snackbar can be positioned at different locations on the screen using the `position` prop.
+
+### Custom Duration
+Control how long the snackbar remains visible with the `duration` prop. Set to `null` to prevent auto-hiding. 
