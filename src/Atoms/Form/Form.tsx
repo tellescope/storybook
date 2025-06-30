@@ -1,12 +1,12 @@
 import React from 'react';
-import { Box, Typography, FormGroup as MuiFormGroup } from '@mui/material';
+import { FormGroup as MuiFormGroup } from '@mui/material';
 import type { FormGroupProps as MuiFormGroupProps } from '@mui/material';
 
 interface FormGroupProps extends MuiFormGroupProps {
   label?: string;
   labelSize?: 'default' | 'large';
   helperText?: string;
-  children: React.ReactNode;
+
 }
 
 export const FormGroup: React.FC<MuiFormGroupProps & FormGroupProps> = ({

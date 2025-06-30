@@ -21,7 +21,7 @@ interface Props {
   label: string;
   labelSize: LabelSize;
   helperText?: string;
-  children: React.ReactNode; // ⬅️ Tambahkan ini!
+  error?: boolean;
 }
 
 const meta: Meta<Props> = {
@@ -46,7 +46,7 @@ const meta: Meta<Props> = {
 
 export default meta;
 
-const createInputMap = (labelSize: LabelSize, label: string, helperText?: string): Record<InputType, React.ReactNode> => ({
+const createInputMap = (labelSize: LabelSize, label: string, helperText?: string, error?: boolean): Record<InputType, React.ReactNode> => ({
   text: (
     <Input  
       type="text" 
@@ -54,8 +54,8 @@ const createInputMap = (labelSize: LabelSize, label: string, helperText?: string
       labelSize={labelSize}
       placeholder="Enter text..." 
       fullWidth 
-      error
       helperText={helperText || "Helper text  "} 
+      error={error}
     />
   ),
   multiline: (
@@ -68,6 +68,7 @@ const createInputMap = (labelSize: LabelSize, label: string, helperText?: string
       placeholder="Enter multiline text..."
       fullWidth
       helperText={helperText || "Please provide detailed information"}
+      error={error}
     />
   ),
   checkbox: <FormControlLabel control={<Checkbox />} label="Checkbox" />,
@@ -92,7 +93,25 @@ export const Default: StoryObj<Props> = {
     helperText: "Helper text",
   },
   render: (args) => {
-    const inputMap = createInputMap(args.labelSize, args.label, args.helperText);
+    const inputMap = createInputMap(args.labelSize, args.label, args.helperText, args.error);
+    return (
+      <div style={{ width: "400px" }}>
+        {inputMap[args.inputType]}
+      </div>
+    );
+  },
+};
+
+export const Error: StoryObj<Props> = {
+  args: {
+    inputType: "text",
+    label: "Email Address",
+    labelSize: "large",
+    error: true,
+    helperText: "Helper text",
+  },
+  render: (args) => {
+    const inputMap = createInputMap(args.labelSize, args.label, args.helperText, args.error);
     return (
       <div style={{ width: "400px" }}>
         {inputMap[args.inputType]}
