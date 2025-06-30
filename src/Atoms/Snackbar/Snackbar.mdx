@@ -1,0 +1,51 @@
+# Snackbar
+
+The Snackbar component provides a way to display brief messages to users in a non-intrusive manner with enhanced visual styling.
+
+## Basic Usage
+
+```tsx
+<Snackbar
+  open={true}
+  message="Hello, World!"
+  severity="success"
+/>
+```
+
+## Action Examples
+
+### Basic Action Button
+
+```tsx
+<Snackbar
+  open={true}
+  message="Message sent"
+  action={<Button color="inherit" size="small">UNDO</Button>}
+/>
+```
+
+### Combined Actions with Close Button
+
+```tsx
+<Snackbar
+  open={true}
+  message="File uploaded"
+  action={
+    <React.Fragment>
+      <Button color="inherit" size="small" variant="text" onClick={handleUndo}>
+        UNDO
+      </Button>
+      <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  }
+/>
+```
+
+### Severity Colors
+Use different severity levels to communicate the nature of the message:
+- **Success**: Green - for successful operations
+- **Info**: Blue - for general information
+- **Warning**: Amber - for cautionary messages
+- **Error**: Red - for error states 
