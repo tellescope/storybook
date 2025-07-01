@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import {
-  Snackbar as MuiSnackbar,
-  Alert,
-  Button,
-  Box,
-} from "@mui/material";
+import { Snackbar as MuiSnackbar, Alert, Button, Box } from "@mui/material";
 
 export interface SnackbarProps {
   open: boolean;
   message?: string;
-  severity?: "success" | "info" | "warning" | "error";
+  asAlert?: boolean;
   action?: React.ReactNode;
 }
 
@@ -27,10 +22,7 @@ const DemoTriggerButton: React.FC<{
       flexWrap: "wrap",
     }}
   >
-    <Button
-      variant="contained"
-      onClick={() => onShowSnackbar("success")}
-    >
+    <Button variant="contained" onClick={() => onShowSnackbar("success")}>
       Show
     </Button>
   </Box>
@@ -39,8 +31,8 @@ const DemoTriggerButton: React.FC<{
 export const Snackbar: React.FC<SnackbarProps> = ({
   open,
   message = "This is a snackbar message",
-  severity = "info",
   action,
+  asAlert = false,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
 
@@ -63,13 +55,13 @@ export const Snackbar: React.FC<SnackbarProps> = ({
       >
         <Alert
           onClose={() => setIsOpen(false)}
-          severity={severity}
           variant="filled"
-          color={severity}
-          sx={{ 
+          sx={{
             width: "100%",
-            boxShadow: "0 12px 48px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.22)",
+            boxShadow:
+              "0 12px 48px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.22)",
             borderRadius: "4px",
+            backgroundColor: asAlert ? "#BA1A1A" : "#151B2C",
           }}
           action={action}
         >
@@ -80,4 +72,4 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   );
 };
 
-export default Snackbar; 
+export default Snackbar;
