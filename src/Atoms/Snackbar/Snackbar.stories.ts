@@ -24,11 +24,6 @@ const meta: Meta<typeof Snackbar> = {
       control: 'text',
       description: 'The message to display in the snackbar',
     },
-    severity: {
-      control: 'select',
-      options: ['success', 'info', 'warning', 'error'],
-      description: 'The severity level of the message',
-    },
   },
 };
 
@@ -43,7 +38,7 @@ export const Default: Story = {
   args: {
     open: false,
     message: 'This is a default snackbar message',
-    severity: 'info',
+    asAlert: false,
   },
 };
 
@@ -51,7 +46,6 @@ export const WithActions: Story = {
   args: {
     open: false,
     message: 'Message sent successfully',
-    severity: "info",
     action: React.createElement(
       React.Fragment,
       {},
@@ -75,6 +69,6 @@ export const Alert: Story = {
   args: {
     open: false,
     message: 'Warning! Please check your input',
-    severity: 'warning',
+    asAlert: true,
   },
 }; 
