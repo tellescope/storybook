@@ -1,36 +1,32 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { Input } from './input';
+import Textaraa from './textarea';
 
 const meta = {
-    title: 'ATOMS/FormInputs/Input',
-    component: Input,
+    title: 'ATOMS/FormInputs/Textarea',
+    component: Textaraa,
     parameters: {
         controls: {
-            exclude: ['onClick', "label"],
+            exclude: ['onClick', 'value', 'onChange', "label", "placeholder"],
         },
     },
     argTypes: {
         appearance: {
-            options: ['standard', 'filled', 'outlined', "distinct"],
+            options: ['standard', 'filled', 'outlined', "patientForm"],
             control: { type: 'select' },
         },
-        size: {
-            control: { type: 'select' },
-            options: ['medium', 'small'],
-        },
+
     },
     args: { onClick: fn() },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Textaraa>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Error: Story = {
+export const Placeholder: Story = {
     args: {
         appearance: 'standard',
-        size: "medium",
-        error: true,
         label: 'Label',
+        placeholder: 'Placeholder',
     },
 };

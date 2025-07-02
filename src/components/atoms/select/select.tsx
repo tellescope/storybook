@@ -5,24 +5,26 @@ import {
     MenuItem,
     Select as MuiSelect,
     Chip,
-    Checkbox,
-    ListItemText,
-    OutlinedInput,
-    Stack,
+    ListItemText, Stack,
+    type Theme
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
+import CheckIcon from '@mui/icons-material/Check';
+import { CheckBox } from '../checkbox/checkbox';
+import { FormHelperText } from '@mui/material';
+import type { SelectProps as MuiSelectProps } from '@mui/material/Select';
 
 
 type VariantType = 'standard' | 'filled' | 'outlined' | 'patientForm' | 'table';
 type OptionStyle = 'default' | 'checkmark' | 'checkbox';
 
-interface SelectProps {
+interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange' | 'value'> {
     label: string;
     value: string | string[];
     onChange: (event: SelectChangeEvent<string | string[]>) => void;
     options: string[];
     multiple?: boolean;
-    variant?: VariantType;
+    appearance?: VariantType;
     disabled?: boolean;
     error?: boolean;
     helperText?: string;
@@ -36,21 +38,43 @@ const Select: FC<SelectProps> = ({
     onChange,
     options,
     multiple = false,
-    variant = 'standard',
+    appearance = 'standard',
     disabled = false,
     error = false,
     helperText,
     optionStyle = 'default',
-    size
+    size,
+    ...rest
 }) => {
-    const isCustomVariant = variant === 'patientForm' || variant === 'table';
+    const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
 
     const renderValue = (selected: string | string[]) => {
         if (multiple && Array.isArray(selected)) {
             return (
-                <Stack style={{ flexDirection: "row", flexWrap: 'wrap', gap: 4 }}>
+                <Stack
+                    sx={{
+                        flexDirection: "row",
+                        gap: 1,
+                        overflowX: "hidden",
+                        maxWidth: "100%",
+                    }}
+                >
                     {selected.map((val: string) => (
-                        <Chip key={val} label={val} />
+                        <Chip
+                            disabled={disabled}
+                            key={val}
+                            label={val}
+                            size="small"
+                            onDelete={() => {
+                                const filtered = selected.filter((item) => item !== val);
+                                onChange({
+                                    target: {
+                                        value: filtered,
+                                        name: label
+                                    }
+                                } as SelectChangeEvent<string | string[]>);
+                            }}
+                        />
                     ))}
                 </Stack>
             );
@@ -59,83 +83,152 @@ const Select: FC<SelectProps> = ({
     };
 
     const renderMenuItem = (option: string) => {
-        if (!multiple) return <MenuItem value={option}>{option}</MenuItem>;
+        if (!multiple) return <MenuItem
+            value={option}
+            disableRipple
+            sx={{
+                "&.Mui-selected, &.Mui-selected:hover": {
+                    backgroundColor: '#DDE1F9',
+                }
+            }}
+        >{option}</MenuItem>;
 
         if (optionStyle === 'checkmark') {
             return (
-                <MenuItem key={option} value={option}>
-                    {value.includes(option) && '✓'} {option}
+                <MenuItem key={option} value={option} disableRipple sx={{
+                    justifyContent: 'space-between',
+                    "&.Mui-selected, &.Mui-selected:hover": {
+                        backgroundColor: '#DDE1F9',
+                    }
+                }}>
+                    {option}
+                    {value.includes(option) && <CheckIcon />}
                 </MenuItem>
             );
         }
 
         if (optionStyle === 'checkbox') {
             return (
-                <MenuItem key={option} value={option}>
-                    <Checkbox checked={(value as string[]).includes(option)} />
+                <MenuItem key={option} value={option} disableRipple
+                    sx={{
+                        "&.Mui-selected, &.Mui-selected:hover": {
+                            backgroundColor: '#DDE1F9',
+                        }
+                    }}
+                >
+                    <CheckBox checked={(value as string[]).includes(option)} />
                     <ListItemText primary={option} />
                 </MenuItem>
             );
         }
 
-        return <MenuItem key={option} value={option}>{option}</MenuItem>;
+        return <MenuItem
+            key={option}
+            value={option}
+            disableRipple
+            sx={{
+                "&.Mui-selected, &.Mui-selected:hover": {
+                    backgroundColor: '#DDE1F9',
+                }
+            }}
+        >
+            {option}
+        </MenuItem>;
     };
 
-    const getSx = () => {
-        if (variant === 'patientForm') {
+    const getSx = (theme: Theme) => {
+        if (appearance === 'patientForm') {
             return {
-                minWidth: 240,
-                '.MuiOutlinedInput-root': {
-                    // padding: '6px',
+                '& .MuiInputLabel-outlined, & .MuiOutlinedInput-notchedOutline > legend': {
+                    display: 'none',
+                },
+                "& .MuiOutlinedInput-notchedOutline": {
+                    top: 0,
+                    // borderColor: '#0000003B',
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'rgba(28, 122, 224, 1) !important'
+                },
+                '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderWidth: "2px",
+                    borderColor: 'rgba(28, 122, 224, 1) !important',
+                    boxShadow: '0px 0px 0 4px rgb(238, 237, 244) !important',
+                },
+                // "&:focus .MuiOutlinedInput-notchedOutline": {
+                //     borderColor: '#0000003B !important',
+                // },
+                "& .Mui-disabled .MuiOutlinedInput-notchedOutline": {
+                    borderColor: '#0000003B !important',
+                },
+                '& .Mui-error .MuiOutlinedInput-notchedOutline': {
+                    borderColor: `${theme.palette.error.main} !important`,
+                    boxShadow: '0px 0px 0 4px rgba(255, 218, 214, 1) !important',
+                    borderWidth: "1px !important",
                 },
             };
         }
-        if (variant === 'table') {
+        if (appearance === 'table') {
             return {
-                minWidth: 200,
+                minWidth: 220,
                 '.MuiOutlinedInput-root': {
                     height: "auto",
                     padding: '0',
-                },
-                '.MuiChip-root': {
-                    height: 20,
-                    fontSize: 12,
                 },
                 '& .MuiInputLabel-root': {
                     display: 'none',
                 },
                 '& .MuiOutlinedInput-notchedOutline': {
                     display: 'none',
-                }
+                },
+                ".MuiInputBase-root.MuiInput-root.MuiInput-underline::before, .MuiInputBase-root.MuiInput-root.MuiInput-underline::after": {
+                    borderColor: "transparent"
+                },
+                ".MuiInputBase-root.MuiInput-root.MuiInput-underline.Mui-error::before, .MuiInputBase-root.MuiInput-root.MuiInput-underline.Mui-error::after": {
+                    borderColor: `${theme.palette.error.main}`,
+                    borderWidth: "2px !important"
+                },
+                '& .MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.Mui-error.MuiInputBase-input': {
+                    padding: "0 0 2px 0 !important"
+                },
             };
         }
-        // return {};
     };
 
     return (
         <FormControl
             fullWidth
-            variant={variant === "patientForm" ? 'outlined' : variant === "table" ? "standard" : variant}
-            sx={{ m: 1, ...getSx() }}
+            variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
+            sx={(theme) => ({ m: 1, ...getSx(theme) })}
             error={error}
             disabled={disabled}
             size={size}
         >
-            <InputLabel variant={isCustomVariant ? 'outlined' : variant}>{label}</InputLabel>
+            <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel>
             <MuiSelect
                 label={label}
                 multiple={multiple}
                 value={value}
                 onChange={onChange}
-                input={multiple ? <OutlinedInput label={label} /> : undefined}
+                // input={multiple ? <Input label={label} /> : undefined}
                 renderValue={renderValue}
+                error={error}
+                disabled={disabled}
+                MenuProps={isCustomVariant ? {
+                    PaperProps: {
+                        sx: {
+                            mt: 1,
+                            overflowY: 'auto',
+                        },
+                    },
+                } : undefined}
+                {...rest}
             >
                 {options.map(renderMenuItem)}
             </MuiSelect>
             {helperText && (
-                <p style={{ color: 'red', fontSize: '0.75rem', marginLeft: '14px' }}>
+                <FormHelperText error={error}>
                     {helperText}
-                </p>
+                </FormHelperText>
             )}
         </FormControl>
     );

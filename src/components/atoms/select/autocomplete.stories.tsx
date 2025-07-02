@@ -1,18 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Select from './select';
 import { useState } from 'react';
+import { Autocomplete } from './autocomplete';
 
 const meta = {
     title: 'ATOMS/FormInputs/Select',
-    component: Select,
+    component: Autocomplete,
+    parameters: {
+        controls: {
+            exclude: ["optionStyle", "disabled", "error", "helperText", "value", "onChange", "size", "multiple", "options", "label", "textFieldProps"],
+        }
+    },
     argTypes: {
-        variant: {
+        appearance: {
             control: 'select',
-            options: ['standard', 'filled', 'outlined', 'patientForm', 'table'],
+            options: ['standard', 'filled', 'outlined', 'table'],
         },
         multiple: { control: 'boolean' },
     },
-} satisfies Meta<typeof Select>;
+    decorators: [
+        (Story) => (
+            <div style={{ width: 250 }}>
+                <Story />
+            </div>
+        )
+    ]
+} satisfies Meta<typeof Autocomplete>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -20,21 +32,23 @@ type Story = StoryObj<typeof meta>;
 export const AutoComplete: Story = {
     args: {
         label: 'Label',
-        options: ['Menu Item 1', 'Menu Item 2', 'Menu Item 3'],
-        variant: 'standard',
-        multiple: false,
+        options: ['Chip 1', 'Chip 2', 'Chip 3'],
+        appearance: 'standard',
+        multiple: true,
         value: '',
         onChange: () => { },
         size: 'medium',
     },
     render: (args) => {
-        const [value, setValue] = useState<string | string[]>(args.multiple ? [] : '');
-
+        const [value, setValue] = useState<string | string[] | null>(
+            args.multiple ? [] : null
+        );
         return (
-            <Select
+            <Autocomplete
                 {...args}
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                disableCloseOnSelect
+                onChange={setValue}
             />
         );
     }

@@ -5,6 +5,11 @@ import { useState, type ChangeEvent } from 'react';
 const meta = {
     title: 'ATOMS/FormInputs/Input',
     component: Input,
+    parameters: {
+        controls: {
+            exclude: ['label'],
+        },
+    },
     argTypes: {
         appearance: {
             options: ['standard', 'filled', 'outlined', "distinct"],
@@ -25,6 +30,7 @@ export const Number: Story = {
     args: {
         appearance: 'standard',
         size: "medium",
+        label: 'Label',
     },
     render: (args) => {
         const [value, setValue] = useState('');

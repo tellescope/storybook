@@ -5,13 +5,25 @@ import { useState } from 'react';
 const meta = {
     title: 'ATOMS/FormInputs/Select',
     component: Select,
+    parameters: {
+        controls: {
+            // exclude: ["optionStyle", "disabled", "helperText", "value", "onChange", "size", "options", "label"],
+        }
+    },
     argTypes: {
-        variant: {
+        appearance: {
             control: 'select',
             options: ['standard', 'filled', 'outlined', 'patientForm', 'table'],
         },
         multiple: { control: 'boolean' },
     },
+    decorators: [
+        (Story) => (
+            <div style={{ width: 250 }}>
+                <Story />
+            </div>
+        )
+    ]
 } satisfies Meta<typeof Select>;
 
 export default meta;
@@ -21,7 +33,7 @@ export const Error: Story = {
     args: {
         label: 'Label',
         options: ['Menu Item 1', 'Menu Item 2', 'Menu Item 3'],
-        variant: 'standard',
+        appearance: 'standard',
         multiple: false,
         value: '',
         onChange: () => { },
@@ -35,6 +47,7 @@ export const Error: Story = {
                 {...args}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
+            // error={true}
             />
         );
     }

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Input } from './input';
+import Textaraa from './textarea';
 
 const meta = {
-    title: 'ATOMS/FormInputs/Input',
-    component: Input,
+    title: 'ATOMS/FormInputs/Textarea',
+    component: Textaraa,
     parameters: {
         controls: {
             exclude: ['label'],
@@ -11,24 +11,20 @@ const meta = {
     },
     argTypes: {
         appearance: {
-            options: ['standard', 'filled', 'outlined', "distinct"],
+            options: ['standard', 'filled', 'outlined', "patientForm"],
             control: { type: 'select' },
         },
-        size: {
-            control: { type: 'select' },
-            options: ['medium', 'small'],
-        },
+
     },
-} satisfies Meta<typeof Input>;
+} satisfies Meta<typeof Textaraa>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Disabled: Story = {
     args: {
-        appearance: 'standard',
-        size: "medium",
+        appearance: "standard",
+        label: "Label",
         disabled: true,
-        label: 'Label',
     },
 };

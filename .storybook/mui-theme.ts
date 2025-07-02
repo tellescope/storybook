@@ -357,6 +357,15 @@ export const theme = createTheme({
                     },
                 }
             ]
-        }
+        },
+        MuiAutocomplete: {
+            styleOverrides: {
+                option: {
+                    '&[aria-selected="true"], &[aria-selected="true"].Mui-focused': {
+                        backgroundColor: '#DDE1F9 !important',
+                    },
+                },
+            },
+        },
     },
 });

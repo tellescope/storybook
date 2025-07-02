@@ -1,12 +1,9 @@
 import {
     FormControl,
-    FormHelperText,
     InputAdornment,
     TextField as MuiTextField,
 } from '@mui/material';
-import InputDistinct from '@mui/material/OutlinedInput';
 import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
-import type { OutlinedInputProps as MuiInputDistinctProps } from '@mui/material/OutlinedInput';
 import { useState, type ChangeEvent, type ReactNode } from 'react';
 
 type BaseProps = {
@@ -18,25 +15,16 @@ type BaseProps = {
     endIcon?: ReactNode;
 };
 
-type DistinctProps = BaseProps & {
-    appearance: 'distinct';
-    label?: string;
+
+export type RegularTextFieldProps = BaseProps & {
+    appearance?: 'filled' | 'outlined' | 'standard' | 'distinct';
     value?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     error?: boolean;
     helperText?: string;
+} & Omit<MuiTextFieldProps, 'color' | "variant">;
 
-} & Omit<MuiInputDistinctProps, 'startAdornment' | 'endAdornment'>;
-
-type RegularTextFieldProps = BaseProps & {
-    appearance?: 'filled' | 'outlined' | 'standard';
-    value?: string;
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-    error?: boolean;
-    helperText?: string;
-} & Omit<MuiTextFieldProps, 'color' | 'placeholder'>;
-
-export type InputProps = DistinctProps | RegularTextFieldProps;
+export type InputProps = RegularTextFieldProps;
 
 export const Input = (props: InputProps) => {
     const isControlled = props.value !== undefined && props.onChange !== undefined;
@@ -52,58 +40,69 @@ export const Input = (props: InputProps) => {
 
     if (props.appearance === 'distinct') {
         const {
-            label = 'Label',
+            label,
             size = 'medium',
             error,
             helperText,
             startIcon,
             endIcon,
+            placeholder,
+            sx,
             ...rest
         } = props;
 
         const hasStartAdornment = !!startIcon;
-        const hasEndAdornment = !!endIcon;
+        const pos = getPos("outlined");
         return (
-            <FormControl variant="outlined" size={size} error={error}>
-                <InputDistinct
-                    {...rest}
+            <FormControl variant={"outlined"} size={size} error={error}>
+                <MuiTextField
+                    variant={"outlined"}
                     value={currentValue}
                     onChange={handleChange}
-                    placeholder={label}
-                    notched={false}
-                    startAdornment={
-                        startIcon ?
+                    size={size}
+                    placeholder={placeholder ? placeholder : typeof label === 'string' ? label : undefined}
+                    helperText={helperText}
+                    error={error}
+                    hiddenLabel
+                    InputProps={{
+                        startAdornment: startIcon ? (
                             <InputAdornment position="start">
                                 {startIcon}
-                            </InputAdornment> : null
-                    }
-                    endAdornment={
-                        endIcon ?
+                            </InputAdornment>
+                        ) : null,
+                        endAdornment: endIcon ? (
                             <InputAdornment position="end">
                                 {endIcon}
-                            </InputAdornment> : null
-                    }
-
+                            </InputAdornment>
+                        ) : null,
+                    }}
                     sx={(theme) => {
                         const isSmall = size === 'small';
                         const isMedium = size === 'medium';
+                        // console.log(isSmall, isMedium);
 
-                        return {
+                        const baseSx = {
+                            ...(hasStartAdornment && {
+                                '& .MuiInputLabel-root[data-shrink="false"]': {
+                                    transform: size === 'medium'
+                                        ? `translate(${pos.medium.x}px, ${pos.medium.y}px) scale(1) !important`
+                                        : `translate(${pos.small.x}px, ${pos.small.y}px) scale(1) !important`,  // adjusted for filled appearance when there is a start adornment
+                                },
+                            }),
                             '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: isSmall ? 'rgba(28, 122, 224, 1)' : '',
-                                // borderWidth: '1px !important',
-                                borderWidth: isSmall ? '2px' : "1px",
+                                borderColor: isSmall ? 'rgba(28, 122, 224, 1) !important' : "",
+                                borderWidth: isSmall ? '2px' : "1px !important",
                                 backgroundColor: isSmall ? 'rgba(87, 73, 63, 0.04)' : '',
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: isSmall ? 'rgba(28, 122, 224, 1)' : 'rgba(121, 142, 208, 1)',
+                                borderColor: isSmall ? 'rgba(28, 122, 224, 1)' : !currentValue ? 'rgba(121, 142, 208, 1) !important' : "rgba(121, 142, 208, 1) !important",
                             },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
                                 borderColor: isSmall ? 'rgba(28, 122, 224, 1)' : '',
                                 boxShadow: isMedium ? '0px 0px 0 4px rgb(238, 237, 244)' : '',
                             },
-                            '&.Mui-error .MuiOutlinedInput-notchedOutline': {
-                                borderColor: theme.palette.error.main,
+                            '& .Mui-error .MuiOutlinedInput-notchedOutline': {
+                                borderColor: `${theme.palette.error.main} !important`,
                                 boxShadow: '0px 0px 0 4px rgba(255, 218, 214, 1)',
                                 backgroundColor: isSmall ? 'transparent' : '',
                                 borderWidth: "1px",
@@ -111,34 +110,44 @@ export const Input = (props: InputProps) => {
                             '& .MuiOutlinedInput-input::placeholder': {
                                 color: isSmall ? 'rgba(0, 0, 0, 1)' : 'rgba(0, 0, 0, 0.38)',
                             },
-                            '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-                                borderColor: 'rgba(0, 0, 0, 0.23)',
+                            '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
+                                borderColor: 'rgba(0, 0, 0, 0.23) !important',
                                 boxShadow: 'none',
+                                borderWidth: "1px", // reset border width for disabled state small
                                 color: isSmall ? 'rgba(0, 0, 0, 0.38)' : '',
                                 backgroundColor: isSmall ? 'transparent' : '',
                             },
-                            '&.Mui-disabled .MuiInputBase-input': {
+                            '& .Mui-disabled .MuiInputBase-input': {
                                 '-webkit-text-fill-color': 'rgba(0, 0, 0, 0.6)',
                             },
-                            '& .MuiInputBase-input': {
-                                padding: isSmall ? hasEndAdornment ? "4.5px 0 4.5px 14px" : hasStartAdornment ? "4.5px 14px 4.5px 0" : "4.5px 14px" : undefined // Adjust padding for small size when there are adornments and no adornments
-                            },
                         };
+
+                        // If sx is a function, call it with theme, otherwise just use it as an object
+                        let mergedSx = baseSx;
+                        if (typeof sx === 'function') {
+                            mergedSx = { ...baseSx, ...sx(theme) };
+                        } else if (typeof sx === 'object' && sx !== null) {
+                            mergedSx = { ...baseSx, ...sx };
+                        }
+                        return mergedSx;
                     }}
+                    {...rest}
+                    type="text"
                 />
-                {helperText && <FormHelperText>{helperText}</FormHelperText>}
             </FormControl>
         );
     }
 
     const {
         appearance = 'standard',
-        size,
+        size = "medium",
         error,
         helperText,
         startIcon,
         endIcon,
-        label = 'Label',
+        label,
+        placeholder,
+        sx,
         ...rest
     } = props;
     const hasStartAdornment = !!startIcon;
@@ -150,11 +159,13 @@ export const Input = (props: InputProps) => {
                 variant={appearance}
                 value={currentValue}
                 onChange={handleChange}
-                InputLabelProps={{ shrink: currentValue.length > 0 }}
+                // InputLabelProps={{ shrink: currentValue.length > 0 }}
+                InputLabelProps={{ shrink: currentValue.length > 0 || !!placeholder }}
                 size={size}
                 label={label}
                 helperText={helperText}
                 error={error}
+                placeholder={placeholder} // <-- Add this line
                 InputProps={{
                     startAdornment: startIcon ? (
                         <InputAdornment position="start">
@@ -167,27 +178,27 @@ export const Input = (props: InputProps) => {
                         </InputAdornment>
                     ) : null,
                 }}
-                sx={() => {
-                    const isMedium = size === 'medium';
-                    return ({
-                        ...(hasStartAdornment && {
-                            '& .MuiInputLabel-root[data-shrink="false"]': {
-                                transform: isMedium ? `translate(${pos.medium.x}px, ${pos.medium.y}px) scale(1) !important` : `translate(${pos.small.x}px, ${pos.small.y}px) scale(1) !important`,  // adjusted for filled appearance when there is a start adornment
-                            },
-                        }),
-                        '& .Mui-error.MuiInputLabel-root[data-shrink="false"]': {
-                            color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.6) !important',
+                sx={{
+                    ...(hasStartAdornment && {
+                        '& .MuiInputLabel-root[data-shrink="false"]': {
+                            transform: size === 'medium'
+                                ? `translate(${pos.medium.x}px, ${pos.medium.y}px) scale(1) !important`
+                                : `translate(${pos.small.x}px, ${pos.small.y}px) scale(1) !important`,  // adjusted for filled appearance when there is a start adornment
                         },
-                        '& .Mui-focused.MuiInputLabel-outlined.MuiInputLabel-root[data-shrink="false"]': {
-                            color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.87)',
-                        },
-                        '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
-                            borderColor: appearance === 'outlined' ? 'rgba(0, 0, 0, 0.23) !important' : undefined,
-                        },
-                        '& .Mui-focused.MuiInputLabel-root.MuiInputLabel-filled[data-shrink="false"]': {
-                            transform: `translate(12px, ${isMedium ? "24px" : "20px"}) scale(1)`, // adjusted for filled appearance
-                        },
-                    })
+                    }),
+                    '& .Mui-error.MuiInputLabel-root[data-shrink="false"]': {
+                        color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.6) !important',
+                    },
+                    '& .Mui-focused.MuiInputLabel-outlined.MuiInputLabel-root[data-shrink="false"]': {
+                        color: currentValue.length > 0 ? undefined : 'rgba(0, 0, 0, 0.87)',
+                    },
+                    '& .Mui-disabled .MuiOutlinedInput-notchedOutline': {
+                        borderColor: appearance === 'outlined' ? 'rgba(0, 0, 0, 0.23) !important' : undefined,
+                    },
+                    '& .Mui-focused.MuiInputLabel-root.MuiInputLabel-filled[data-shrink="false"]': {
+                        transform: `translate(12px, ${size === 'medium' ? "24px" : "20px"}) scale(1)`, // adjusted for filled appearance
+                    },
+                    ...sx
                 }}
                 {...rest}
                 type="text"
