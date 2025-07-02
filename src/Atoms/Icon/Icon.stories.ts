@@ -14,7 +14,7 @@ const meta = {
       control: 'select',
       options: ['small', 'medium', 'large'],
       description: 'Size of the icon',
-      defaultValue: 'medium',
+      defaultValue: 'small',
     },
   },
 } satisfies Meta<typeof Icon>;
