@@ -28,31 +28,3 @@ export const Default: Story = {
     size: 'medium',
   },
 };
-
-export const Small: Story = {
-  args: {
-    icon: HomeIcon,
-    size: 'small',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    icon: HomeIcon,
-    size: 'large',
-  },
-};
-
-export const SVGIcon: Story = {
-  args: {
-    icon: '/src/assets/react.svg',
-    size: 'medium',
-  },
-};
-
-export const SVGIconLarge: Story = {
-  args: {
-    icon: '/src/assets/react.svg',
-    size: 'large',
-  },
-};
