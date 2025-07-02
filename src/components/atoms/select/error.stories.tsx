@@ -7,7 +7,7 @@ const meta = {
     component: Select,
     parameters: {
         controls: {
-            // exclude: ["optionStyle", "disabled", "helperText", "value", "onChange", "size", "options", "label"],
+            exclude: ["optionStyle", "disabled", "helperText", "value", "onChange", "size", "options", "label", "multiple", "error"],
         }
     },
     argTypes: {
@@ -47,7 +47,7 @@ export const Error: Story = {
                 {...args}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-            // error={true}
+                error={true}
             />
         );
     }

@@ -6,7 +6,7 @@ const meta = {
     component: Textaraa,
     parameters: {
         controls: {
-            exclude: ['label'],
+            exclude: ['label', "disabled"],
         },
     },
     argTypes: {
