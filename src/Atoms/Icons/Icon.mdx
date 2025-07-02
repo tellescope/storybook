@@ -1,0 +1,27 @@
+import { Meta, Canvas, ArgTypes, Story, Controls } from "@storybook/addon-docs/blocks"
+import * as IconStories from './Icon.stories';
+
+<Meta of={IconStories} />
+
+# Icon
+
+The Icon component is a wrapper around MUI's SvgIcon component that provides predefined size variants. It can also render SVG files directly.
+
+## Usage
+
+```tsx
+import { Icon } from './Icon';
+import HomeIcon from '@mui/icons-material/Home';
+
+// Using MUI icon components
+<Icon icon={HomeIcon} />
+<Icon icon={HomeIcon} size="small" />
+<Icon icon={HomeIcon} size="medium" />
+<Icon icon={HomeIcon} size="large" />
+
+// Using SVG files
+<Icon icon="/path/to/icon.svg" />
+<Icon icon="/path/to/icon.svg" size="small" />
+<Icon icon="/path/to/icon.svg" size="medium" />
+<Icon icon="/path/to/icon.svg" size="large" />
+```
