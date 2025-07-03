@@ -6,6 +6,7 @@ export interface SnackbarProps {
   message?: string;
   asAlert?: boolean;
   action?: React.ReactNode;
+  showIcon?: boolean;
 }
 
 // Demo trigger button component
@@ -33,6 +34,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   message = "This is a snackbar message",
   action,
   asAlert = false,
+  showIcon = false,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
 
@@ -56,12 +58,18 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         <Alert
           onClose={() => setIsOpen(false)}
           variant="filled"
+          icon={showIcon ? undefined : false}
           sx={{
             width: "100%",
             boxShadow:
               "0 12px 48px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.22)",
             borderRadius: "4px",
             backgroundColor: asAlert ? "#BA1A1A" : "#151B2C",
+            "& .MuiAlert-action": {
+              "& .MuiButton-root": {
+                color: "#DDE1F9",
+              },
+            },
           }}
           action={action}
         >
