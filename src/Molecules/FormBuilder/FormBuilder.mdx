@@ -1,0 +1,57 @@
+# FormBuilder
+
+A dynamic form builder component that displays form categories with a clean, modern interface. Features interactive states with a checkcirlce icon that changes color based on selection status and modular header/footer structure.
+
+## Features
+
+- **Selected State Control**: Toggle between selected (green checkcirlce) and unselected (grey checkcirlce) states
+- **Hover Animation**: Smooth border color transition from grey to black on hover with pointer cursor
+- **Modular Structure**: Separate FormHeader and FormFooter components for clean organization
+- **Clean Design**: Modern card-style layout with rounded corners
+- **Visual Feedback**: Clear visual indicators for interactive states
+
+## Usage
+
+### Basic Usage
+
+```jsx
+import { FormBuilder } from './FormBuilder';
+
+function App() {
+  return (
+    <FormBuilder />
+  );
+}
+```
+
+### Selected State
+
+```jsx
+import { FormBuilder } from './FormBuilder';
+
+function App() {
+  return (
+    <FormBuilder selected={true} />
+  );
+}
+```
+
+
+## Component Structure
+
+The FormBuilder component is composed of three main parts:
+
+### FormWrapper
+- Main container with border, background, and hover effects
+- Handles the overall styling and interactive states
+
+### FormHeader  
+- Contains the form categories (Primary, Secondary, Accent)
+- Houses the CheckCircle icon with conditional coloring
+- Flexible layout with proper spacing
+
+### FormFooter
+- Bottom section with white background
+- Contains "Tellescope Soft" branding and more options icon
+- Separated from header with subtle border
+
