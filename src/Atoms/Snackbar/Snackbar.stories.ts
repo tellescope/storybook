@@ -24,11 +24,6 @@ const meta: Meta<typeof Snackbar> = {
       control: 'text',
       description: 'The message to display in the snackbar',
     },
-    showIcon: {
-      control: 'boolean',
-      description: 'Whether to show the leading icon',
-      defaultValue: false,
-    },
   },
 };
 
@@ -44,16 +39,6 @@ export const Default: Story = {
     open: false,
     message: 'This is a default snackbar message',
     asAlert: false,
-    showIcon: false,
-  },
-};
-
-export const WithIcon: Story = {
-  args: {
-    open: false,
-    message: 'This is a snackbar message with icon',
-    asAlert: false,
-    showIcon: true,
   },
 };
 
@@ -61,7 +46,6 @@ export const WithActions: Story = {
   args: {
     open: false,
     message: 'Message sent successfully',
-    showIcon: false,
     action: React.createElement(
       React.Fragment,
       {},
@@ -86,6 +70,5 @@ export const Alert: Story = {
     open: false,
     message: 'Warning! Please check your input',
     asAlert: true,
-    showIcon: false,
   },
 }; 

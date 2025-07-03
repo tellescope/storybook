@@ -6,7 +6,6 @@ export interface SnackbarProps {
   message?: string;
   asAlert?: boolean;
   action?: React.ReactNode;
-  showIcon?: boolean;
 }
 
 // Demo trigger button component
@@ -34,7 +33,6 @@ export const Snackbar: React.FC<SnackbarProps> = ({
   message = "This is a snackbar message",
   action,
   asAlert = false,
-  showIcon = false,
 }) => {
   const [isOpen, setIsOpen] = useState(open);
 
@@ -58,7 +56,7 @@ export const Snackbar: React.FC<SnackbarProps> = ({
         <Alert
           onClose={() => setIsOpen(false)}
           variant="filled"
-          icon={showIcon ? undefined : false}
+          icon={false}
           sx={{
             width: "100%",
             boxShadow:
