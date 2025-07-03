@@ -8,11 +8,16 @@ const meta: Meta<typeof FormBuilder> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A form builder component for creating dynamic forms. The checkcirlce icon color changes based on the selected state - green when selected, grey when unselected.',
+        component: 'A form builder component with three different color schemes: tellescope-soft (purple-blue), tellescope (blue), and agua (aqua/teal). The checkcirlce icon color changes based on the selected state - green when selected, grey when unselected.',
       },
     },
   },
   argTypes: {
+    type: {
+      control: 'select',
+      options: ['tellescope-soft', 'tellescope', 'agua'],
+      description: 'The type of form builder with different color schemes',
+    },
     selected: {
       control: 'boolean',
       description: 'Whether the component is in selected state (affects checkcirlce icon color)',
@@ -26,6 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    // selected: false,
+    type: 'tellescope-soft',
+    selected: false,
   },
 };
