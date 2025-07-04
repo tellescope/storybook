@@ -7,8 +7,14 @@ import {
   styled,
 } from "@mui/material";
 
-const drawerWidth = 240;
+// Constants
+const DRAWER_WIDTH = 240;
+const DRAWER_MARGIN = 16;
+const DRAWER_BORDER_RADIUS = 28;
+const DRAWER_BACKGROUND_COLOR = "#F4F3FA";
 
+
+// Styled Components
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
 }>(({ theme }) => ({
@@ -18,7 +24,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  marginRight: -drawerWidth,
+  marginRight: -DRAWER_WIDTH,
   position: 'relative',
   variants: [
     {
@@ -34,6 +40,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   ],
 }));
 
+// Types
 export interface DrawerProps {
   open?: boolean;
   title?: string;
@@ -43,11 +50,16 @@ export interface DrawerProps {
   mainContent?: React.ReactNode;
 }
 
-// Demo trigger button component
-const DemoTriggerButton: React.FC<{
+interface DemoTriggerButtonProps {
   isOpen: boolean;
   onToggle: () => void;
-}> = ({ isOpen, onToggle }) => (
+}
+
+// Demo Trigger Button Component
+const DemoTriggerButton: React.FC<DemoTriggerButtonProps> = ({ 
+  isOpen, 
+  onToggle 
+}) => (
   <Box
     sx={{
       display: "flex",
@@ -63,41 +75,130 @@ const DemoTriggerButton: React.FC<{
   </Box>
 );
 
-// Helper function to get drawer paper styles for right position
-const getDrawerPaperStyles = (persistent?: boolean, hugContents?: boolean) => {
-  if (persistent) {
-    // MUI persistent drawer style - no floating effects
-    return {
-      backgroundColor: "#F4F3FA",
-      width: drawerWidth,
-      height: hugContents ? "fit-content" : "100vh",
-    };
-  }
+// Style Helpers
+const getBaseDrawerStyles = (hugContents: boolean) => ({
+  backgroundColor: DRAWER_BACKGROUND_COLOR,
+  height: hugContents ? "fit-content" : "calc(100vh - 32px)",
+});
 
-  // Floating style for temporary drawers
-  const baseStyles = {
-    backgroundColor: "#F4F3FA",
-    borderRadius: "28px",
-    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
-    margin: "16px",
-    marginLeft: "0",
-    height: hugContents ? "fit-content" : "calc(100vh - 32px)",
-    width: "fit-content",
-  };
+const getFloatingDrawerStyles = (hugContents: boolean) => ({
+  ...getBaseDrawerStyles(hugContents),
+  borderRadius: `${DRAWER_BORDER_RADIUS}px`,
+  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
+  margin: `${DRAWER_MARGIN}px`,
+  marginLeft: "0",
+  width: "fit-content",
+  ...(hugContents && {
+    position: "fixed",
+    bottom: `${DRAWER_MARGIN}px`,
+    top: "auto",
+  }),
+});
 
-  // When hugging content, position at bottom
-  if (hugContents) {
-    return {
-      ...baseStyles,
-      position: "fixed",
-      bottom: "16px",
-      top: "auto",
-    };
-  }
+const getPersistentDrawerStyles = (hugContents: boolean) => ({
+  ...getBaseDrawerStyles(hugContents),
+  width: DRAWER_WIDTH,
+  height: hugContents ? "fit-content" : "100vh",
+});
 
-  return baseStyles;
+const getDrawerPaperStyles = (persistent: boolean, hugContents: boolean) => {
+  return persistent 
+    ? getPersistentDrawerStyles(hugContents)
+    : getFloatingDrawerStyles(hugContents);
 };
 
+// Drawer Content Component
+const DrawerContent: React.FC<{
+  title?: string;
+  children?: React.ReactNode;
+}> = ({ title, children }) => (
+  <Box
+    sx={{
+      p: 2,
+      display: "flex",
+      flexDirection: "column",
+      width: "100%",
+      boxSizing: "border-box",
+    }}
+  >
+    {title && (
+      <Typography variant="subtitle2" component="h4" sx={{ mb: 2 }}>
+        {title}
+      </Typography>
+    )}
+    <Box
+      sx={{
+        "& *": {
+          boxSizing: "border-box",
+        },
+      }}
+    >
+      {children}
+    </Box>
+  </Box>
+);
+
+// Persistent Drawer Component
+const PersistentDrawer: React.FC<{
+  isOpen: boolean;
+  onToggle: () => void;
+  title?: string;
+  children?: React.ReactNode;
+  mainContent?: React.ReactNode;
+}> = ({ isOpen, onToggle, title, children, mainContent }) => (
+  <Box sx={{ display: 'flex' }}>
+    <Main open={isOpen}>
+      <DemoTriggerButton isOpen={isOpen} onToggle={onToggle} />
+      {mainContent}
+    </Main>
+    <MuiDrawer
+      sx={{
+        width: DRAWER_WIDTH,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: DRAWER_WIDTH,
+          backgroundColor: DRAWER_BACKGROUND_COLOR,
+        },
+      }}
+      variant="persistent"
+      anchor="right"
+      open={isOpen}
+    >
+      <DrawerContent title={title} children={children} />
+    </MuiDrawer>
+  </Box>
+);
+
+// Temporary Drawer Component
+const TemporaryDrawer: React.FC<{
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+  title?: string;
+  children?: React.ReactNode;
+  hugContents?: boolean;
+}> = ({ isOpen, onToggle, onClose, title, children, hugContents = false }) => (
+  <>
+    <DemoTriggerButton isOpen={isOpen} onToggle={onToggle} />
+    <MuiDrawer
+      anchor="right"
+      open={isOpen}
+      onClose={onClose}
+      variant="temporary"
+      sx={{
+        zIndex: 1300,
+        "& .MuiDrawer-paper": {
+          ...getDrawerPaperStyles(false, hugContents),
+          zIndex: 1300,
+        },
+      }}
+    >
+      <DrawerContent title={title} children={children} />
+    </MuiDrawer>
+  </>
+);
+
+// Main Drawer Component
 export const Drawer: React.FC<DrawerProps> = ({
   open = false,
   title,
@@ -108,97 +209,32 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(open);
 
-  // Use persistent variant when persistent prop is true
-  const drawerVariant = persistent ? "persistent" : "temporary";
-
-  // Handle toggle for demo button
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  // Handle close - only close if not persistent or via explicit close action
   const handleClose = () => {
     if (!persistent) {
       setIsOpen(false);
     }
   };
 
-  // Drawer content with consistent padding for both persistent and temporary
-  const drawerContent = (
-    <Box
-      sx={{
-        p: 2,
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    >
-      {title && (
-        <Typography variant="subtitle2" component="h4" sx={{ mb: 2 }}>
-          {title}
-        </Typography>
-      )}
-
-      <Box
-        sx={{
-          "& *": {
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        {children}
-      </Box>
-    </Box>
-  );
-
-  // For persistent drawers, use the proper layout structure
-  if (persistent) {
-    return (
-      <Box sx={{ display: 'flex' }}>
-        <Main open={isOpen}>
-          <DemoTriggerButton isOpen={isOpen} onToggle={handleToggle} />
-          {mainContent}
-        </Main>
-        <MuiDrawer
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              backgroundColor: "#F4F3FA",
-            },
-          }}
-          variant="persistent"
-          anchor="right"
-          open={isOpen}
-        >
-          {drawerContent}
-        </MuiDrawer>
-      </Box>
-    );
-  }
-
-  // For temporary drawers, use the original structure
-  return (
-    <>
-      <DemoTriggerButton isOpen={isOpen} onToggle={handleToggle} />
-      <MuiDrawer
-        anchor="right"
-        open={isOpen}
-        onClose={handleClose}
-        variant={drawerVariant}
-        hideBackdrop={persistent}
-        sx={{
-          zIndex: 1300,
-          "& .MuiDrawer-paper": {
-            ...getDrawerPaperStyles(persistent, hugContents),
-            zIndex: 1300,
-          },
-        }}
-      >
-        {drawerContent}
-      </MuiDrawer>
-    </>
+  return persistent ? (
+    <PersistentDrawer
+      isOpen={isOpen}
+      onToggle={handleToggle}
+      title={title}
+      children={children}
+      mainContent={mainContent}
+    />
+  ) : (
+    <TemporaryDrawer
+      isOpen={isOpen}
+      onToggle={handleToggle}
+      onClose={handleClose}
+      title={title}
+      children={children}
+      hugContents={hugContents}
+    />
   );
 };
