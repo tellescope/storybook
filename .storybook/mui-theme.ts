@@ -1,5 +1,5 @@
 // theme.ts
-import { createTheme } from '@mui/material/styles';
+import { alpha, createTheme } from '@mui/material/styles';
 
 
 declare module '@mui/material/IconButton' {
@@ -367,5 +367,267 @@ export const theme = createTheme({
                 },
             },
         },
+        MuiSwitch: {
+            styleOverrides: {
+                root: () => ({
+                    padding: 0,
+                    overflow: "visible",
+                    "& .PrivateSwitchBase-input": {
+                        width: "100% !important",
+                    },
+                    '& .MuiSwitch-switchBase': {
+                        margin: 0,
+                        top: "50%",
+                        transform: "translate(0,-50%)",
+                        transition: '300ms ease-in-out',
+                        "&:active" : {
+                            background:  alpha(theme.palette.common.white, 0.3),
+                        },
+                        '&.Mui-checked': {
+                            color: '#fff',
+                            '& .MuiSwitch-thumb': {
+                                background: "#fff",
+                            },
+                            '& + .MuiSwitch-track': {
+                                opacity: 1,
+                                border : "2px solid transparent"
+                                
+                            },
+                        },
+                        "&.Mui-disabled": {
+                            "& .MuiSwitch-thumb": {
+                                background: "#F5F5F5"
+                            },
+                            "&.Mui-checked + .MuiSwitch-track": {
+                                backgroundColor: "rgba(0, 0, 0, 0.12)",
+                                border : "2px solid transparent"
+                            },
+                            "& + .MuiSwitch-track": {
+                                backgroundColor: "rgba(0, 0, 0, 0.12)",
+                                border: "2px solid #F5F5F5",
+                                opacity: 1,
+                            },
+                        },
+                    },
+                    '& .MuiSwitch-thumb': {
+                        background: "#79747E",
+                        transition: "300ms ease-in-out",
+                    },
+                    '& .MuiSwitch-track': {
+                        background : "#fff",
+                        borderRadius: 32 / 2,
+                        opacity: 1,
+                        transition: '300ms ease-in-out',
+                    },
+                }),
+                sizeMedium: {
+                    width: 52,
+                    height: 32,
+                    '& .MuiSwitch-switchBase': {
+                        padding: "11px",
+                        left: "-4px",
+                        '&.Mui-checked': {
+                            transform: "translate(21px,-50%)",
+                            padding: "7px",
+                            '& .MuiSwitch-thumb': {
+                                width: 24,
+                                height: 24,
+                            }
+                        },
+                        
+                    },
+                    "&:hover .MuiSwitch-track" :{
+                        borderColor: "rgba(121, 116, 126, 0.38)",
+                    },
+                    '& .MuiSwitch-thumb': {
+                        width: 16,
+                        height: 16,
+                    },
+                    '& .MuiSwitch-track': {
+                        border: "2px solid #79747E",
+                    }
+                },
+                sizeSmall: {
+                    width: 26,
+                    height: 16,
+                    '& .MuiSwitch-switchBase': {
+                        left: "-2.5px",
+                        padding: "6.5px !important",
+                        transform: "translate(0,-52%) !important",
+                        '&.Mui-checked': {
+                            transform: "translate(8.5px,-52%) !important",
+                            color: '#fff',
+                            padding: "5.5px !important",
+                            '& .MuiSwitch-thumb': {
+                                width: "12px !important",
+                                height: "12px !important",
+                            },
+                            "&.Mui-disabled": {
+                                "& .MuiSwitch-thumb": {
+                                    background: "rgba(245, 245, 245, 1)"
+                                },
+                            }
+                        },
+                        "&.Mui-disabled": {
+                            "& + .MuiSwitch-track": {
+                                borderWidth: "1px",
+                            },
+                            "& .MuiSwitch-thumb": {
+                                background: "rgba(121, 116, 126, 1)"
+                            },
+                        },
+                    },
+                    '& .MuiSwitch-thumb': {
+                        width: "8px !important",
+                        height: "8px !important",
+                        transition: "300ms ease-in-out",
+                    },
+                    '& .MuiSwitch-track': {
+                        border: "1px solid #79747E",
+                    },
+                },
+            },
+            variants: [
+                /* Default Appearance */
+                {
+                    props: { color: "default" },
+                    style: ({ theme }) =>  ({
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                "& + .MuiSwitch-track": {
+                                    background: theme.palette.grey[500],
+                                },
+                            },
+                        },
+                    }),
+                },
+                /* Default Appearance & Small Size */
+                {
+                    props: { color: "default", size: "small" },
+                    style: ({ theme }) =>  ({
+                        '& .MuiSwitch-switchBase:hover': {
+                            '&.Mui-checked': {
+                                '& + .MuiSwitch-track': {
+                                    background: theme.palette.common.white,
+                                    border: "1px solid rgba(121, 116, 126, 0.5)",
+                                },
+                            },
+                        },
+                        '& .MuiSwitch-switchBase:active': {
+                            '&.Mui-checked': {
+                                padding: "4.5px !important",
+                                transform: "translate(11.5px,-50%) !important",
+                                '& + .MuiSwitch-track': {
+                                    background: "rgba(0, 0, 0, 0.5) ",
+                                    border: "1px solid rgba(0, 0, 0, 0) ",
+                                },
+                                "& .MuiSwitch-thumb": {
+                                    background: "rgba(121, 116, 126, 1)",
+                                    width: "8px !important",
+                                    height: "8px !important"
+                                }
+                            },
+                        },
+                    }),
+                },
+                /* Primary Appearance */
+                {
+                    props: { color: "primary" },
+                    style: ({ theme }) =>  ({
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                "& + .MuiSwitch-track": {
+                                    background: alpha(theme.palette.primary.main, 0.5),
+                                },
+                                "&:hover" : {
+                                    background:  `${alpha(theme.palette.secondary.main, 0.04)} !important`,
+                                    
+                                },
+                                "&:active" : {
+                                    background:  `${alpha(theme.palette.primary.main, 0.3)} !important`,
+                                    "& .MuiSwitch-thumb": {
+                                        background: "rgba(121, 116, 126, 1) !important"
+                                    }
+                                },
+                            },
+                        },
+                        "&:hover .MuiSwitch-track" : {
+                                borderColor: "rgba(121, 116, 126, 1)",
+                            }
+                    }),
+                },
+                /* Primary Appearance & Small Size */
+                {
+                    props: { color: "primary", size: "small" },
+                    style: {
+                        '& .MuiSwitch-switchBase:hover': {
+                            '&.Mui-checked': {
+                                '& + .MuiSwitch-track': {
+                                    // borderColor: "rgba(121, 116, 126, 1)",
+                                },
+                            },
+                        },
+                        '& .MuiSwitch-switchBase:active': {
+                            '&.Mui-checked': {
+                                padding: "4.5px !important",
+                                transform: "translate(11.5px,-50%) !important",
+                                "& .MuiSwitch-thumb": {
+                                    background: "rgba(121, 116, 126, 1)",
+                                    width: "8px !important",
+                                    height: "8px !important"
+                                }
+                            },
+                        },
+                    },
+                    // style: ({
+                    //     "&:hover .MuiSwitch-track" :{
+                    //         borderColor: "rgba(121, 116, 126, 1)",
+                    //     },
+                    // }),
+                },
+                /* Secondary Appearance */
+                {
+                    props: { color: "secondary" },
+                    style: ({ theme }) =>  ({
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                "& + .MuiSwitch-track": {
+                                    background: alpha(theme.palette.secondary.main, 0.5),
+                                },
+                                '& .MuiSwitch-thumb': {
+                                    background: theme.palette.secondary.main,
+                                },
+                                "&:hover" : {
+                                    background:  `${alpha(theme.palette.secondary.main, 0.04)} !important`,
+                                },
+                                "&:active" : {
+                                    background:  `${alpha(theme.palette.secondary.main, 0.3)} !important`,
+                                },
+                            },
+                            
+                        },
+                    }),
+                },
+                /* Info Appearance */
+                {
+                    props: { color: "info" },
+                    style: ({ theme }) =>  ({
+                        '& .MuiSwitch-switchBase': {
+                            '&.Mui-checked': {
+                                "& + .MuiSwitch-track": {
+                                    background: theme.palette.info.main,
+                                },
+                                "&:hover" : {
+                                    background:  `${alpha(theme.palette.info.main, 0.04)} !important`,
+                                },
+                                "&:active" : {
+                                    background:  `${alpha(theme.palette.info.main, 0.3)} !important`,
+                                },
+                            },
+                        },
+                    }),
+                },
+            ],
+        }
     },
 });

@@ -4,7 +4,7 @@ import { Stack } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 
 const meta = {
-    title: 'ATOMS/ChipArray',
+    title: 'ATOMS/FormInputs/ChipArray',
     component: ChipArray,
     parameters: {
         controls: {
