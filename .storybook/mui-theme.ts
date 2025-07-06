@@ -34,9 +34,6 @@ export const theme = createTheme({
         info: {
             main: "rgba(2, 136, 209, 1)",
         },
-        // error: {
-        //     main: "#BA1A1A"
-        // },
         error: {
             main: "#BA1A1A"
         },
