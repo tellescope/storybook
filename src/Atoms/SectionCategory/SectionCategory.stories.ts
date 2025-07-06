@@ -53,7 +53,7 @@ const AccordionContent = React.createElement(
 
 export const Expanded: Story = {
   args: {
-    title: "Expanded Accordion",
+    title: "Inbox",
     expanded: true,
     children: AccordionContent,
   },
@@ -61,7 +61,7 @@ export const Expanded: Story = {
 
 export const Selected: Story = {
   args: {
-    title: "Selected Accordion",
+    title: "Inbox",
     selected: true,
     children: AccordionContent,
   },

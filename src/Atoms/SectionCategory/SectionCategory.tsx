@@ -8,13 +8,14 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import type { ReactNode } from "react";
 import { useState } from "react";
 
 interface CustomAccordionProps {
   title?: string;
   children?: ReactNode;
-    expanded?: boolean;
+  expanded?: boolean;
   selected?: boolean;
 }
 
@@ -25,7 +26,7 @@ export default function CustomAccordion({
   selected = false,
 }: CustomAccordionProps) {
   const [expandedState, setExpandedState] = useState(expanded);
-//   const [selectValue, setSelectValue] = useState("");
+  //   const [selectValue, setSelectValue] = useState("");
 
   const handleChange = () => {
     setExpandedState(!expandedState);
@@ -37,19 +38,32 @@ export default function CustomAccordion({
       onChange={handleChange}
       elevation={0}
       sx={{
-        borderBottom: selected ? "none" : "1px solid #E2E8F0",
+        // borderBottom: selected ? "none" : "1px solid #E2E8F0",
         backgroundColor: selected ? "#E2E8F0" : "transparent",
+        borderRadius: "0 !important",
         "&:before": {
           display: "none",
         },
-        "&:hover": {
-          outline: "none",
-          borderColor: "white"
+        "& .MuiAccordionSummary-root": {
+          borderRadius: "0 !important",
         },
-        "&.Mui-focused": {
-          outline: "none",
-          borderColor: "white"
+        "& .MuiAccordionDetails-root": {
+          borderRadius: "0 !important",
         },
+        "&:first-of-type": {
+          borderRadius: "0 !important",
+        },
+        "&:last-of-type": {
+          borderRadius: "0 !important",
+        },
+        // "&:hover": {
+        //   outline: "none",
+        //   borderColor: "white"
+        // },
+        // "&.Mui-focused": {
+        //   outline: "none",
+        //   borderColor: "white"
+        // },
         // "&.Mui-expanded": {
         //   backgroundColor: "#E2E8F0"
         // }
@@ -62,7 +76,10 @@ export default function CustomAccordion({
           },
           "& .MuiAccordionSummary-content.Mui-expanded": {
             margin: 0,
-          }
+          },
+          "&:hover .hover-chevron": {
+            opacity: 1,
+          },
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
@@ -73,11 +90,22 @@ export default function CustomAccordion({
               transition: "transform 0.3s",
             }}
           />
-          <Typography
+          <Box
             sx={{ flexGrow: 1, display: "flex", alignItems: "center", ml: 3 }}
           >
-            {title}
-          </Typography>
+            <Typography>{title}</Typography>
+            <ChevronRightIcon
+              className="hover-chevron"
+              sx={{
+                opacity: 0,
+                transition: "opacity 0.2s ease-in-out",
+                ml: 1,
+                rotate: "90deg",
+                fontSize: "1.2rem",
+                color: "#666",
+              }}
+            />
+          </Box>
           <IconButton>
             <AddIcon sx={{ color: "#000000" }} />
           </IconButton>
