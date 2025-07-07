@@ -55,7 +55,7 @@ const Select: FC<SelectProps> = ({
                     sx={{
                         flexDirection: "row",
                         gap: 1,
-                        overflowX: "hidden",
+                        overflowX: "auto",
                         maxWidth: "100%",
                     }}
                 >
@@ -65,7 +65,10 @@ const Select: FC<SelectProps> = ({
                             key={val}
                             label={val}
                             size="small"
-                            onDelete={() => {
+                            clickable
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onDelete={(e) => {
+                                e.stopPropagation();
                                 const filtered = selected.filter((item) => item !== val);
                                 onChange({
                                     target: {
@@ -147,11 +150,11 @@ const Select: FC<SelectProps> = ({
                     // borderColor: '#0000003B',
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'rgba(28, 122, 224, 1) !important'
+                    borderColor: '#798ED0 !important',
                 },
                 '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
                     borderWidth: "2px",
-                    borderColor: 'rgba(28, 122, 224, 1) !important',
+                    borderColor: '#798ED0 !important',
                     boxShadow: '0px 0px 0 4px rgb(238, 237, 244) !important',
                 },
                 // "&:focus .MuiOutlinedInput-notchedOutline": {
@@ -176,6 +179,33 @@ const Select: FC<SelectProps> = ({
                 },
                 '& .MuiInputLabel-root': {
                     display: 'none',
+                },
+                "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
+                    display: 'none',
+                    backgroundColor: '#fff',
+                    paddingRight: "24px",
+                    top: "4px",
+                    width: "auto",
+                    zIndex: 999
+                },
+                '&:hover': {
+                    "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
+                        display: "block",
+                        paddingLeft: "24px",
+                    }
+                },
+                ".MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input:focus": {
+                    background: "transparent !important",
+                },
+                '& .Mui-focused ': {
+                    "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
+                        display: "block",
+                        paddingLeft: "24px",
+
+                    }
+                },
+                ".MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.MuiInputBase-input": {
+                    paddingRight: "0 !important"
                 },
                 '& .MuiOutlinedInput-notchedOutline': {
                     display: 'none',

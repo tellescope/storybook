@@ -28,9 +28,7 @@ export const VerticalAmPmToggle = ({ value, onChange, disabled = false }: Vertic
             onChange={handleChange}
             disabled={disabled}
             sx={{
-                borderRadius: 2,
-                overflow: 'hidden',
-                border: '1px solid rgba(117, 118, 128, 1)',
+
                 '& .MuiToggleButtonGroup-grouped': {
                     border: 'none',
                     fontWeight: 500,
@@ -50,10 +48,12 @@ export const VerticalAmPmToggle = ({ value, onChange, disabled = false }: Vertic
 
                 },
                 "& .MuiToggleButtonGroup-firstButton": {
-                    borderBottom: "1.5px solid rgba(117, 118, 128, 1)"
+                    borderRadius: "10px 10px 0 0",
+                    border: '1px solid rgba(117, 118, 128, 1)',
                 },
                 "& .MuiToggleButtonGroup-lastButton": {
-                    borderTop: "1.5px solid rgba(117, 118, 128, 1)"
+                    border: '1px solid rgba(117, 118, 128, 1)',
+                    borderRadius: "0 0 10px 10px",
                 },
                 "& .MuiButtonBase-root": {
                     padding: "4px 0",

@@ -44,7 +44,7 @@ export const ProfileTimeTrackingToggle: Story = {
                         />
                         <WifiCalling3OutlinedIcon
                             sx={{
-                                color: "rgba(242, 117, 92, 0.35)",
+                                color: "rgba(242, 117, 92, 1)",
                                 opacity: checked ? 1 : 0,
                                 maxWidth: checked ? 24 : 0,
                                 overflow: "hidden",
@@ -117,7 +117,7 @@ export const AppBarTimeTrackingToggle: Story = {
                         />
                         <WifiCalling3OutlinedIcon
                             sx={{
-                                color: "rgba(242, 117, 92, 0.35)",
+                                color: "rgba(242, 117, 92, 1)",
                                 opacity: checked ? 1 : 0,
                                 maxWidth: checked ? 24 : 0,
                                 overflow: "hidden",

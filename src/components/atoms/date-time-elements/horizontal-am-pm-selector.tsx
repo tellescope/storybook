@@ -27,9 +27,6 @@ export const HorizontalAmPmToggle = ({ value, onChange, disabled = false }: Hori
             onChange={handleChange}
             disabled={disabled}
             sx={{
-                borderRadius: 2,
-                overflow: 'hidden',
-                border: '1px solid rgba(117, 118, 128, 1)',
                 '& .MuiToggleButtonGroup-grouped': {
                     border: 'none',
                     fontWeight: 500,
@@ -46,13 +43,14 @@ export const HorizontalAmPmToggle = ({ value, onChange, disabled = false }: Hori
                             bgcolor: 'rgb(243, 202, 235)',
                         },
                     },
-
                 },
                 "& .MuiToggleButtonGroup-firstButton": {
-                    borderRight: "1.5px solid rgba(117, 118, 128, 1)"
+                    border: '1px solid rgba(117, 118, 128, 1)',
+                    borderRadius: "8px 0 0 8px"
                 },
                 "& .MuiToggleButtonGroup-lastButton": {
-                    borderLeft: "1.5px solid rgba(117, 118, 128, 1)"
+                    border: '1px solid rgba(117, 118, 128, 1)',
+                    borderRadius: "0 8px 8px 0"
                 },
                 "& .MuiButtonBase-root": {
                     padding: "3px 0",

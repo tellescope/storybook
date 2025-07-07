@@ -14,21 +14,8 @@ const Textarea: FC<TextareaProps> = (props) => {
                 placeholder={typeof props.label === 'string' ? props.label : undefined}
                 appearance="distinct"
                 hiddenLabel
-                // sx={{
-                // "& .MuiOutlinedInput-notchedOutline": {
-                // top: 0,
-                // borderColor: '#0000003B !important',
-                // },
-                // "&:hover .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: '#0000003B !important',
-                // },
-                // "&:focus .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: '#0000003B !important',
-                // },
-                // "& .Mui-disabled .MuiOutlinedInput-notchedOutline": {
-                //     borderColor: '#0000003B !important',
-                // },
-                // }}
+                maxRows={9}
+                rows={9}
                 {...rest}
             />
         );
@@ -38,6 +25,8 @@ const Textarea: FC<TextareaProps> = (props) => {
             {...props}
             appearance={appearance}
             multiline
+            maxRows={9}
+            rows={9}
         />
     );
 };

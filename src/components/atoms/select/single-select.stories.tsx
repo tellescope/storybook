@@ -34,16 +34,17 @@ export const SingleSelect: Story = {
         label: "Label",
         value: "",
         onChange: () => { },
-        options: ['Chip 1', 'Chip 2', 'Chip 3', 'Chip 4'],
+        options: ['Synt to health', 'Content capsqd', 'Chip 3', 'Chip 4'],
         appearance: 'standard',
         multiple: false,
         size: "medium"
     },
     render: (args) => {
-        const [value, setValue] = useState<string | string[]>(args.multiple ? [] : '');
+        const [value, setValue] = useState<string | string[]>(args.multiple || args.appearance === "table" ? [] : '');
         return (
             <Select
                 {...args}
+                multiple={args.multiple || args.appearance === "table"}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
             />
