@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { Message } from "./Message";
 
 const meta: Meta<typeof Message> = {
@@ -30,6 +31,7 @@ type Story = StoryObj<typeof meta>;
 
 
 export const Default: Story = {
+  args: {},
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', minWidth: '400px' }}>
       <div>
@@ -53,4 +55,4 @@ export const Default: Story = {
       },
     },
   },
-}; 
+};
