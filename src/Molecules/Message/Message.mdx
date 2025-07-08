@@ -1,0 +1,208 @@
+import { Meta, Canvas, ArgTypes, Story } from "@storybook/addon-docs/blocks"
+import * as MessageInputStories from './Message.stories';
+
+<Meta of={MessageInputStories} />
+
+# MessageInput
+
+A complete message input interface combining a versatile toolbar with action icons and a sophisticated input field designed for communication applications. The component provides rich interaction states and accessibility features perfect for chat interfaces, comment systems, and messaging platforms.
+
+## Overview
+
+The MessageInput component consists of two main parts:
+
+- **Toolbar**: An interactive toolbar with selectable action icons for various communication tools
+- **MessageInput**: A rounded input field with text formatting, microphone, and send functionality
+
+These components work together to create a comprehensive messaging interface, but can also be used independently for more specific use cases.
+
+## Features
+
+- **🎯 Interactive Toolbar**: First four icons (chat, text, mail, group) are selectable with colored backgrounds
+- **🎨 Dynamic Focus States**: Input border and send button change color when focused
+- **♿ Accessibility**: Full keyboard navigation and screen reader support
+- **📱 Responsive Design**: Adapts beautifully to different screen sizes
+- **🔄 State Management**: Supports disabled and error states across all components
+- **🎪 Smooth Animations**: Polished transitions for all interactive elements
+
+## Usage
+
+### Basic Implementation
+
+```tsx
+import { Message } from './Message';
+
+function ChatInterface() {
+  return (
+    <Message />
+  );
+}
+```
+
+### With State Control
+
+```tsx
+import { Message } from './Message';
+import { useState } from 'react';
+
+function ChatInterface() {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  return (
+    <Message 
+      disabled={isDisabled}
+      error={hasError}
+    />
+  );
+}
+```
+
+### Using Individual Components
+
+```tsx
+import { MessageInput } from './MessageInput';
+import { Toolbar } from './Toolbar';
+
+function CustomLayout() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <Toolbar />
+      <MessageInput />
+    </div>
+  );
+}
+```
+
+## Examples
+
+
+### All States Comparison
+
+A comprehensive view showing all possible states of the MessageInput component for easy comparison and testing.
+
+<Canvas of={MessageInputStories.AllStates} />
+
+## Interactive Behavior
+
+### Toolbar Interactions
+
+The toolbar contains 12 different action icons divided into two groups:
+
+**Selectable Icons (with colored backgrounds when active):**
+- 💬 **Chat** - Blue background (#1C7AE0)
+- 📱 **Text** - Purple background (#8B5CF2) 
+- 📧 **Mail** - Indigo background (#6466F1)
+- 👥 **Group** - Teal background (#15B8A6)
+
+**Action Icons (simple hover states):**
+- 📋 **Assignment**
+- 📝 **Note**
+- 🔗 **Link**
+- 📎 **Attach**
+- 💬 **Message**
+- 🎫 **Add Ticket**
+- 💡 **Lightbulb**
+- ⛶ **Expand**
+
+### Input Field Interactions
+
+The input field provides rich visual feedback:
+
+- **Default**: Light gray border (#E2E8F0)
+- **Focused**: Blue border (#1C7AE0) with highlighted send button
+- **Error**: Red border (#DC2626)
+- **Disabled**: Gray border (#ACACAC) with muted icons
+
+### Focus State Animation
+
+When the input receives focus (unless disabled or in error state):
+- Border color transitions to blue
+- Send button background becomes blue
+- Send icon changes to white
+- Smooth 0.2s transition for all changes
+
+## Component API
+
+### Message (Main Component)
+
+The complete message interface combining toolbar and input.
+
+```tsx
+<Message disabled={false} error={false} />
+```
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | boolean | false | Disables all interactions across toolbar and input |
+| error | boolean | false | Shows error state with red border on input field |
+
+### MessageInput (Standalone)
+
+The input field component with text formatting, microphone, and send icons.
+
+```tsx
+<MessageInput disabled={false} error={false} />
+```
+
+#### Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | boolean | false | Disables the input field and all action icons |
+| error | boolean | false | Shows error state with red border |
+
+### Toolbar (Standalone)
+
+Interactive toolbar with various action icons and selection states.
+
+```tsx
+<Toolbar />
+```
+
+The Toolbar component manages its own internal state for icon selection and doesn't accept props.
+
+## State Priority
+
+When multiple states are applied, they follow this priority order:
+
+1. **Disabled** (highest priority) - Overrides all other states
+2. **Error** - Shows red border, prevents focus styling
+3. **Focused** - Default blue styling when input is active
+4. **Default** - Base gray styling
+
+## Styling Customization
+
+The component uses Material-UI's theming system and can be customized through:
+
+- **Theme Colors**: Override primary colors to change focus and selection colors
+- **Border Radius**: The input uses a 28px border radius for the pill shape
+- **Transitions**: All animations use 0.2s ease-in-out timing
+- **Icon Sizing**: Icons use Material-UI's default sizing
+
+## Accessibility Features
+
+- **Keyboard Navigation**: Full tab navigation through all interactive elements
+- **ARIA Labels**: Input includes "Type a message" aria-label
+- **Focus Management**: Clear focus indicators and logical tab order
+- **Screen Reader Support**: Proper semantic markup and labels
+- **Color Contrast**: All text and icons meet WCAG contrast requirements
+
+## Design Considerations
+
+- **28px Border Radius**: Creates a modern pill-shaped input field
+- **Icon Grouping**: Visual separation between selectable and action icons
+- **Consistent Spacing**: 8px gap between toolbar and input maintains visual rhythm
+- **Color Hierarchy**: Different background colors help users understand selectable vs action icons
+- **Hover States**: All interactive elements provide clear hover feedback
+
+## Use Cases
+
+- **Chat Interfaces**: Complete messaging with rich formatting options
+- **Comment Systems**: Blog comments, social media replies
+- **Support Platforms**: Customer service chat widgets
+- **Collaboration Tools**: Team communication interfaces
+- **Form Builders**: Rich text input with action buttons
+- **Content Management**: Admin interfaces with quick actions 
