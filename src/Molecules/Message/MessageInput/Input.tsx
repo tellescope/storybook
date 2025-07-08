@@ -1,7 +1,7 @@
 import { Box, IconButton, InputBase } from "@mui/material";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 
-import { Send } from "./Icons";
+import { Send } from "../Icons";
 import { Mic } from "@mui/icons-material";
 
 interface MessageInputProps {
@@ -9,7 +9,7 @@ interface MessageInputProps {
   error?: boolean;
 }
 
-export const MessageInput = ({ disabled, error }: MessageInputProps) => {
+export const Input = ({ disabled, error }: MessageInputProps) => {
   // Determine border color based on state hierarchy
   const getBorderColor = () => {
     if (disabled) return "1px solid rgb(172, 172, 172)";
