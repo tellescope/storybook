@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import { CheckBox } from './checkbox';
+import CheckBox from './checkbox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import { Stack } from '@mui/material';

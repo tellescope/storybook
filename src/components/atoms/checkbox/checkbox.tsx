@@ -8,10 +8,12 @@ export interface ButtonProps extends Omit<MuiCheckboxProps, 'color' | 'variant' 
 
 }
 
-export const CheckBox = ({ color = "primary", ...rest }: ButtonProps) => (
+const CheckBox = ({ color = "primary", ...rest }: ButtonProps) => (
     <MuiCheckbox
         disableRipple
         color={color}
         {...rest}
     />
 );
+
+export default CheckBox;

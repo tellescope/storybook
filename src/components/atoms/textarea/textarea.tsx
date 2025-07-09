@@ -6,7 +6,7 @@ type TextareaProps = Omit<InputProps, 'appearance' | "size"> & {
 };
 
 const Textarea: FC<TextareaProps> = (props) => {
-    const { appearance, ...rest } = props
+    const { appearance, sx, ...rest } = props
     if (appearance === "patientForm") {
         return (
             <Input
@@ -16,17 +16,25 @@ const Textarea: FC<TextareaProps> = (props) => {
                 hiddenLabel
                 maxRows={9}
                 rows={9}
+                sx={{
+                    width: "14rem",
+                    ...sx
+                }}
                 {...rest}
             />
         );
     }
     return (
         <Input
-            {...props}
+            {...rest}
             appearance={appearance}
             multiline
             maxRows={9}
             rows={9}
+            sx={{
+                width: "14rem",
+                ...sx
+            }}
         />
     );
 };

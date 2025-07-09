@@ -7,7 +7,7 @@ const meta = {
     component: Textaraa,
     parameters: {
         controls: {
-            exclude: ['onClick', 'value', 'onChange', "label", "placeholder"],
+            include: ["appearance"],
         },
     },
     argTypes: {

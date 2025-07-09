@@ -11,6 +11,7 @@ import type {
     AutocompleteRenderInputParams,
 } from '@mui/material';
 import { Input } from '../input/input';
+import { useWheel } from '../../../custom';
 
 type OptionType = string;
 
@@ -47,6 +48,8 @@ export const Autocomplete: FC<AutocompleteProps> = ({
     sx,
     ...rest
 }) => {
+
+    const scrollElementRef = useWheel<HTMLDivElement>();
 
     const getSx = (theme: Theme) => {
         if (appearance === 'table') {
@@ -102,16 +105,26 @@ export const Autocomplete: FC<AutocompleteProps> = ({
                 disabled={disabled}
                 renderTags={(tagValue: OptionType[], getTagProps) => (
                     <Stack
+                        ref={scrollElementRef}
+                        component="div"
                         sx={{
                             flexDirection: "row",
-                            gap: 1,
-                            overflowX: "hidden",
-                            maxWidth: "100%",
+                            // gap: 1,
+                            overflowX: 'auto',
+                            overflowY: 'hidden',
+                            maxWidth: '100%',
+                            touchAction: 'pan-y',
+                            "& > *": {
+                                flexShrink: 0, // Prevent chips from shrinking and shifting
+                            },
+                            "&::-webkit-scrollbar": {
+                                display: "none"
+                            }
                         }}
                     >
                         {
                             tagValue.map((option, index) => (
-                                <Chip size="small" label={option} {...getTagProps({ index })} />
+                                <Chip size="small" clickable label={option} {...getTagProps({ index })} />
                             ))
                         }
                     </Stack>

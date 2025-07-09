@@ -10,6 +10,11 @@ type StoryProps = ComponentProps<typeof Input> & {
 const meta: Meta<StoryProps> = {
     title: 'ATOMS/FormInputs/Input',
     component: Input,
+    parameters: {
+        controls: {
+            include: ['appearance', 'size', 'CustomIcon'],
+        },
+    },
     argTypes: {
         appearance: {
             options: ['standard', 'filled', 'outlined', "distinct"],

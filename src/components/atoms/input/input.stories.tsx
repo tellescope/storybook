@@ -7,7 +7,7 @@ const meta = {
     component: Input,
     parameters: {
         controls: {
-            exclude: ['onClick', 'value', 'onChange', "label"],
+            include: ['appearance', 'size'],
         },
     },
     argTypes: {

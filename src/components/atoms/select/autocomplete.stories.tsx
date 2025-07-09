@@ -7,7 +7,7 @@ const meta = {
     component: Autocomplete,
     parameters: {
         controls: {
-            exclude: ["optionStyle", "disabled", "error", "helperText", "value", "onChange", "size", "multiple", "options", "label", "textFieldProps"],
+            include: ["appearance"],
         }
     },
     argTypes: {

@@ -11,7 +11,7 @@ const meta = {
     component: SwitchToggle,
     parameters: {
         controls: {
-            exclude: ['label', 'formlabelProps', 'color'],
+            include: [''],
         },
     },
 

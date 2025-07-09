@@ -7,7 +7,7 @@ const meta = {
     component: Select,
     parameters: {
         controls: {
-            exclude: ["optionStyle", "disabled", "error", "helperText", "value", "onChange", "size", "multiple", "options", "label", "appearance"],
+            include: [""],
         }
     },
     argTypes: {

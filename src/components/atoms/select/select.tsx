@@ -10,16 +10,17 @@ import {
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import CheckIcon from '@mui/icons-material/Check';
-import { CheckBox } from '../checkbox/checkbox';
+import CheckBox from '../checkbox/checkbox';
 import { FormHelperText } from '@mui/material';
 import type { SelectProps as MuiSelectProps } from '@mui/material/Select';
+import { useWheel } from '../../../custom';
 
 
 type VariantType = 'standard' | 'filled' | 'outlined' | 'patientForm' | 'table';
 type OptionStyle = 'default' | 'checkmark' | 'checkbox';
 
 interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange' | 'value'> {
-    label: string;
+    label?: string;
     value: string | string[];
     onChange: (event: SelectChangeEvent<string | string[]>) => void;
     options: string[];
@@ -48,15 +49,32 @@ const Select: FC<SelectProps> = ({
 }) => {
     const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
 
+    const scrollElementRef = useWheel<HTMLDivElement>();
+
+
     const renderValue = (selected: string | string[]) => {
         if (multiple && Array.isArray(selected)) {
             return (
                 <Stack
+                    component="div"
+                    ref={scrollElementRef}
                     sx={{
                         flexDirection: "row",
                         gap: 1,
-                        overflowX: "auto",
-                        maxWidth: "100%",
+                        overflowX: 'auto',
+                        overflowY: 'hidden',
+                        maxWidth: '100%',
+                        touchAction: 'pan-y',
+                        paddingRight: appearance === 'table' ? "72px" : undefined,
+                        "& > *": {
+                            flexShrink: 0, // Prevent chips from shrinking and shifting
+                        },
+                        // Hide scrollbar for all major browsers
+                        "&::-webkit-scrollbar": {
+                            display: "none"
+                        },
+                        "-ms-overflow-style": "none", // IE and Edge
+                        "scrollbarWidth": "none", // Firefox
                     }}
                 >
                     {selected.map((val: string) => (
@@ -173,18 +191,20 @@ const Select: FC<SelectProps> = ({
         if (appearance === 'table') {
             return {
                 minWidth: 220,
+                maxWidth: "100%",
                 '.MuiOutlinedInput-root': {
                     height: "auto",
-                    padding: '0',
+                    padding: '24px',
                 },
                 '& .MuiInputLabel-root': {
                     display: 'none',
                 },
                 "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
-                    display: 'none',
+                    // display: 'none',
                     backgroundColor: '#fff',
                     paddingRight: "24px",
-                    top: "4px",
+                    paddingLeft: "24px",
+                    top: size === "medium" ? "4px" : "1px",
                     width: "auto",
                     zIndex: 999
                 },
@@ -201,7 +221,6 @@ const Select: FC<SelectProps> = ({
                     "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
                         display: "block",
                         paddingLeft: "24px",
-
                     }
                 },
                 ".MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.MuiInputBase-input": {

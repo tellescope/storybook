@@ -8,7 +8,7 @@ const meta = {
     component: ChipArray,
     parameters: {
         controls: {
-            exclude: ['label', 'data', 'withDelete', 'selectable', 'chipProps', 'ListProps'],
+            include: [''],
         },
     },
 } satisfies Meta<typeof ChipArray>;

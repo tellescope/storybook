@@ -6,7 +6,7 @@ const meta = {
     component: Radio,
     parameters: {
         controls: {
-            exclude: ['disabled', 'color', 'checked', 'size'],
+            exclude: [''],
         },
     },
     argTypes: {
