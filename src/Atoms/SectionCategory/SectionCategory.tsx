@@ -1,11 +1,4 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  IconButton,
-  Typography,
-  Box,
-} from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, IconButton, Typography, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -19,12 +12,7 @@ interface CustomAccordionProps {
   selected?: boolean;
 }
 
-export default function CustomAccordion({
-  title = "Tagged as",
-  children,
-  expanded = false,
-  selected = false,
-}: CustomAccordionProps) {
+export default function CustomAccordion({ title = "Tagged as", children, expanded = false, selected = false }: CustomAccordionProps) {
   const [expandedState, setExpandedState] = useState(expanded);
   //   const [selectValue, setSelectValue] = useState("");
 
@@ -82,29 +70,40 @@ export default function CustomAccordion({
           },
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <ArrowRightIcon
-            fontSize="medium"
-            sx={{
-              transform: expandedState ? "rotate(90deg)" : "rotate(0deg)",
-              transition: "transform 0.3s",
-            }}
-          />
-          <Box
-            sx={{ flexGrow: 1, display: "flex", alignItems: "center", ml: 3 }}
-          >
-            <Typography>{title}</Typography>
-            <ChevronRightIcon
-              className="hover-chevron"
+        <Box sx={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <ArrowRightIcon
+              fontSize="medium"
               sx={{
-                opacity: 0,
-                transition: "opacity 0.2s ease-in-out",
-                ml: 1,
-                rotate: "90deg",
-                fontSize: "1.2rem",
-                color: "#666",
+                transform: expandedState ? "rotate(90deg)" : "rotate(0deg)",
+                transition: "transform 0.3s",
               }}
             />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                height: 32,
+                px: 1,
+                gap: 1,
+                borderRadius: 1,
+                "&:hover": { backgroundColor: "#FFF" },
+                cursor: "pointer",
+                transition: "background-color 0.2s ease-in-out",
+              }}
+            >
+              <Typography>{title}</Typography>
+              <ChevronRightIcon
+                className="hover-chevron"
+                sx={{
+                  opacity: 0,
+                  transition: "opacity 0.2s ease-in-out",
+                  rotate: "90deg",
+                  fontSize: "1.2rem",
+                  color: "#666",
+                }}
+              />
+            </Box>
           </Box>
           <IconButton>
             <AddIcon sx={{ color: "#000000" }} />
