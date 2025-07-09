@@ -27,3 +27,9 @@ export const Default: Story = {
     },
   },
 };
+
+export const Unread: Story = {
+  args: {
+    haveUnreadMessages: true,
+  },
+};

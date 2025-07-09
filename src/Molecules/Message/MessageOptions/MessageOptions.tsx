@@ -5,6 +5,10 @@ import {
 } from "@mui/icons-material";
 import { Checkmark, Nice } from "../Icons";
 
+interface MessageOptionsProps {
+  haveUnreadMessages?: boolean;
+}
+
 const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
   return (
     <IconButton
@@ -21,7 +25,7 @@ const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
   );
 };
 
-export const MessageOptions = () => {
+export const MessageOptions = ({ haveUnreadMessages }: MessageOptionsProps) => {
   return (
     <Box>
       <Box
@@ -42,7 +46,7 @@ export const MessageOptions = () => {
             9:00 AM
           </Typography>
           <Box
-            bgcolor={"#EFF0F2"}
+            bgcolor={haveUnreadMessages ? "#EFF0F2" : "transparent"}
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
@@ -50,6 +54,11 @@ export const MessageOptions = () => {
             height={"24px"}
             borderRadius={"100px"}
             p={1}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
           >
             <MarkEmailUnreadOutlined sx={{ color: "#3C82F6" }} />
           </Box>
