@@ -1,6 +1,6 @@
 import SvgIcon from "@mui/material/SvgIcon";
 
-export default function Send() {
+export default function Nice() {
   return (
     <SvgIcon>
       {/* credit: cog icon from https://heroicons.com */}

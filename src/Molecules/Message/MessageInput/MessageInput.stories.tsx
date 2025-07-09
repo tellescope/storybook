@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MessageInput } from "./MessageInput";
-import { Box } from "@mui/material";
-import { Toolbar } from "./Toolbar/Toolbar";
-
 
 const meta: Meta<typeof MessageInput> = {
   title: "Molecules/Message/MessageInput",
@@ -51,10 +48,7 @@ export const Default: Story = {
         >
           Default
         </h3>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Toolbar />
-          <MessageInput />
-        </Box>
+        <MessageInput />
       </div>
       <div>
         <h3
@@ -62,10 +56,7 @@ export const Default: Story = {
         >
           Disabled
         </h3>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Toolbar />
-          <MessageInput disabled />
-        </Box>
+        <MessageInput disabled />
       </div>
       <div>
         <h3
@@ -73,10 +64,7 @@ export const Default: Story = {
         >
           Error
         </h3>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Toolbar />
-          <MessageInput error />
-        </Box>
+        <MessageInput error />
       </div>
     </div>
   ),
