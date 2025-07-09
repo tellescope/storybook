@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { Input } from "./Input";
-import { Toolbar } from "./Toolbar";
+import { MessageInput } from "./MessageInput/MessageInput";
+import { Toolbar } from "./Toolbar/Toolbar";
 
 interface MessageProps {
   disabled?: boolean;
@@ -11,7 +11,7 @@ export const Message = ({ disabled, error }: MessageProps) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Toolbar />
-      <Input disabled={disabled} error={error} />
+      <MessageInput disabled={disabled} error={error} />
     </Box>
   );
 };

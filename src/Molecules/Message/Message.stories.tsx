@@ -3,7 +3,7 @@ import React from "react";
 import { Message } from "./Message";
 
 const meta: Meta<typeof Message> = {
-  title: "Molecules/MessageInput",
+  title: "Molecules/Message",
   component: Message,
   parameters: {
     layout: "centered",
@@ -20,7 +20,7 @@ const meta: Meta<typeof Message> = {
       description: "Disables the entire message input interface",
     },
     error: {
-      control: "boolean", 
+      control: "boolean",
       description: "Shows error state with red border on input",
     },
   },
@@ -29,21 +29,39 @@ const meta: Meta<typeof Message> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-
 export const Default: Story = {
   args: {},
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', minWidth: '400px' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+        minWidth: "400px",
+      }}
+    >
       <div>
-        <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', fontWeight: 'bold' }}>Default</h3>
+        <h3
+          style={{ margin: "0 0 10px 0", fontSize: "14px", fontWeight: "bold" }}
+        >
+          Default
+        </h3>
         <Message />
       </div>
       <div>
-        <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', fontWeight: 'bold' }}>Disabled</h3>
+        <h3
+          style={{ margin: "0 0 10px 0", fontSize: "14px", fontWeight: "bold" }}
+        >
+          Disabled
+        </h3>
         <Message disabled />
       </div>
       <div>
-        <h3 style={{ margin: '0 0 10px 0', fontSize: '14px', fontWeight: 'bold' }}>Error</h3>
+        <h3
+          style={{ margin: "0 0 10px 0", fontSize: "14px", fontWeight: "bold" }}
+        >
+          Error
+        </h3>
         <Message error />
       </div>
     </div>
@@ -51,7 +69,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: "A comparison view showing all possible states of the Message component.",
+        story:
+          "A comparison view showing all possible states of the Message component.",
       },
     },
   },

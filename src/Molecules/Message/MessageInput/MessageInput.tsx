@@ -9,7 +9,7 @@ interface MessageInputProps {
   error?: boolean;
 }
 
-export const Input = ({ disabled, error }: MessageInputProps) => {
+export const MessageInput = ({ disabled, error }: MessageInputProps) => {
   // Determine border color based on state hierarchy
   const getBorderColor = () => {
     if (disabled) return "1px solid rgb(172, 172, 172)";
