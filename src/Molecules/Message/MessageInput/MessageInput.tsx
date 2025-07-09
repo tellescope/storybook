@@ -23,7 +23,7 @@ export const MessageInput = ({ disabled, error }: MessageInputProps) => {
       // Don't change border or send button on focus if disabled or error
       return {};
     }
-    
+
     return {
       borderColor: "#1C7AE0",
       "& .send-button": {
@@ -39,13 +39,13 @@ export const MessageInput = ({ disabled, error }: MessageInputProps) => {
 
   return (
     <Box
+      borderRadius={28}
+      border={getBorderColor()}
+      display={"flex"}
+      alignItems={"center"}
+      padding={0.8}
+      justifyContent={"space-between"}
       sx={{
-        borderRadius: 28,
-        border: getBorderColor(),
-        display: "flex",
-        alignItems: "center",
-        padding: 0.8,
-        justifyContent: "space-between",
         transition: "border-color 0.2s ease-in-out",
         "&:focus-within": getFocusStyles(),
       }}

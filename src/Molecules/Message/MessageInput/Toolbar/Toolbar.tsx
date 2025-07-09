@@ -10,7 +10,7 @@ import {
   StickyNote2Outlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton } from "@mui/material";
-import { AddTicket, Lightbulb, OpenInFull } from "../Icons";
+import { AddTicket, Lightbulb, OpenInFull } from "../../Icons";
 import { useState } from "react";
 
 enum ToolType {

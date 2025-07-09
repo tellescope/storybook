@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
-import { Message } from "./Message";
+import { MessageInput } from "./MessageInput";
+import { Box } from "@mui/material";
+import { Toolbar } from "./Toolbar/Toolbar";
 
-const meta: Meta<typeof Message> = {
-  title: "Molecules/Message",
-  component: Message,
+
+const meta: Meta<typeof MessageInput> = {
+  title: "Molecules/Message/MessageInput",
+  component: MessageInput,
   parameters: {
     layout: "centered",
     docs: {
@@ -30,7 +32,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    disabled: false,
+    error: false,
+  },
   render: () => (
     <div
       style={{
@@ -46,7 +51,10 @@ export const Default: Story = {
         >
           Default
         </h3>
-        <Message />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Toolbar />
+          <MessageInput />
+        </Box>
       </div>
       <div>
         <h3
@@ -54,7 +62,10 @@ export const Default: Story = {
         >
           Disabled
         </h3>
-        <Message disabled />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Toolbar />
+          <MessageInput disabled />
+        </Box>
       </div>
       <div>
         <h3
@@ -62,7 +73,10 @@ export const Default: Story = {
         >
           Error
         </h3>
-        <Message error />
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+          <Toolbar />
+          <MessageInput error />
+        </Box>
       </div>
     </div>
   ),
