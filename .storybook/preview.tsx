@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react-vite';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import { theme } from './mui-theme';
 
+
 const preview: Preview = {
   parameters: {
     controls: {

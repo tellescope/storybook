@@ -9,7 +9,7 @@ declare module '@mui/material/IconButton' {
 }
 
 export interface IconButtonProps extends Omit<MuiIconButtonProps, 'color' | 'variant' | 'size'> {
-    color?: "primary" | "secondary" | "info";
+    color?: "primary" | "secondary" | "info" | "default";
     size?: "large" | "medium" | "small" | "table";
     onClick?: () => void;
     disabled?: boolean;
