@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { MessageItem } from "./MessageItem/MessageItem";
-import { MessageInput } from "./MessageInput/MessageInput";
+import { MessageItem } from "./MessageItem";
+import { MessageInput } from "./MessageInput";
 import type { IMessage } from "./types";
 
 const incomingMessage: IMessage = {
