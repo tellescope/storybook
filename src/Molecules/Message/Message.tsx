@@ -1,6 +1,17 @@
 import { Box } from "@mui/material";
 import { MessageItem } from "./MessageItem/MessageItem";
 import { MessageInput } from "./MessageInput/MessageInput";
+import type { IMessage } from "./types";
+
+const incomingMessage: IMessage = {
+  type: "INCOMING",
+  text: "Healthy dumpling recipes!",
+};
+
+const outgoingMessage: IMessage = {
+  type: "OUTGOING",
+  text: "I'm looking for some healthy dumpling recipes, can you share some?",
+};
 
 export const Message = () => {
   return (
@@ -12,8 +23,8 @@ export const Message = () => {
       flexDirection={"column"}
       gap={4}
     >
-      <MessageItem messageType="INCOMING" />
-      <MessageItem messageType="OUTGOING" />
+      <MessageItem message={incomingMessage} />
+      <MessageItem message={outgoingMessage} />
       {/* <MessageItem messageType="team-chat" /> */}
       <Box p={3}>
         <MessageInput />

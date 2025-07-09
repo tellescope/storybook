@@ -21,6 +21,27 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: "Healthy dumpling recipes!",
+    messageType: "INCOMING",
+    reactions: [
+      {
+        icon: "😭",
+        count: 1,
+      },
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "A view showing all possible states of the MessageText component.",
+      },
+    },
+  },
+};
+
+export const Outgoing: Story = {
+  args: {
+    children: "Healthy dumpling recipes!",
+    messageType: "OUTGOING",
     reactions: [
       {
         icon: "😭",

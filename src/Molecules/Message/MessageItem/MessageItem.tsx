@@ -1,18 +1,18 @@
 import { Box } from "@mui/material";
 import { MessageText } from "./components";
 import { MessageOptions } from "../MessageOptions/MessageOptions";
-import type { MessageType } from "../types";
+import type { IMessage } from "../types";
 
 interface MessageItemProps {
-  messageType: MessageType;
+  message: IMessage;
 }
 
-export const MessageItem = ({ messageType }: MessageItemProps) => {
+export const MessageItem = ({ message }: MessageItemProps) => {
   return (
     <Box
       display={"flex"}
       justifyContent={"space-between"}
-      flexDirection={messageType === "INCOMING" ? "row" : "row-reverse"}
+      flexDirection={message.type === "INCOMING" ? "row" : "row-reverse"}
       px={4}
       py={1}
       alignItems={"center"}
@@ -29,7 +29,7 @@ export const MessageItem = ({ messageType }: MessageItemProps) => {
         }
       }}
     >
-      <MessageText messageType={messageType}>Healthy dumpling recipes!</MessageText>
+      <MessageText messageType={message.type}>{message.text}</MessageText>
       <Box 
         className="message-options"
         sx={{
@@ -39,7 +39,7 @@ export const MessageItem = ({ messageType }: MessageItemProps) => {
           transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out",
         }}
       >
-        <MessageOptions messageType={messageType} />
+        <MessageOptions messageType={message.type} />
       </Box>
     </Box>
   );

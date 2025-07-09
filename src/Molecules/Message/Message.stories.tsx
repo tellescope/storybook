@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Message } from "./Message";
+import { Message } from "./index";
 
 const meta: Meta<typeof Message> = {
   title: "Molecules/Message/Message",
