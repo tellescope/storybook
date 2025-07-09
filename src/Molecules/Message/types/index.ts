@@ -1,0 +1,1 @@
+export type MessageType = "INCOMING" | "OUTGOING" | "TEAM_CHAT";

@@ -3,27 +3,26 @@ import SvgIcon from "@mui/material/SvgIcon";
 export default function Checkmark() {
   return (
     <SvgIcon>
-      {/* credit: cog icon from https://heroicons.com */}
       <svg
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <path d="M3 17H17V3H3V17Z" fill="url(#pattern0_16355_2412)" />
+        <path d="M0 14H14V0H0V14Z" fill="url(#pattern0_16374_1929)" />
         <defs>
           <pattern
-            id="pattern0_16355_2412"
+            id="pattern0_16374_1929"
             patternContentUnits="objectBoundingBox"
             width="1"
             height="1"
           >
-            <use xlinkHref="#image0_16355_2412" transform="scale(0.00625)" />
+            <use xlinkHref="#image0_16374_1929" transform="scale(0.00625)" />
           </pattern>
           <image
-            id="image0_16355_2412"
+            id="image0_16374_1929"
             width="160"
             height="160"
             preserveAspectRatio="none"

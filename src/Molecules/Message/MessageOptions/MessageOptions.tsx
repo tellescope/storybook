@@ -3,10 +3,12 @@ import {
   MarkEmailUnreadOutlined,
   AddReactionOutlined,
 } from "@mui/icons-material";
-import { Checkmark, Nice } from "../Icons";
+import { Nice } from "../Icons";
+import type { MessageType } from "../types";
 
 interface MessageOptionsProps {
   haveUnreadMessages?: boolean;
+  messageType: MessageType;
 }
 
 const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
@@ -25,21 +27,26 @@ const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
   );
 };
 
-export const MessageOptions = ({ haveUnreadMessages }: MessageOptionsProps) => {
+export const MessageOptions = ({
+  haveUnreadMessages,
+  messageType,
+}: MessageOptionsProps) => {
   return (
     <Box>
       <Box
         display={"flex"}
         flexDirection={"column"}
-        alignItems={"flex-end"}
+        alignItems={messageType === "INCOMING" ? "flex-end" : "flex-start"}
         justifyContent={"center"}
-        gap={0.4}
       >
         <Box
-          mr={0.4}
+          mr={messageType === "INCOMING" ? 1 : 0}
+          ml={messageType === "OUTGOING" ? 1 : 0}
           display={"flex"}
           alignItems={"center"}
           gap={1.4}
+          flexDirection={messageType === "INCOMING" ? "row" : "row-reverse"}
+          mb={1}
           justifyContent={"flex-end"}
         >
           <Typography color={"black"} variant="caption">
@@ -52,8 +59,8 @@ export const MessageOptions = ({ haveUnreadMessages }: MessageOptionsProps) => {
             justifyContent={"center"}
             width={"24px"}
             height={"24px"}
+            p={haveUnreadMessages ? 1 : 0}
             borderRadius={"100px"}
-            p={1}
             sx={{
               "&:hover": {
                 cursor: "pointer",
@@ -71,7 +78,7 @@ export const MessageOptions = ({ haveUnreadMessages }: MessageOptionsProps) => {
             borderRadius={"100px"}
             padding={"0"}
           >
-            <ButttonIcon icon={<Checkmark />} />
+            <ButttonIcon icon={<Nice />} />
             <ButttonIcon icon={<Nice />} />
             <ButttonIcon icon={<AddReactionOutlined />} />
           </Box>
