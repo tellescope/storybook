@@ -67,6 +67,8 @@ export default function CustomAccordion({ title = "Tagged as", children, expande
               }}
             />
             <Box
+              // @ might be used for another accordion
+              onClick={(event) => event.stopPropagation()}
               sx={{
                 display: "flex",
                 alignItems: "center",
