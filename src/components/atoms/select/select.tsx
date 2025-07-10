@@ -65,7 +65,7 @@ const Select: FC<SelectProps> = ({
                         overflowY: 'hidden',
                         maxWidth: '100%',
                         touchAction: 'pan-y',
-                        paddingRight: appearance === 'table' ? "72px" : undefined,
+                        paddingRight: appearance === 'table' ? "40px" : undefined,
                         "& > *": {
                             flexShrink: 0, // Prevent chips from shrinking and shifting
                         },
@@ -192,6 +192,9 @@ const Select: FC<SelectProps> = ({
             return {
                 minWidth: 220,
                 maxWidth: "100%",
+                "& .MuiInputBase-root.MuiInput-root": {
+                    marginTop: "0px !important",
+                },
                 '.MuiOutlinedInput-root': {
                     height: "auto",
                     padding: '24px',
@@ -200,18 +203,19 @@ const Select: FC<SelectProps> = ({
                     display: 'none',
                 },
                 "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
-                    // display: 'none',
+                    display: 'none',
                     backgroundColor: '#fff',
-                    paddingRight: "24px",
-                    paddingLeft: "24px",
-                    top: size === "medium" ? "4px" : "1px",
+                    paddingRight: "8px",
+                    paddingLeft: "8px",
+                    // top: size === "medium" ? "4px" : "1px",
+                    top: "4px",
                     width: "auto",
                     zIndex: 999
                 },
                 '&:hover': {
                     "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
                         display: "block",
-                        paddingLeft: "24px",
+                        paddingLeft: "8px",
                     }
                 },
                 ".MuiSelect-select.MuiSelect-standard.MuiInputBase-input.MuiInput-input:focus": {
@@ -220,11 +224,13 @@ const Select: FC<SelectProps> = ({
                 '& .Mui-focused ': {
                     "& .MuiSvgIcon-root.MuiSelect-icon.MuiSelect-iconStandard": {
                         display: "block",
-                        paddingLeft: "24px",
+                        paddingLeft: "8px",
                     }
                 },
                 ".MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.MuiInputBase-input": {
-                    paddingRight: "0 !important"
+                    paddingRight: "0 !important",
+                    paddingY: "4px",
+
                 },
                 '& .MuiOutlinedInput-notchedOutline': {
                     display: 'none',
