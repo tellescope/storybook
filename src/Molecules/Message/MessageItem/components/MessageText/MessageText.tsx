@@ -1,89 +1,113 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import type { MessageType } from "../../../types";
+import {
+  bubbleBackgroundColors,
+  messageBubbleBorderBottomLeftRadius,
+  messageBubbleBorderBottomRightRadius,
+  messageContainerWidth,
+  messageTextColors,
+  reactionsContainerJustifyContent,
+} from "./styles/maps";
+
+export interface Reaction {
+  icon: string;
+  count: number;
+}
 
 interface TextProps {
   children: React.ReactNode;
   messageType: MessageType;
-  reactions?: {
-    icon: string;
-    count: number;
-  }[];
+  reactions?: Reaction[];
 }
 
-const data = [
-  {
-    icon: "😭",
-    count: 1,
-  },
-  {
-    icon: "😭",
-    count: 2,
-  },
-  {
-    icon: "😭",
-    count: 3,
-  },
-];
+const MessageContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "messageType",
+})<{ messageType: MessageType }>(({ messageType }) => ({
+  width: messageContainerWidth[messageType],
+}));
+
+const MessageBubble = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "messageType",
+})<{ messageType: MessageType }>(({ messageType }) => ({
+  padding: "10px 16px",
+  maxWidth: "fit-content",
+  backgroundColor: bubbleBackgroundColors[messageType],
+  borderTopRightRadius: "20px",
+  borderTopLeftRadius: "20px",
+  borderBottomLeftRadius: messageBubbleBorderBottomLeftRadius[messageType],
+  borderBottomRightRadius: messageBubbleBorderBottomRightRadius[messageType],
+}));
+
+const MessageContent = styled(Typography, {
+  shouldForwardProp: (prop) => prop !== "messageType",
+})<{ messageType: MessageType }>(({ messageType }) => ({
+  color: messageTextColors[messageType],
+  fontSize: "16px",
+}));
+
+const ReactionsContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "messageType",
+})<{ messageType: MessageType }>(({ messageType }) => ({
+  display: "flex",
+  justifyContent: reactionsContainerJustifyContent[messageType],
+}));
+
+const ReactionsWrapper = styled(Box)({
+  marginTop: "3px",
+  width: "fit-content",
+  padding: "2px 8px",
+  borderRadius: "100px",
+  backgroundColor: "#EFF0F2",
+  display: "flex",
+  alignItems: "center",
+  gap: "4px",
+});
+
+const ReactionItem = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "3.2px",
+});
+
+interface ReactionsProps {
+  reactions: Reaction[];
+  messageType: MessageType;
+}
+
+const Reactions = ({ reactions, messageType }: ReactionsProps) => {
+  if (reactions.length === 0) {
+    return null;
+  }
+
+  return (
+    <ReactionsContainer messageType={messageType}>
+      <ReactionsWrapper>
+        {reactions.map((reaction) => (
+          <ReactionItem key={reaction.icon}>
+            <Box>{reaction.icon}</Box>
+            <Typography variant="caption" color="black">
+              {reaction.count}
+            </Typography>
+          </ReactionItem>
+        ))}
+      </ReactionsWrapper>
+    </ReactionsContainer>
+  );
+};
 
 export const MessageText = ({
   children,
   messageType,
-  reactions = data,
+  reactions = [],
 }: TextProps) => {
   return (
-    <Box width={messageType === "INCOMING" ? "100%" : "fit-content"}>
-      <Box
-        px={2}
-        maxWidth={"fit-content"}
-        py={1.2}
-        bgcolor={messageType === "INCOMING" ? "#EFF0F2" : "#1C7AE0"}
-        sx={{
-          borderBottomLeftRadius: messageType === "INCOMING" ? "8px" : "20px",
-          borderBottomRightRadius: messageType === "INCOMING" ? "20px" : "8px",
-          borderTopRightRadius: "20px",
-          borderTopLeftRadius: "20px",
-        }}
-      >
-        <Typography variant="body1" sx={{ color: messageType === "INCOMING" ? "#1D1B20" : "#FFFFFF", fontSize: "16px" }}>
+    <MessageContainer messageType={messageType}>
+      <MessageBubble messageType={messageType}>
+        <MessageContent variant="body1" messageType={messageType}>
           {children}
-        </Typography>
-      </Box>
-      {reactions && reactions.length > 0 && (
-        <Box
-          display={"flex"}
-          justifyContent={
-            messageType === "INCOMING" ? "flex-start" : "flex-end"
-          }
-        >
-          <Box
-            mt="3px"
-            width={"fit-content"}
-            px={1}
-            py={"2px"}
-            borderRadius={"100px"}
-            bgcolor={"#EFF0F2"}
-            display={"flex"}
-            alignItems={"center"}
-            gap={0.4}
-          >
-            <Box display={"flex"} alignItems={"center"} gap={1}>
-              {reactions.map((reaction) => (
-                <Box
-                  key={reaction.icon}
-                  display={"flex"}
-                  alignItems={"center"}
-                  gap={0.4}
-                >
-                  <Box>{reaction.icon}</Box>
-                  <Typography variant="caption" color={"black"}>
-                    {reaction.count}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        </Box>
-      )}
-    </Box>
+        </MessageContent>
+      </MessageBubble>
+      <Reactions reactions={reactions} messageType={messageType} />
+    </MessageContainer>
   );
 };

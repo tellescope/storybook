@@ -1,13 +1,14 @@
 import { Box } from "@mui/material";
-import { MessageText } from "./components";
+import { MessageText, type Reaction } from "./components";
 import { MessageOptions } from "../MessageOptions";
 import type { IMessage } from "../types";
 
 interface MessageItemProps {
   message: IMessage;
+  reactions?: Reaction[];
 }
 
-export const MessageItem = ({ message }: MessageItemProps) => {
+export const MessageItem = ({ message, reactions }: MessageItemProps) => {
   return (
     <Box
       display={"flex"}
@@ -29,7 +30,7 @@ export const MessageItem = ({ message }: MessageItemProps) => {
         }
       }}
     >
-      <MessageText messageType={message.type}>{message.text}</MessageText>
+      <MessageText messageType={message.type} reactions={reactions}>{message.text}</MessageText>
       <Box 
         className="message-options"
         sx={{

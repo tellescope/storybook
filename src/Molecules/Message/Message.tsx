@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { MessageItem } from "./MessageItem";
+import { MessageItem, type Reaction } from "./MessageItem";
 import { MessageInput } from "./MessageInput";
 import type { IMessage } from "./types";
 
@@ -13,6 +13,27 @@ const outgoingMessage: IMessage = {
   text: "I'm looking for some healthy dumpling recipes, can you share some?",
 };
 
+const teamChatMessage: IMessage = {
+  type: "TEAM_CHAT",
+  text: "I'm looking for some healthy dumpling recipes, can you share some?",
+};
+
+const reactions: Reaction[] = [
+  {
+    icon: "😭",
+    count: 1,
+  },
+  {
+    icon: "😭",
+    count: 2,
+  },
+  
+  {
+    icon: "😭",
+    count: 3,
+  },
+];
+
 export const Message = () => {
   return (
     <Box
@@ -24,7 +45,9 @@ export const Message = () => {
       gap={4}
     >
       <MessageItem message={incomingMessage} />
-      <MessageItem message={outgoingMessage} />
+      <MessageItem reactions={reactions} message={outgoingMessage} />
+      <MessageItem reactions={reactions} message={teamChatMessage} />
+
       {/* <MessageItem messageType="team-chat" /> */}
       <Box p={3}>
         <MessageInput />
