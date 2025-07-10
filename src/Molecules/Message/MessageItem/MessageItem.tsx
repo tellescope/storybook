@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { MessageText, type Reaction } from "./components";
+import { MessageText } from "./components";
 import { MessageOptions } from "../MessageOptions";
-import type { IMessage } from "../types";
+import type { IMessage, Reaction } from "../types";
 
 interface MessageItemProps {
   message: IMessage;

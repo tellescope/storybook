@@ -4,3 +4,9 @@ export interface IMessage {
   type: MessageType;
   text: string;
 }
+
+
+export interface Reaction {
+  icon: string;
+  count: number;
+}
