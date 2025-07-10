@@ -84,7 +84,7 @@ export const Toolbar = () => {
   ];
   
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "space-between" }}>
       {tools.slice(0, 6).map(({ type, icon }) => {
         const backgroundColor = toolColors[type];
         

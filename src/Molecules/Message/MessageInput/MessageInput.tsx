@@ -9,7 +9,7 @@ interface MessageInputProps {
 
 export const MessageInput = ({ disabled, error }: MessageInputProps) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 1, width: "100%" }}>
       <Toolbar />
       <Input disabled={disabled} error={error} />
     </Box>

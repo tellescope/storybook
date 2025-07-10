@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ItemViewer } from "./ItemViewer";
+import { Chat } from "./Chat";
 
 
-const meta: Meta<typeof ItemViewer> = {
-  title: "Organism/ItemViewer/ItemViewer",
-  component: ItemViewer ,
+const meta: Meta<typeof Chat> = {
+  title: "Organism/ItemViewer/Chat",
+  component: Chat ,
   parameters: {
     layout: "centered",
     docs: {

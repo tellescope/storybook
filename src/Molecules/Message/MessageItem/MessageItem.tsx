@@ -14,7 +14,7 @@ export const MessageItem = ({ message, reactions }: MessageItemProps) => {
       display={"flex"}
       justifyContent={"space-between"}
       flexDirection={message.type === "INCOMING" ? "row" : "row-reverse"}
-      px={4}
+      px={2}
       py={1}
       alignItems={"center"}
       bgcolor={"transparent"}
