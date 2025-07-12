@@ -1,79 +1,24 @@
-import { Box, Divider, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage, Reaction } from "../../../Molecules/Message/types";
-import { useState } from "react";
-import { Header, ChatActions, EmptyHeader } from "./components";
+import { Header, EmptyHeader } from "./components";
 import { MessageItem } from "../../../Molecules/Message/MessageItem";
 import { MessageInput } from "../../../Molecules/Message/MessageInput";
+import { styles } from "./Chat.styles";
+export interface ChatProps {
+  messages: IMessage[];
+  reactions?: Reaction[];
+  enableTeamChat?: boolean;
+  setEnableTeamChat?: (value: boolean) => void;
+}
 
-const incomingMessage: IMessage = {
-  type: "INCOMING",
-  text: "Healthy dumpling recipes!",
-};
-
-// const outgoingMessage: IMessage = {
-//   type: "OUTGOING",
-//   text: "I'm looking for some healthy dumpling recipes, can you share some?",
-// };
-
-// const teamChatMessage: IMessage = {
-//   type: "TEAM_CHAT",
-//   text: "I'm looking for some healthy dumpling recipes, can you share some?",
-// };
-
-const reactions: Reaction[] = [
-  {
-    icon: "😭",
-    count: 1,
-  },
-  {
-    icon: "😭",
-    count: 2,
-  },
-
-  {
-    icon: "😭",
-    count: 3,
-  },
-];
-
-const sampleMessages: IMessage[] = [
-  {
-    type: "INCOMING",
-    text: "Healthy dumpling recipes!",
-  },
-  {
-    type: "OUTGOING",
-    text: "I'm looking for some healthy dumpling recipes, can you share some?",
-  },
-  {
-    type: "OUTGOING",
-    text: "I'm looking for some healthy dumpling recipes, can you share some?",
-  },
-  {
-    type: "INCOMING",
-    text: "Healthy dumpling recipes!",
-  },
-  // {
-  //   type: "TEAM_CHAT",
-  //   text: "I'm looking for some healthy dumpling recipes, can you share some?",
-  // },
-];
-
-export const Chat = () => {
-  const [isTeamChatMode, setIsTeamChatMode] = useState<boolean>(false);
-  const [enableTeamChat, setEnableTeamChat] = useState<boolean>(false);
-  const [messages, setMessages] = useState<IMessage[]>(sampleMessages);
-
-  console.log(enableTeamChat);
+export const Chat = ({
+  messages,
+  reactions,
+  enableTeamChat = false,
+  setEnableTeamChat = () => {},
+}: ChatProps) => {
   return (
-    <Box
-      width={800}
-      boxShadow={"0px 0px 10px 0px rgba(0, 0, 0, 0.1)"}
-      borderRadius={2}
-      display={"flex"}
-      flexDirection={"column"}
-      height={800}
-    >
+    <Box sx={styles.container}>
       {messages.length > 0 ? (
         <Header
           enableTeamChat={enableTeamChat}
@@ -84,13 +29,7 @@ export const Chat = () => {
       )}
 
       <Box
-        my={2}
-        overflow={"auto"}
-        flex={1}
-        display={"flex"}
-        flexDirection={"column"}
-        justifyContent={messages.length === 0 ? "center" : "flex-start"}
-        gap={messages.length > 0 ? 2 : 0}
+        sx={styles.messagesContainer(enableTeamChat, messages.length)}
       >
         {messages.length > 0 ? (
           messages.map((message, index) => (
@@ -102,12 +41,8 @@ export const Chat = () => {
             />
           ))
         ) : (
-          <Stack
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Box bgcolor={"#EFF0F2"} borderRadius={20} px={1.4} py={0.5}>
+          <Stack sx={styles.emptyContainer}>
+            <Box sx={styles.emptyMessageBox}>
               <Typography
                 variant="body2"
                 fontWeight={600}
@@ -119,7 +54,7 @@ export const Chat = () => {
           </Stack>
         )}
       </Box>
-      <Box p={2}>
+      <Box sx={styles.inputContainer(enableTeamChat)}>
         <MessageInput />
       </Box>
     </Box>
