@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+import { Box, Divider, Stack, Typography } from "@mui/material";
 import type { IMessage, Reaction } from "../../../Molecules/Message/types";
 import { useState } from "react";
-import { Header, ChatActions } from "./components";
+import { Header, ChatActions, EmptyHeader } from "./components";
 import { MessageItem } from "../../../Molecules/Message/MessageItem";
 import { MessageInput } from "../../../Molecules/Message/MessageInput";
 
@@ -61,7 +61,10 @@ const sampleMessages: IMessage[] = [
 
 export const Chat = () => {
   const [isTeamChatMode, setIsTeamChatMode] = useState<boolean>(false);
+  const [enableTeamChat, setEnableTeamChat] = useState<boolean>(false);
+  const [messages, setMessages] = useState<IMessage[]>(sampleMessages);
 
+  console.log(enableTeamChat);
   return (
     <Box
       width={800}
@@ -71,31 +74,54 @@ export const Chat = () => {
       flexDirection={"column"}
       height={800}
     >
-      <Header />
-      <ChatActions />
+      {messages.length > 0 ? (
+        <Header
+          enableTeamChat={enableTeamChat}
+          setEnableTeamChat={setEnableTeamChat}
+        />
+      ) : (
+        <EmptyHeader />
+      )}
+
       <Box
         my={2}
         overflow={"auto"}
         flex={1}
         display={"flex"}
         flexDirection={"column"}
-        gap={2}
+        justifyContent={messages.length === 0 ? "center" : "flex-start"}
+        gap={messages.length > 0 ? 2 : 0}
       >
-        {sampleMessages.map((message, index) => (
-          <MessageItem avatar={message.avatar} key={index} message={message} reactions={reactions} />
-        ))}
+        {messages.length > 0 ? (
+          messages.map((message, index) => (
+            <MessageItem
+              avatar={message.avatar}
+              key={index}
+              message={message}
+              reactions={reactions}
+            />
+          ))
+        ) : (
+          <Stack
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Box bgcolor={"#EFF0F2"} borderRadius={20} px={1.4} py={0.5}>
+              <Typography
+                variant="body2"
+                fontWeight={600}
+                color="text.secondary"
+              >
+                You must specify a subject to send a chat
+              </Typography>
+            </Box>
+          </Stack>
+        )}
       </Box>
       <Box p={2}>
         <MessageInput />
       </Box>
-      {/* <MessageItem message={incomingMessage} />
-      <MessageItem reactions={reactions} message={outgoingMessage} />
-      <MessageItem reactions={reactions} message={teamChatMessage} />
-
-
-      <Box p={3}>
-        <MessageInput />
-      </Box> */}
     </Box>
   );
 };
