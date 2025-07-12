@@ -82,7 +82,7 @@ export const Chat = () => {
         gap={2}
       >
         {sampleMessages.map((message, index) => (
-          <MessageItem key={index} message={message} reactions={reactions} />
+          <MessageItem avatar={message.avatar} key={index} message={message} reactions={reactions} />
         ))}
       </Box>
       <Box p={2}>

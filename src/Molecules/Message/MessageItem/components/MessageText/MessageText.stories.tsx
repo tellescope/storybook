@@ -58,3 +58,17 @@ export const Outgoing: Story = {
   },
 };
 
+export const IncomingWithAvatar: Story = {
+  args: {
+    ...Default.args,
+    avatar: "https://i.pravatar.cc/32",
+  },
+};
+
+export const OutgoingWithAvatar: Story = {
+  args: {
+    ...Outgoing.args,
+    avatar: "https://i.pravatar.cc/32",
+  },
+};
+

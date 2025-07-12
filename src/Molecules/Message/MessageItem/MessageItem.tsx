@@ -6,9 +6,10 @@ import type { IMessage, Reaction } from "../types";
 interface MessageItemProps {
   message: IMessage;
   reactions?: Reaction[];
+  avatar?: string;
 }
 
-export const MessageItem = ({ message, reactions }: MessageItemProps) => {
+export const MessageItem = ({ message, reactions, avatar }: MessageItemProps) => {
   return (
     <Box
       display={"flex"}
@@ -25,19 +26,26 @@ export const MessageItem = ({ message, reactions }: MessageItemProps) => {
           "& .message-options": {
             opacity: 1,
             visibility: "visible",
-            transform: "translateX(0)"
-          }
-        }
+            transform: "translateX(0)",
+          },
+        },
       }}
     >
-      <MessageText messageType={message.type} reactions={reactions}>{message.text}</MessageText>
-      <Box 
+      <MessageText
+        messageType={message.type}
+        reactions={reactions}
+        avatar={avatar}
+      >
+        {message.text}
+      </MessageText>
+      <Box
         className="message-options"
         sx={{
           opacity: 0,
           visibility: "hidden",
           transform: "translateX(10px)",
-          transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out",
+          transition:
+            "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out",
         }}
       >
         <MessageOptions messageType={message.type} />
