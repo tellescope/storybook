@@ -11,7 +11,7 @@ import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
 import { Header } from "../shared/components/Header";
 
-export interface ChatProps {
+export interface SMSProps {
   content: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
@@ -19,13 +19,13 @@ export interface ChatProps {
   chatInterface: ChatInterface;
 }
 
-export const Chat = ({
+export const SMS = ({
   content,
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
   chatInterface,
-}: ChatProps) => {
+}: SMSProps) => {
   let lastDate: Date | null = null;
 
   return (

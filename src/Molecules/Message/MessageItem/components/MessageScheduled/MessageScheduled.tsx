@@ -1,5 +1,5 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
-
+import AccessTime from "@mui/icons-material/AccessTime";
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import {
@@ -8,23 +8,22 @@ import {
   MessageContainer,
   MessageContent,
 } from "./styles/maps";
-import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
-interface TextProps {
+interface ScheduledProps {
   children: React.ReactNode;
   messageType: MessageType;
   reactions?: Reaction[];
   avatar?: string;
-  chatInterface?: ChatInterface;
+  scheduledTime?: string;
 }
 
-export const MessageText = ({
+export const MessageScheduled = ({
   children,
   messageType,
   reactions = [],
   avatar,
-  chatInterface,
-}: TextProps) => {
+  scheduledTime,
+}: ScheduledProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
   return (
     <Container messageType={messageType}>
@@ -35,12 +34,29 @@ export const MessageText = ({
             {children}
           </MessageContent>
         </MessageBubble>
-        {messageType === "INCOMING" && chatInterface === "MMS" && (
-          <Box>
+        {scheduledTime && (
+          <Stack
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            gap={1.4}
+            mt={0.5}
+            px={1}
+            borderRadius={10}
+            bgcolor={"#1C7AE01A"}
+          >
             <Typography fontWeight={600} variant="caption">
-              +1 202 555-0123
+              {scheduledTime}
             </Typography>
-          </Box>
+            <Box
+              sx={{ cursor: "pointer" }}
+              onClick={() => console.log("cancel")}
+            >
+              <Typography fontWeight={600} color={"#1C7AE0"} variant="caption">
+                Cancel
+              </Typography>
+            </Box>
+          </Stack>
         )}
         {messageType == "TEAM_CHAT" && (
           <Stack

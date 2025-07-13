@@ -11,7 +11,7 @@ import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
 import { Header } from "../shared/components/Header";
 
-export interface ChatProps {
+export interface EmailProps {
   content: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
@@ -19,13 +19,13 @@ export interface ChatProps {
   chatInterface: ChatInterface;
 }
 
-export const Chat = ({
+export const Email = ({
   content,
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
   chatInterface,
-}: ChatProps) => {
+}: EmailProps) => {
   let lastDate: Date | null = null;
 
   return (
@@ -57,6 +57,7 @@ export const Chat = ({
                   key={index}
                   message={message}
                   reactions={reactions}
+                  scheduledTime={message.scheduledTime}
                 />
               </>
             );
@@ -69,7 +70,7 @@ export const Chat = ({
                 fontWeight={600}
                 color="text.secondary"
               >
-                You must specify a subject to send a chat
+                You must specify participants and a subject to send an email
               </Typography>
             </Box>
           </Stack>

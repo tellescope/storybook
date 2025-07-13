@@ -1,45 +1,36 @@
 import { Box } from "@mui/material";
-import { MessageText } from "./components";
+import { MessageContent } from "./components";
 import { MessageOptions } from "../MessageOptions";
 import type { IMessage, Reaction } from "../types";
+import { useMessageItemStyles } from "./styles/maps";
+import type { ChatInterface } from "../../../Organism/ItemViewer/types";
 
 interface MessageItemProps {
   message: IMessage;
   reactions?: Reaction[];
+  avatar?: string;
+  scheduledTime?: string;
+  chatInterface?: ChatInterface;
 }
 
-export const MessageItem = ({ message, reactions }: MessageItemProps) => {
+export const MessageItem = ({
+  message,
+  reactions,
+  avatar,
+  scheduledTime,
+  chatInterface,
+}: MessageItemProps) => {
+  const styles = useMessageItemStyles({ messageType: message.type });
   return (
-    <Box
-      display={"flex"}
-      justifyContent={"space-between"}
-      flexDirection={message.type === "INCOMING" ? "row" : "row-reverse"}
-      px={2}
-      py={1}
-      alignItems={"center"}
-      bgcolor={"transparent"}
-      sx={{
-        transition: "background-color 0.2s ease-in-out",
-        "&:hover": {
-          bgcolor: "#EFF0F24D",
-          "& .message-options": {
-            opacity: 1,
-            visibility: "visible",
-            transform: "translateX(0)"
-          }
-        }
-      }}
-    >
-      <MessageText messageType={message.type} reactions={reactions}>{message.text}</MessageText>
-      <Box 
-        className="message-options"
-        sx={{
-          opacity: 0,
-          visibility: "hidden",
-          transform: "translateX(10px)",
-          transition: "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out",
-        }}
-      >
+    <Box sx={styles.root}>
+      <MessageContent
+        message={message}
+        reactions={reactions}
+        avatar={avatar}
+        scheduledTime={scheduledTime}        
+        chatInterface={chatInterface}
+      />
+      <Box className="message-options" sx={styles.messageOptions}>
         <MessageOptions messageType={message.type} />
       </Box>
     </Box>

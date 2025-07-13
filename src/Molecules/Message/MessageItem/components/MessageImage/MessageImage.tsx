@@ -1,47 +1,64 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
-
+import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import {
   Container,
   MessageBubble,
   MessageContainer,
-  MessageContent,
+  messageTextColors,
 } from "./styles/maps";
-import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
+import { Download } from "@mui/icons-material";
+import { Icon } from "../../../../../Atoms";
 
-interface TextProps {
-  children: React.ReactNode;
+interface ImageProps {
+  image: {
+    url: string;
+    fileName: string;
+  };
   messageType: MessageType;
   reactions?: Reaction[];
   avatar?: string;
-  chatInterface?: ChatInterface;
 }
 
-export const MessageText = ({
-  children,
+export const MessageImage = ({
+  image,
   messageType,
   reactions = [],
   avatar,
-  chatInterface,
-}: TextProps) => {
+}: ImageProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
   return (
     <Container messageType={messageType}>
       {showAvatar && <Avatar src={avatar} sx={{ width: 32, height: 32 }} />}
       <MessageContainer messageType={messageType}>
         <MessageBubble messageType={messageType}>
-          <MessageContent variant="body1" messageType={messageType}>
-            {children}
-          </MessageContent>
+          <Stack display={"flex"} flexDirection={"column"} gap={1}>
+            <img
+              src={image.url}
+              style={{
+                borderRadius: "10px",
+              }}
+              alt="message-image"
+            />
+            <Stack
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Typography
+                variant="caption"
+                sx={{ color: messageTextColors[messageType] }}
+              >
+                {image.fileName}
+              </Typography>
+              <Icon
+                icon={Download}
+                sx={{ color: messageTextColors[messageType] }}
+              />
+            </Stack>
+          </Stack>
         </MessageBubble>
-        {messageType === "INCOMING" && chatInterface === "MMS" && (
-          <Box>
-            <Typography fontWeight={600} variant="caption">
-              +1 202 555-0123
-            </Typography>
-          </Box>
-        )}
         {messageType == "TEAM_CHAT" && (
           <Stack
             display={"flex"}

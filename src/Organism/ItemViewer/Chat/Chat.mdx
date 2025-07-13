@@ -1,0 +1,58 @@
+
+import { Meta, Story, Canvas, ArgTypes } from "@storybook/addon-docs";
+import * as ChatStories from "./Chat.stories";
+import { Chat } from "./Chat";
+
+<Meta title="Organism/ItemViewer/Chat" of={ChatStories} />
+
+# Chat
+
+The `Chat` component is a flexible interface for displaying conversations. It supports different message types, reactions, and can be configured for various communication channels like standard chat, SMS, or team discussions.
+
+## How to use
+
+To use the `Chat` component, you need to import it and provide it with an array of messages.
+
+```tsx
+import { Chat } from "./Chat";
+import { sampleMessages, reactions } from "./data";
+
+<Chat
+  chatInterface="CHAT"
+  content={sampleMessages}
+  reactions={reactions}
+  enableTeamChat={true}
+/>;
+```
+
+## Props
+
+The `Chat` component accepts the following props:
+
+<ArgTypes of={Chat} />
+
+## Stories
+
+### With Messages
+
+This is the standard view of the chat, displaying a list of messages.
+
+<Canvas>
+  <Story of={ChatStories.WithMessages} />
+</Canvas>
+
+### Empty
+
+This view shows the component when there are no messages to display.
+
+<Canvas>
+  <Story of={ChatStories.Empty} />
+</Canvas>
+
+### Team Chat Enabled
+
+When `enableTeamChat` is true, the input area changes to provide team-chat-specific functionalities.
+
+<Canvas>
+  <Story of={ChatStories.TeamChatEnabled} />
+</Canvas> 

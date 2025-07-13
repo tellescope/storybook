@@ -1,39 +1,57 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
-
+import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import {
   Container,
   MessageBubble,
   MessageContainer,
-  MessageContent,
+  messageTextColors,
 } from "./styles/maps";
 import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
-interface TextProps {
-  children: React.ReactNode;
+interface LinkProps {
+  link: string;
   messageType: MessageType;
   reactions?: Reaction[];
   avatar?: string;
   chatInterface?: ChatInterface;
 }
 
-export const MessageText = ({
-  children,
+export const MessageLink = ({
+  link,
   messageType,
   reactions = [],
   avatar,
   chatInterface,
-}: TextProps) => {
+}: LinkProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
   return (
     <Container messageType={messageType}>
       {showAvatar && <Avatar src={avatar} sx={{ width: 32, height: 32 }} />}
       <MessageContainer messageType={messageType}>
         <MessageBubble messageType={messageType}>
-          <MessageContent variant="body1" messageType={messageType}>
-            {children}
-          </MessageContent>
+          <Stack display={"flex"} flexDirection={"column"} gap={1}>
+            <img
+              src={"https://placehold.co/60x60"}
+              style={{
+                borderRadius: "10px",
+              }}
+              alt="message-image"
+            />
+            <Stack
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Typography
+                variant="caption"
+                sx={{ color: messageTextColors[messageType] }}
+              >
+                {link}
+              </Typography>
+            </Stack>
+          </Stack>
         </MessageBubble>
         {messageType === "INCOMING" && chatInterface === "MMS" && (
           <Box>

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Chat } from "./Chat";
+import { Email } from "./Email";
 import { sampleMessages, reactions } from "./data";
 
-const meta: Meta<typeof Chat> = {
-  title: "Organism/ItemViewer/Chat",
-  component: Chat,
+const meta: Meta<typeof Email> = {
+  title: "Organism/ItemViewer/Email",
+  component: Email,
   parameters: {
     layout: "centered",
     docs: {
@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithMessages: Story = {
   args: {
-    chatInterface: "CHAT",
+    chatInterface: "EMAIL",
     content: sampleMessages,
     reactions: reactions,
     enableTeamChat: false,
@@ -40,7 +40,7 @@ export const WithMessages: Story = {
 
 export const Empty: Story = {
   args: {
-    chatInterface: "CHAT",
+    chatInterface: "EMAIL",
     ...WithMessages.args,
     content: [],
   },
@@ -55,7 +55,7 @@ export const Empty: Story = {
 
 export const TeamChatEnabled: Story = {
   args: {
-    chatInterface: "CHAT",
+    chatInterface: "EMAIL",
     reactions: [],
     ...WithMessages.args,
     enableTeamChat: true,
@@ -64,7 +64,7 @@ export const TeamChatEnabled: Story = {
     docs: {
       description: {
         story:
-          "A view showing the Chat component with Team Chat switch enabled.",
+          "A view showing the Email component with Team Chat switch enabled.",
       },
     },
   },

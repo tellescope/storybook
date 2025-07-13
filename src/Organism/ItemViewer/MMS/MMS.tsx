@@ -11,7 +11,7 @@ import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
 import { Header } from "../shared/components/Header";
 
-export interface ChatProps {
+export interface MMSProps {
   content: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
@@ -19,13 +19,13 @@ export interface ChatProps {
   chatInterface: ChatInterface;
 }
 
-export const Chat = ({
+export const MMS = ({
   content,
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
   chatInterface,
-}: ChatProps) => {
+}: MMSProps) => {
   let lastDate: Date | null = null;
 
   return (
@@ -57,6 +57,8 @@ export const Chat = ({
                   key={index}
                   message={message}
                   reactions={reactions}
+                  chatInterface={chatInterface}
+                  scheduledTime={message.scheduledTime}
                 />
               </>
             );
@@ -69,7 +71,7 @@ export const Chat = ({
                 fontWeight={600}
                 color="text.secondary"
               >
-                You must specify a subject to send a chat
+                Team chats aren’t visible to the thread recipient
               </Typography>
             </Box>
           </Stack>

@@ -11,21 +11,21 @@ import {
 } from "@mui/icons-material";
 import { Box, Divider, IconButton } from "@mui/material";
 import { AddTicket, Lightbulb, OpenInFull } from "../../../Icons";
-import { useState } from "react";
+import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
 enum ToolType {
-  CHAT = "chat",
-  TEXT = "text",
-  MAIL = "mail",
-  GROUP = "group",
-  ASSIGNMENT = "assignment",
-  NOTE = "note",
-  LINK = "link",
-  ATTACH = "attach",
-  MESSAGE = "message",
-  TICKET = "ticket",
-  LIGHTBULB = "lightbulb",
-  EXPAND = "expand",
+  CHAT = "CHAT",
+  SMS = "SMS",
+  EMAIL = "EMAIL",
+  MMS = "MMS",
+  ASSIGNMENT = "ASSIGNMENT",
+  NOTE = "NOTE",
+  LINK = "LINK",
+  ATTACH = "ATTACH",
+  MESSAGE = "MESSAGE",
+  TICKET = "TICKET",
+  LIGHTBULB = "LIGHTBULB",
+  EXPAND = "EXPAND",
 }
 
 interface IconWrapperProps {
@@ -44,7 +44,7 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
         backgroundColor: isSelected ? backgroundColor : "transparent",
         transition: "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
         "&:hover": {
-          backgroundColor: isSelected ? backgroundColor : "#F3F4F6",
+          backgroundColor
         },
       }}
     >
@@ -53,26 +53,22 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
   );
 };
 
-export const Toolbar = () => {
-  const [selectedTool, setSelectedTool] = useState<ToolType | null>(null);
-  
-  const handleToolClick = (tool: ToolType) => {
-    setSelectedTool(selectedTool === tool ? null : tool);
-  };
+export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => {
+
 
   const toolColors: Partial<Record<ToolType, string>> = {
     [ToolType.CHAT]: "#1C7AE0",        // Blue
-    [ToolType.TEXT]: "#8B5CF2",        // Green
-    [ToolType.MAIL]: "#6466F1",        // Orange
-    [ToolType.GROUP]: "#15B8A6",       // Purple
+    [ToolType.SMS]: "#8B5CF2",        // Green
+    [ToolType.EMAIL]: "#6466F1",        // Orange
+    [ToolType.MMS]: "#15B8A6",       // Purple
     // Only first 4 tools have background colors
   };
 
   const tools = [
     { type: ToolType.CHAT, icon: <ChatBubbleOutline /> },
-    { type: ToolType.TEXT, icon: <TextsmsOutlined /> },
-    { type: ToolType.MAIL, icon: <LocalPostOfficeOutlined /> },
-    { type: ToolType.GROUP, icon: <GroupOutlined /> },
+    { type: ToolType.SMS, icon: <TextsmsOutlined /> },
+    { type: ToolType.EMAIL, icon: <LocalPostOfficeOutlined /> },
+    { type: ToolType.MMS, icon: <GroupOutlined /> },
     { type: ToolType.ASSIGNMENT, icon: <AssignmentOutlined /> },
     { type: ToolType.NOTE, icon: <StickyNote2Outlined /> },
     { type: ToolType.LINK, icon: <Link /> },
@@ -92,9 +88,9 @@ export const Toolbar = () => {
           return (
             <IconWrapper
               key={type}
-              isSelected={selectedTool === type}
+              isSelected={chatInterface === type}
               backgroundColor={backgroundColor}
-              onClick={() => handleToolClick(type)}
+              onClick={() => {}}
             >
               {icon}
             </IconWrapper>
@@ -103,7 +99,7 @@ export const Toolbar = () => {
           return (
             <IconButton
               key={type}
-              onClick={() => handleToolClick(type)}
+              onClick={() => {}}
               sx={{
                 color: "black",
                 transition: "color 0.2s ease-in-out",
@@ -118,7 +114,7 @@ export const Toolbar = () => {
       {tools.slice(6).map(({ type, icon }) => (
         <IconButton
           key={type}
-          onClick={() => handleToolClick(type)}
+          onClick={() => {}}
           sx={{
             color: "black",
             transition: "color 0.2s ease-in-out",

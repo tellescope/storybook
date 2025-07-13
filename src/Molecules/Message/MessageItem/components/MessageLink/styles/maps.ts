@@ -67,8 +67,10 @@ export const MessageBubble = styled(Box, {
   backgroundColor: bubbleBackgroundColors[messageType],
   borderTopRightRadius: "20px",
   display: "flex",
+  gap: "8px",
   flexDirection: "row",
   borderTopLeftRadius: "20px",
+  justifyContent: "space-between",
   borderBottomLeftRadius: messageBubbleBorderBottomLeftRadius[messageType],
   borderBottomRightRadius: messageBubbleBorderBottomRightRadius[messageType],
 }));
