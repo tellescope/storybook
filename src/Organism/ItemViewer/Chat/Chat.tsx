@@ -7,9 +7,9 @@ import { MessageInput, Toolbar } from "../../../Molecules/Message/MessageInput";
 import { Icon } from "../../../Atoms";
 import { AddCircleOutline, EmojiEmotionsOutlined } from "@mui/icons-material";
 import { IconButton } from "../../../components/atoms/button/icon-button";
-import { EmptyHeaderType, HeaderType } from "../shared/components/enums";
 import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
+import { Header } from "../shared/components/Header";
 
 export interface ChatProps {
   content: IMessage[];
@@ -93,29 +93,4 @@ export const Chat = ({
       </Box>
     </Box>
   );
-};
-
-const Header = ({
-  content,
-  chatInterface,
-  enableTeamChat,
-  setEnableTeamChat,
-}: {
-  content: IMessage[];
-  chatInterface: ChatInterface;
-  enableTeamChat: boolean;
-  setEnableTeamChat: (value: boolean) => void;
-}) => {
-  if (content.length > 0) {
-    const HeaderComponent = HeaderType[chatInterface].Component;
-    return (
-      <HeaderComponent
-        enableTeamChat={enableTeamChat}
-        setEnableTeamChat={setEnableTeamChat}
-      />
-    );
-  }
-
-  const EmptyHeaderComponent = EmptyHeaderType[chatInterface].Component;
-  return EmptyHeaderComponent ? <EmptyHeaderComponent /> : null;
 };
