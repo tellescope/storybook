@@ -28,7 +28,7 @@ export const HeaderChat = ({
     <Box>
       <Box
         display={"flex"}
-        bgcolor={enableTeamChat ? "#F4F0FF" : "#F8FAFC"}
+        bgcolor={enableTeamChat ? "#F4F0FF" : "#E2E8F0"}
         justifyContent={"space-between"}
         alignItems={"center"}
         p={2}
