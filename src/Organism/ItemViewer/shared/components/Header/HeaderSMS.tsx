@@ -124,23 +124,25 @@ export const HeaderSMS = ({
             />
           </Stack>
         </Box>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          sx={{
-            mr: 2,
-          }}
-        >
-          <Select
-            value={""}
-            label="From: +123 456 7890"
+        {!enableTeamChat && (
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
             sx={{
-              margin: 0,
+              mr: 2,
             }}
-            onChange={() => {}}
-            options={["Option 1", "Option 2", "Option 3"]}
-          />
-        </Box>
+          >
+            <Select
+              value={""}
+              label="From: +123 456 7890"
+              sx={{
+                margin: 0,
+              }}
+              onChange={() => {}}
+              options={["Option 1", "Option 2", "Option 3"]}
+            />
+          </Box>
+        )}
         {!enableTeamChat && (
           <Box mt={1} ml={1}>
             <Stack

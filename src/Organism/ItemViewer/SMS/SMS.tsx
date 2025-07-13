@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage, Reaction } from "../../../Molecules/Message/types";
 import { DateSeparator } from "../shared/components";
-import { MessageItem } from "../../../Molecules/Message/MessageItem";
+import { MessageImage, MessageItem } from "../../../Molecules/Message/MessageItem";
 import { MessageInput, Toolbar } from "../../../Molecules/Message/MessageInput";
 
 import { Icon } from "../../../Atoms";
@@ -12,15 +12,15 @@ import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
 
 export interface SMSProps {
-  messages: IMessage[];
+  content: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
   setEnableTeamChat?: (value: boolean) => void;
   chatInterface: ChatInterface;
 }
 
-  export const SMS = ({
-  messages,
+export const SMS = ({
+  content,
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
@@ -31,14 +31,14 @@ export interface SMSProps {
   return (
     <Box sx={styles.container}>
       <Header
-        messages={messages}
+        content={content}
         chatInterface={chatInterface}
         enableTeamChat={enableTeamChat}
         setEnableTeamChat={setEnableTeamChat}
       />
-      <Box sx={styles.messagesContainer(enableTeamChat, messages.length)}>
-        {messages.length > 0 ? (
-          messages.map((message, index) => {
+      <Box sx={styles.messagesContainer(enableTeamChat, content.length)}>
+        {content.length > 0 ? (
+          content.map((message, index) => {
             const showDateSeparator =
               message.createdAt &&
               (!lastDate ||
@@ -96,17 +96,17 @@ export interface SMSProps {
 };
 
 const Header = ({
-  messages,
+  content,
   chatInterface,
   enableTeamChat,
   setEnableTeamChat,
 }: {
-  messages: IMessage[];
+  content: IMessage[];
   chatInterface: ChatInterface;
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
 }) => {
-  if (messages.length > 0) {
+  if (content.length > 0) {
     const HeaderComponent = HeaderType[chatInterface].Component;
     return (
       <HeaderComponent

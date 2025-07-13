@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const WithMessages: Story = {
   args: {
     chatInterface: "SMS",
-    messages: sampleMessages,
+    content: sampleMessages,
     reactions: reactions,
     enableTeamChat: false,
   },
@@ -42,7 +42,7 @@ export const Empty: Story = {
   args: {
     chatInterface: "SMS",
     ...WithMessages.args,
-    messages: [],
+    content: [],
   },
   parameters: {
     docs: {
