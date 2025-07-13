@@ -3,12 +3,14 @@ import { MessageContent } from "./components";
 import { MessageOptions } from "../MessageOptions";
 import type { IMessage, Reaction } from "../types";
 import { useMessageItemStyles } from "./styles/maps";
+import type { ChatInterface } from "../../../Organism/ItemViewer/types";
 
 interface MessageItemProps {
   message: IMessage;
   reactions?: Reaction[];
   avatar?: string;
   scheduledTime?: string;
+  chatInterface?: ChatInterface;
 }
 
 export const MessageItem = ({
@@ -16,6 +18,7 @@ export const MessageItem = ({
   reactions,
   avatar,
   scheduledTime,
+  chatInterface,
 }: MessageItemProps) => {
   const styles = useMessageItemStyles({ messageType: message.type });
   return (
@@ -24,7 +27,8 @@ export const MessageItem = ({
         message={message}
         reactions={reactions}
         avatar={avatar}
-        scheduledTime={scheduledTime}
+        scheduledTime={scheduledTime}        
+        chatInterface={chatInterface}
       />
       <Box className="message-options" sx={styles.messageOptions}>
         <MessageOptions messageType={message.type} />

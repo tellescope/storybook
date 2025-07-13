@@ -26,7 +26,7 @@ export const WithMessages: Story = {
   args: {
     chatInterface: "MMS",
     content: sampleMessages,
-    reactions: reactions,
+    reactions: [],
     enableTeamChat: false,
   },
   parameters: {

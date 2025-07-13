@@ -1,4 +1,5 @@
 import { Avatar, Box, Stack, Typography } from "@mui/material";
+
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import {
@@ -7,12 +8,14 @@ import {
   MessageContainer,
   MessageContent,
 } from "./styles/maps";
+import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
 interface TextProps {
   children: React.ReactNode;
   messageType: MessageType;
   reactions?: Reaction[];
   avatar?: string;
+  chatInterface?: ChatInterface;
 }
 
 export const MessageText = ({
@@ -20,6 +23,7 @@ export const MessageText = ({
   messageType,
   reactions = [],
   avatar,
+  chatInterface,
 }: TextProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
   return (
@@ -31,6 +35,13 @@ export const MessageText = ({
             {children}
           </MessageContent>
         </MessageBubble>
+        {messageType === "INCOMING" && chatInterface === "MMS" && (
+          <Box>
+            <Typography fontWeight={600} variant="caption">
+              +1 202 555-0123
+            </Typography>
+          </Box>
+        )}
         {messageType == "TEAM_CHAT" && (
           <Stack
             display={"flex"}

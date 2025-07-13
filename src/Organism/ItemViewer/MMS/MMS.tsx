@@ -57,6 +57,7 @@ export const MMS = ({
                   key={index}
                   message={message}
                   reactions={reactions}
+                  chatInterface={chatInterface}
                   scheduledTime={message.scheduledTime}
                 />
               </>
@@ -70,8 +71,7 @@ export const MMS = ({
                 fontWeight={600}
                 color="text.secondary"
               >
-                You must specify participants and a subject to start a group
-                message
+                Team chats aren’t visible to the thread recipient
               </Typography>
             </Box>
           </Stack>

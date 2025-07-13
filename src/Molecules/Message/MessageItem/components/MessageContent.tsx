@@ -1,13 +1,16 @@
-import type { IMessage, Reaction } from "../../types";
+import type {  IMessage, Reaction } from "../../types";
 import { MessageImage } from "./MessageImage/MessageImage";
 import { MessageLink } from "./MessageLink/MessageLink";
 import { MessageText } from "./MessageText/MessageText";
 import { MessageScheduled } from "./MessageScheduled/MessageScheduled";
+import type { ChatInterface } from "../../../../Organism/ItemViewer/types";
 
 interface MessageContentProps {
   message: IMessage;
   reactions?: Reaction[];
   avatar?: string;
+  chatInterface?: ChatInterface;
+  scheduledTime?: string;
 }
 
 const getMessageComponent = (message: IMessage) => {
@@ -33,12 +36,16 @@ export const MessageContent = ({
   message,
   reactions,
   avatar,
+  chatInterface,
+  scheduledTime,
 }: MessageContentProps) => {
   const { Component, props } = getMessageComponent(message);
   const commonProps = {
     messageType: message.type,
     reactions,
     avatar,
+    chatInterface,
+    scheduledTime,
   };
 
   const TypedComponent = Component as any;

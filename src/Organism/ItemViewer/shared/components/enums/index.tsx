@@ -1,5 +1,5 @@
 import { HeaderChat, HeaderEmail, HeaderMMS, HeaderSMS } from "../Header";
-import { EmptyHeaderChat, EmptyHeaderEmail, EmptyHeaderSMS } from "../EmptyHeader";
+import { EmptyHeaderChat, EmptyHeaderEmail, EmptyHeaderMMS, EmptyHeaderSMS } from "../EmptyHeader";
 import type { ChatInterface } from "../../../types";
 import type { ComponentType } from "react";
 
@@ -52,6 +52,6 @@ export const EmptyHeaderType: Record<ChatInterface, EmptyHeaderTypeObject> = {
   },
   MMS: {
     name: "MMS",
-    Component: null,
+    Component: EmptyHeaderMMS,
   },
 };
