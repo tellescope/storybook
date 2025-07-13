@@ -7,14 +7,14 @@ import {
   MessageContainer,
   messageTextColors,
 } from "./styles/maps";
-import { Download } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
+import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
 interface LinkProps {
   link: string;
   messageType: MessageType;
   reactions?: Reaction[];
   avatar?: string;
+  chatInterface?: ChatInterface;
 }
 
 export const MessageLink = ({
@@ -22,6 +22,7 @@ export const MessageLink = ({
   messageType,
   reactions = [],
   avatar,
+  chatInterface,
 }: LinkProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
   return (
@@ -52,6 +53,13 @@ export const MessageLink = ({
             </Stack>
           </Stack>
         </MessageBubble>
+        {messageType === "INCOMING" && chatInterface === "MMS" && (
+          <Box>
+            <Typography fontWeight={600} variant="caption">
+              +1 202 555-0123
+            </Typography>
+          </Box>
+        )}
         {messageType == "TEAM_CHAT" && (
           <Stack
             display={"flex"}

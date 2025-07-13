@@ -3,7 +3,7 @@ import { Meta, Story, Canvas, ArgTypes } from "@storybook/addon-docs";
 import * as ChatStories from "./Chat.stories";
 import { Chat } from "./Chat";
 
-<Meta of={ChatStories} />
+<Meta title="Organism/ItemViewer/Chat" of={ChatStories} />
 
 # Chat
 
@@ -19,7 +19,7 @@ import { sampleMessages, reactions } from "./data";
 
 <Chat
   chatInterface="CHAT"
-  messages={sampleMessages}
+  content={sampleMessages}
   reactions={reactions}
   enableTeamChat={true}
 />;
