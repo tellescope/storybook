@@ -12,7 +12,7 @@ import { styles } from "../shared/styles/maps";
 import type { ChatInterface } from "../types";
 
 export interface ChatProps {
-  messages: IMessage[];
+  content: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
   setEnableTeamChat?: (value: boolean) => void;
@@ -20,7 +20,7 @@ export interface ChatProps {
 }
 
 export const Chat = ({
-  messages,
+  content,
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
@@ -31,14 +31,14 @@ export const Chat = ({
   return (
     <Box sx={styles.container}>
       <Header
-        messages={messages}
+        content={content}
         chatInterface={chatInterface}
         enableTeamChat={enableTeamChat}
         setEnableTeamChat={setEnableTeamChat}
       />
-      <Box sx={styles.messagesContainer(enableTeamChat, messages.length)}>
-        {messages.length > 0 ? (
-          messages.map((message, index) => {
+      <Box sx={styles.messagesContainer(enableTeamChat, content.length)}>
+        {content.length > 0 ? (
+          content.map((message, index) => {
             const showDateSeparator =
               message.createdAt &&
               (!lastDate ||
@@ -96,17 +96,17 @@ export const Chat = ({
 };
 
 const Header = ({
-  messages,
+  content,
   chatInterface,
   enableTeamChat,
   setEnableTeamChat,
 }: {
-  messages: IMessage[];
+  content: IMessage[];
   chatInterface: ChatInterface;
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
 }) => {
-  if (messages.length > 0) {
+  if (content.length > 0) {
     const HeaderComponent = HeaderType[chatInterface].Component;
     return (
       <HeaderComponent

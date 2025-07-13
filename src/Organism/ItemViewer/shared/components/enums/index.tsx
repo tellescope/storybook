@@ -1,6 +1,5 @@
-
-import { HeaderChat } from "../Header";
-import { EmptyHeaderChat } from "../EmptyHeader/EmptyHeaderChat";
+import { HeaderChat, HeaderSMS } from "../Header";
+import { EmptyHeaderChat, EmptyHeaderSMS } from "../EmptyHeader";
 
 export const HeaderType = {
   CHAT: {
@@ -9,7 +8,7 @@ export const HeaderType = {
   },
   SMS: {
     name: "SMS",
-    Component: HeaderChat,
+    Component: HeaderSMS,
   },
   EMAIL: {
     name: "EMAIL",
@@ -28,7 +27,7 @@ export const EmptyHeaderType = {
   },
   SMS: {
     name: "SMS",
-    Component: null,
+    Component: EmptyHeaderSMS,
   },
   EMAIL: {
     name: "EMAIL",
