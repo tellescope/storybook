@@ -3,3 +3,4 @@ export * from "./Reactions/Reactions";
 export * from "./MessageImage/MessageImage";
 export * from "./MessageLink/MessageLink";
 export * from "./MessageContent";
+export * from "./MessageScheduled/MessageScheduled";

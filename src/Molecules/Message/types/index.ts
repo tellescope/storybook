@@ -10,6 +10,7 @@ export interface IMessage {
     fileName: string;
   };
   link?: string;
+  scheduledTime?: string;
 }
 
 

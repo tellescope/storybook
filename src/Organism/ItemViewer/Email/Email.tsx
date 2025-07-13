@@ -57,6 +57,7 @@ export const Email = ({
                   key={index}
                   message={message}
                   reactions={reactions}
+                  scheduledTime={message.scheduledTime}
                 />
               </>
             );
