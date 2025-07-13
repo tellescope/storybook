@@ -1,7 +1,24 @@
 import { HeaderChat, HeaderSMS } from "../Header";
 import { EmptyHeaderChat, EmptyHeaderSMS } from "../EmptyHeader";
+import type { ChatInterface } from "../../../types";
+import type { ComponentType } from "react";
 
-export const HeaderType = {
+type HeaderComponentProps = {
+  enableTeamChat: boolean;
+  setEnableTeamChat: (value: boolean) => void;
+};
+
+type HeaderTypeObject = {
+  name: string;
+  Component: ComponentType<HeaderComponentProps>;
+};
+
+type EmptyHeaderTypeObject = {
+  name: string;
+  Component: ComponentType | null;
+};
+
+export const HeaderType: Record<ChatInterface, HeaderTypeObject> = {
   CHAT: {
     name: "CHAT",
     Component: HeaderChat,
@@ -20,7 +37,7 @@ export const HeaderType = {
   },
 };
 
-export const EmptyHeaderType = {
+export const EmptyHeaderType: Record<ChatInterface, EmptyHeaderTypeObject> = {
   CHAT: {
     name: "CHAT",
     Component: EmptyHeaderChat,

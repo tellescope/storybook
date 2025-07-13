@@ -1,7 +1,12 @@
 import { Avatar, Box, IconButton, Stack, Typography } from "@mui/material";
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
-import { Container, MessageBubble, MessageContainer } from "./styles/maps";
+import {
+  Container,
+  MessageBubble,
+  MessageContainer,
+  messageTextColors,
+} from "./styles/maps";
 import { Download } from "@mui/icons-material";
 import { Icon } from "../../../../../Atoms";
 
@@ -41,10 +46,16 @@ export const MessageImage = ({
               justifyContent={"space-between"}
               alignItems={"center"}
             >
-              <Typography variant="caption" color="white">
-                {image.fileName}awdawz
+              <Typography
+                variant="caption"
+                sx={{ color: messageTextColors[messageType] }}
+              >
+                {image.fileName}
               </Typography>
-              <Icon icon={Download} sx={{ color: "white" }} />
+              <Icon
+                icon={Download}
+                sx={{ color: messageTextColors[messageType] }}
+              />
             </Stack>
           </Stack>
         </MessageBubble>
