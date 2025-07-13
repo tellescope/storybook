@@ -17,7 +17,7 @@ enum ToolType {
   CHAT = "CHAT",
   SMS = "SMS",
   EMAIL = "EMAIL",
-  GROUP = "GROUP",
+  MMS = "MMS",
   ASSIGNMENT = "ASSIGNMENT",
   NOTE = "NOTE",
   LINK = "LINK",
@@ -60,7 +60,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
     [ToolType.CHAT]: "#1C7AE0",        // Blue
     [ToolType.SMS]: "#8B5CF2",        // Green
     [ToolType.EMAIL]: "#6466F1",        // Orange
-    [ToolType.GROUP]: "#15B8A6",       // Purple
+    [ToolType.MMS]: "#15B8A6",       // Purple
     // Only first 4 tools have background colors
   };
 
@@ -68,7 +68,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
     { type: ToolType.CHAT, icon: <ChatBubbleOutline /> },
     { type: ToolType.SMS, icon: <TextsmsOutlined /> },
     { type: ToolType.EMAIL, icon: <LocalPostOfficeOutlined /> },
-    { type: ToolType.GROUP, icon: <GroupOutlined /> },
+    { type: ToolType.MMS, icon: <GroupOutlined /> },
     { type: ToolType.ASSIGNMENT, icon: <AssignmentOutlined /> },
     { type: ToolType.NOTE, icon: <StickyNote2Outlined /> },
     { type: ToolType.LINK, icon: <Link /> },

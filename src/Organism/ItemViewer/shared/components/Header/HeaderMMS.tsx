@@ -5,19 +5,21 @@ import {
   CallOutlined,
   VideocamOutlined,
   CloseOutlined,
-  SmsOutlined,
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
   GroupsOutlined,
+  GroupOutlined,
+  MailOutline,
 } from "@mui/icons-material";
 import { Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
 import Switch from "../../../../../components/atoms/switch/switch";
+import Select from "../../../../../components/atoms/select/select";
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderChat = ({
+export const HeaderMMS = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
@@ -70,14 +72,8 @@ export const HeaderChat = ({
             gap={2}
             alignItems={"center"}
           >
-            <Icon
-              icon={SmsOutlined}
-              size="medium"
-              sx={{ color: "#A754F5" }}
-            />
-            <Typography variant="h6">
-              +123 456 7890
-            </Typography>
+            <Icon icon={GroupOutlined} size="medium" sx={{ color: "#15B8A6" }} />
+            <Typography variant="h6">Chat Subject example</Typography>
             <Button
               appearence="outlined"
               size="small"
@@ -102,7 +98,11 @@ export const HeaderChat = ({
               transition,
             }}
           >
-            <Icon icon={GroupsOutlined} size="medium" />
+            <Icon
+              icon={GroupsOutlined}
+              sx={{ color: enableTeamChat ? "#A754F5" : "black" }}
+              size="medium"
+            />
             <Switch
               checked={enableTeamChat}
               onChange={(e) => setEnableTeamChat(e.target.checked)}
@@ -120,6 +120,26 @@ export const HeaderChat = ({
             />
           </Stack>
         </Box>
+        {!enableTeamChat && (
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            sx={{
+              mr: 2,
+            }}
+          >
+            <Select
+              value={["Option 1", "Option 2", "Option 3"]}
+
+              multiple
+              sx={{
+                margin: 0,
+              }}
+              onChange={() => {}}
+              options={["Option 1", "Option 2", "Option 3"]}
+            />
+          </Box>
+        )}
         {!enableTeamChat && (
           <Box mt={1} ml={1}>
             <Stack

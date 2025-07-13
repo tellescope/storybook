@@ -76,6 +76,6 @@ export const MessageBubble = styled(Box, {
 export const MessageContent = styled(Typography, {
   shouldForwardProp: (prop) => prop !== "messageType",
 })<{ messageType: MessageType }>(({ messageType }) => ({
-  color: messageTextColors[messageType],
+  color: "black",
   fontSize: "16px",
 }));

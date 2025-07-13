@@ -93,7 +93,7 @@ export const HeaderSMS = ({
           <Stack
             display={"flex"}
             flexDirection={"row"}
-            gap={2}
+            gap={1}
             px={1}
             borderRadius={1}
             bgcolor={enableTeamChat ? "#DED3FE" : ""}
