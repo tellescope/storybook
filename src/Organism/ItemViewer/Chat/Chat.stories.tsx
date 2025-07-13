@@ -56,8 +56,8 @@ export const Empty: Story = {
 export const TeamChatEnabled: Story = {
   args: {
     chatInterface: "CHAT",
-    ...WithMessages.args,
     reactions: [],
+    ...WithMessages.args,
     enableTeamChat: true,
   },
   parameters: {
