@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage, Reaction } from "../../../Molecules/Message/types";
-import { Header, EmptyHeader } from "./components";
+import { Header, EmptyHeader, DateSeparator } from "./components";
 import { MessageItem } from "../../../Molecules/Message/MessageItem";
 import { MessageInput } from "../../../Molecules/Message/MessageInput";
 import { styles } from "./Chat.styles";
@@ -17,6 +17,8 @@ export const Chat = ({
   enableTeamChat = false,
   setEnableTeamChat = () => {},
 }: ChatProps) => {
+  let lastDate: Date | null = null;
+
   return (
     <Box sx={styles.container}>
       {messages.length > 0 ? (
@@ -32,14 +34,29 @@ export const Chat = ({
         sx={styles.messagesContainer(enableTeamChat, messages.length)}
       >
         {messages.length > 0 ? (
-          messages.map((message, index) => (
-            <MessageItem
-              avatar={message.avatar}
-              key={index}
-              message={message}
-              reactions={reactions}
-            />
-          ))
+          messages.map((message, index) => {
+            const showDateSeparator =
+              message.createdAt &&
+              (!lastDate ||
+                lastDate.toDateString() !== message.createdAt.toDateString());
+            lastDate = message.createdAt
+              ? new Date(message.createdAt)
+              : lastDate;
+
+            return (
+              <>
+                {showDateSeparator && message.createdAt && (
+                  <DateSeparator date={message.createdAt} />
+                )}
+                <MessageItem
+                  avatar={message.avatar}
+                  key={index}
+                  message={message}
+                  reactions={reactions}
+                />
+              </>
+            );
+          })
         ) : (
           <Stack sx={styles.emptyContainer}>
             <Box sx={styles.emptyMessageBox}>
@@ -55,7 +72,7 @@ export const Chat = ({
         )}
       </Box>
       <Box sx={styles.inputContainer(enableTeamChat)}>
-        <MessageInput />
+        <MessageInput hideToolbar={enableTeamChat} />
       </Box>
     </Box>
   );

@@ -4,6 +4,7 @@ export interface IMessage {
   type: MessageType;
   text: string;
   avatar?: string;
+  createdAt?: Date;
 }
 
 
