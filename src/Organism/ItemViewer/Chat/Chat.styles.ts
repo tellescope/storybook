@@ -40,6 +40,9 @@ export const styles: IChatStyles = {
   },
   inputContainer: (enableTeamChat: boolean) => ({
     p: 2,
+    alignItems: "center",
+    gap: 2,
+    display: enableTeamChat ? "flex" : "block",
     bgcolor: enableTeamChat ? "#F4F0FF" : "",
     transition: "all 0.3s ease-in-out",
   }),

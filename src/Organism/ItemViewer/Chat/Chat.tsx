@@ -4,6 +4,9 @@ import { Header, EmptyHeader, DateSeparator } from "./components";
 import { MessageItem } from "../../../Molecules/Message/MessageItem";
 import { MessageInput } from "../../../Molecules/Message/MessageInput";
 import { styles } from "./Chat.styles";
+import { Icon } from "../../../Atoms";
+import { AddCircleOutline, EmojiEmotionsOutlined } from "@mui/icons-material";
+import { IconButton } from "../../../components/atoms/button/icon-button";
 export interface ChatProps {
   messages: IMessage[];
   reactions?: Reaction[];
@@ -30,9 +33,7 @@ export const Chat = ({
         <EmptyHeader />
       )}
 
-      <Box
-        sx={styles.messagesContainer(enableTeamChat, messages.length)}
-      >
+      <Box sx={styles.messagesContainer(enableTeamChat, messages.length)}>
         {messages.length > 0 ? (
           messages.map((message, index) => {
             const showDateSeparator =
@@ -72,6 +73,16 @@ export const Chat = ({
         )}
       </Box>
       <Box sx={styles.inputContainer(enableTeamChat)}>
+        {enableTeamChat && (
+          <Box sx={{ display: "flex"}}>
+            <IconButton color="secondary">
+              <Icon icon={AddCircleOutline} size="medium" />
+            </IconButton>
+            <IconButton color="secondary">
+              <Icon icon={EmojiEmotionsOutlined} size="medium" />
+            </IconButton>
+          </Box>
+        )}
         <MessageInput hideToolbar={enableTeamChat} />
       </Box>
     </Box>
