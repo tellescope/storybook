@@ -40,11 +40,23 @@ export const MessageScheduled = ({
             display="flex"
             flexDirection="row"
             alignItems="center"
-            gap={0.5}
+            gap={1.4}
             mt={0.5}
+            px={1}
+            borderRadius={10}
+            bgcolor={"#1C7AE01A"}
           >
-            <Icon icon={AccessTime} size="small" />
-            <Typography variant="caption">{scheduledTime}</Typography>
+            <Typography fontWeight={600} variant="caption">
+              {scheduledTime}
+            </Typography>
+            <Box
+              sx={{ cursor: "pointer" }}
+              onClick={() => console.log("cancel")}
+            >
+              <Typography fontWeight={600} color={"#1C7AE0"} variant="caption">
+                Cancel
+              </Typography>
+            </Box>
           </Stack>
         )}
         {messageType == "TEAM_CHAT" && (

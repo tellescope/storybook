@@ -21,13 +21,8 @@ export const Default: Story = {
   args: {
     children: "This is a scheduled message.",
     messageType: "OUTGOING",
-    scheduledTime: "Will send at 10:00 AM",
-    reactions: [
-      {
-        icon: "👍",
-        count: 5,
-      },
-    ],
+    scheduledTime: "Scheduled for 3/5/2025 at 1:00PM",
+    reactions: [],
   },
 };
 
@@ -36,4 +31,4 @@ export const WithAvatar: Story = {
     ...Default.args,
     avatar: "https://i.pravatar.cc/32",
   },
-}; 
+};
