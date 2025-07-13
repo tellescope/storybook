@@ -13,7 +13,7 @@ export const ReactionsContainer = styled(Box, {
   export const ReactionsWrapper = styled(Box)({
     marginTop: "3px",
     width: "fit-content",
-    padding: "2px 8px",
+    padding: "4px 10px",
     borderRadius: "100px",
     backgroundColor: "#EFF0F2",
     display: "flex",

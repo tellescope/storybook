@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import type { MessageType, Reaction } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import {
@@ -6,7 +6,7 @@ import {
   MessageBubble,
   MessageContainer,
   MessageContent,
-} from "./MessageText.styles";
+} from "./styles/maps";
 
 interface TextProps {
   children: React.ReactNode;
@@ -31,6 +31,24 @@ export const MessageText = ({
             {children}
           </MessageContent>
         </MessageBubble>
+        {messageType == "TEAM_CHAT" && (
+          <Stack
+            display={"flex"}
+            mt={0.5}
+            flexDirection={"row"}
+            alignItems={"center"}
+            gap={1}
+          >
+            <Typography variant="caption" color="#8B5CF2">
+              Nutritionist
+            </Typography>
+            <Box px={1} py={0.5} bgcolor="#F4F0FF" borderRadius={10}>
+              <Typography variant="caption" color="#8B5CF2">
+                Team
+              </Typography>
+            </Box>
+          </Stack>
+        )}
         <Reactions reactions={reactions} messageType={messageType} />
       </MessageContainer>
     </Container>

@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { MessageText } from "./components";
 import { MessageOptions } from "../MessageOptions";
 import type { IMessage, Reaction } from "../types";
+import { useMessageItemStyles } from "./styles/maps";
 
 interface MessageItemProps {
   message: IMessage;
@@ -9,28 +10,14 @@ interface MessageItemProps {
   avatar?: string;
 }
 
-export const MessageItem = ({ message, reactions, avatar }: MessageItemProps) => {
+export const MessageItem = ({
+  message,
+  reactions,
+  avatar,
+}: MessageItemProps) => {
+  const styles = useMessageItemStyles({ messageType: message.type });
   return (
-    <Box
-      display={"flex"}
-      justifyContent={"space-between"}
-      flexDirection={message.type === "INCOMING" ? "row" : "row-reverse"}
-      px={2}
-      py={1}
-      alignItems={"center"}
-      bgcolor={"transparent"}
-      sx={{
-        transition: "background-color 0.2s ease-in-out",
-        "&:hover": {
-          bgcolor: "#EFF0F24D",
-          "& .message-options": {
-            opacity: 1,
-            visibility: "visible",
-            transform: "translateX(0)",
-          },
-        },
-      }}
-    >
+    <Box sx={styles.root}>
       <MessageText
         messageType={message.type}
         reactions={reactions}
@@ -38,16 +25,7 @@ export const MessageItem = ({ message, reactions, avatar }: MessageItemProps) =>
       >
         {message.text}
       </MessageText>
-      <Box
-        className="message-options"
-        sx={{
-          opacity: 0,
-          visibility: "hidden",
-          transform: "translateX(10px)",
-          transition:
-            "opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, transform 0.3s ease-in-out",
-        }}
-      >
+      <Box className="message-options" sx={styles.messageOptions}>
         <MessageOptions messageType={message.type} />
       </Box>
     </Box>
