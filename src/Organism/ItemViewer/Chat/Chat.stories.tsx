@@ -24,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithMessages: Story = {
   args: {
+    chatInterface: "CHAT",
     messages: sampleMessages,
     reactions: reactions,
     enableTeamChat: false,
@@ -39,6 +40,7 @@ export const WithMessages: Story = {
 
 export const Empty: Story = {
   args: {
+    chatInterface: "CHAT",
     ...WithMessages.args,
     messages: [],
   },
@@ -53,6 +55,7 @@ export const Empty: Story = {
 
 export const TeamChatEnabled: Story = {
   args: {
+    chatInterface: "CHAT",
     ...WithMessages.args,
     reactions: [],
     enableTeamChat: true,

@@ -1,7 +1,6 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 
 import {
-  InfoOutlined,
   CallOutlined,
   VideocamOutlined,
   CloseOutlined,
@@ -10,12 +9,12 @@ import {
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../Atoms";
-import { Button } from "../../../../components/atoms/button/button";
-import Select from "../../../../components/atoms/select/select";
-import { Input } from "../../../../components/atoms/input/input";
+import { Icon } from "../../../../../Atoms";
+import { Button } from "../../../../../components/atoms/button/button";
+import Select from "../../../../../components/atoms/select/select";
+import { Input } from "../../../../../components/atoms/input/input";
 
-export const EmptyHeader = () => {
+export const EmptyHeaderChat = () => {
   return (
     <Box p={2}>
       <Box

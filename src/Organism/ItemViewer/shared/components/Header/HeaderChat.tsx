@@ -11,13 +11,13 @@ import {
   AddOutlined,
   GroupsOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../Atoms";
-import { Button } from "../../../../components/atoms/button/button";
-import Switch from "../../../../components/atoms/switch/switch";
+import { Icon } from "../../../../../Atoms";
+import { Button } from "../../../../../components/atoms/button/button";
+import Switch from "../../../../../components/atoms/switch/switch";
 
 const transition = "all 0.3s ease-in-out";
 
-export const Header = ({
+export const HeaderChat = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
@@ -103,7 +103,7 @@ export const Header = ({
             <Icon icon={GroupsOutlined} size="medium" />
             <Switch
               checked={enableTeamChat}
-              onChange={(e) => setEnableTeamChat(e.target.checked)}              
+              onChange={(e) => setEnableTeamChat(e.target.checked)}
               sx={{
                 "& .MuiSwitch-switchBase.Mui-checked": {
                   color: "white",
@@ -118,26 +118,28 @@ export const Header = ({
             />
           </Stack>
         </Box>
-        <Box mt={1} ml={1}>
-          <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            gap={2}
-            alignItems={"center"}
-          >
-            <Icon icon={GroupAddOutlined} size="medium" />
-            <Button
-              appearence="outlined"
-              size="small"
-              sx={{
-                textTransform: "none",
-              }}
-              startIcon={<AddOutlined />}
+        {!enableTeamChat && (
+          <Box mt={1} ml={1}>
+            <Stack
+              display={"flex"}
+              flexDirection={"row"}
+              gap={2}
+              alignItems={"center"}
             >
-              Tag
-            </Button>
-          </Stack>
-        </Box>
+              <Icon icon={GroupAddOutlined} size="medium" />
+              <Button
+                appearence="outlined"
+                size="small"
+                sx={{
+                  textTransform: "none",
+                }}
+                startIcon={<AddOutlined />}
+              >
+                Tag
+              </Button>
+            </Stack>
+          </Box>
+        )}
       </Box>
     </Box>
   );

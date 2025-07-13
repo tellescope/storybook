@@ -1,17 +1,21 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage, Reaction } from "../../../Molecules/Message/types";
-import { Header, EmptyHeader, DateSeparator } from "./components";
+import { DateSeparator } from "../shared/components";
 import { MessageItem } from "../../../Molecules/Message/MessageItem";
-import { MessageInput } from "../../../Molecules/Message/MessageInput";
-import { styles } from "./Chat.styles";
+import { MessageInput, Toolbar } from "../../../Molecules/Message/MessageInput";
+
 import { Icon } from "../../../Atoms";
 import { AddCircleOutline, EmojiEmotionsOutlined } from "@mui/icons-material";
 import { IconButton } from "../../../components/atoms/button/icon-button";
+import { EmptyHeaderType, HeaderType } from "../shared/components/enums";
+import { styles } from "../shared/styles/maps";
+
 export interface ChatProps {
   messages: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
   setEnableTeamChat?: (value: boolean) => void;
+  chatInterface: "CHAT" | "SMS";
 }
 
 export const Chat = ({
@@ -19,20 +23,28 @@ export const Chat = ({
   reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
+  chatInterface,
 }: ChatProps) => {
   let lastDate: Date | null = null;
 
-  return (
-    <Box sx={styles.container}>
-      {messages.length > 0 ? (
-        <Header
+  const renderHeader = () => {
+    if (messages.length > 0) {
+      const HeaderComponent = HeaderType[chatInterface].Component;
+      return (
+        <HeaderComponent
           enableTeamChat={enableTeamChat}
           setEnableTeamChat={setEnableTeamChat}
         />
-      ) : (
-        <EmptyHeader />
-      )}
+      );
+    }
 
+    const EmptyHeaderComponent = EmptyHeaderType[chatInterface].Component;
+    return EmptyHeaderComponent ? <EmptyHeaderComponent /> : null;
+  };
+
+  return (
+    <Box sx={styles.container}>
+      {renderHeader()}
       <Box sx={styles.messagesContainer(enableTeamChat, messages.length)}>
         {messages.length > 0 ? (
           messages.map((message, index) => {
@@ -83,7 +95,8 @@ export const Chat = ({
             </IconButton>
           </Box>
         )}
-        <MessageInput hideToolbar={enableTeamChat} />
+        {!enableTeamChat && <Toolbar />}
+        <MessageInput />
       </Box>
     </Box>
   );
