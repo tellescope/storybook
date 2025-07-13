@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import TableCell from './default';
+import TableCell from './table-cell';
 import type { ComponentProps } from 'react';
 import { Typography } from '@mui/material';
 
@@ -12,7 +12,7 @@ const meta = {
     component: TableCell,
     parameters: {
         controls: {
-            exclude: ["small", "children",],
+            exclude: ["children", "StackProps"]
         },
     },
     argTypes: {

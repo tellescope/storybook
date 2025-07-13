@@ -63,6 +63,7 @@ export const Input = (props: InputProps) => {
                     placeholder={placeholder ? placeholder : typeof label === 'string' ? label : undefined}
                     helperText={helperText}
                     error={error}
+
                     hiddenLabel
                     InputProps={{
                         startAdornment: startIcon ? (
@@ -148,6 +149,8 @@ export const Input = (props: InputProps) => {
         label,
         placeholder,
         sx,
+        InputLabelProps,
+        InputProps,
         ...rest
     } = props;
     const hasStartAdornment = !!startIcon;
@@ -160,7 +163,7 @@ export const Input = (props: InputProps) => {
                 value={currentValue}
                 onChange={handleChange}
                 // InputLabelProps={{ shrink: currentValue.length > 0 }}
-                InputLabelProps={{ shrink: currentValue.length > 0 || !!placeholder }}
+                InputLabelProps={{ shrink: currentValue.length > 0 || !!placeholder, ...InputLabelProps }}
                 size={size}
                 label={label}
                 helperText={helperText}
@@ -177,6 +180,7 @@ export const Input = (props: InputProps) => {
                             {endIcon}
                         </InputAdornment>
                     ) : null,
+                    ...InputProps
                 }}
                 sx={{
                     ...(hasStartAdornment && {

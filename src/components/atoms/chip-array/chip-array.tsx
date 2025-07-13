@@ -1,7 +1,6 @@
 import { Chip, FormControl, FormLabel, List } from "@mui/material";
 import { useState, type ComponentProps, type FC, type ReactNode } from "react";
 import CheckIcon from '@mui/icons-material/Check';
-import { useWheel } from "../../../custom";
 
 interface ChipData {
     key: string;
@@ -26,7 +25,7 @@ const ChipArray: FC<ChipArrayProps> = ({
     chipProps,
     ListProps
 }) => {
-    const scrollElementRef = useWheel<HTMLUListElement>();
+
     const { sx: sxList, ...restListProps } = ListProps ?? {};
     const { sx: sxChip, ...restChipProps } = chipProps ?? {};
     const [chipData, setChipData] = useState<readonly ChipData[]>(data);
@@ -51,7 +50,21 @@ const ChipArray: FC<ChipArrayProps> = ({
     return (
         <FormControl>
             {label && <FormLabel sx={{ color: "black" }}>{label}</FormLabel>}
-            <List ref={scrollElementRef} sx={{ gap: 1, display: 'flex', overflow: "hidden", maxWidth: "300px", ...sxList }} {...restListProps} >
+            <List
+                sx={{
+                    gap: 1,
+                    display: 'flex',
+                    overflow: "auto",
+                    maxWidth: "300px",
+                    "&::-webkit-scrollbar": {
+                        display: "none"
+                    },
+                    "-ms-overflow-style": "none", // IE and Edge
+                    "scrollbarWidth": "none", // Firefox
+                    ...sxList
+                }}
+                {...restListProps}
+            >
                 {chipData.map((item) => {
                     const isSelected = selected.has(item.key);
                     return (

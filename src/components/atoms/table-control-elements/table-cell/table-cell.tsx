@@ -12,11 +12,12 @@ const TableCell: FC<TableCellProps> = ({ icon, children, StackProps, sx, ...rest
     const { sx: stackSx, ...stackRest } = StackProps || {};
 
     return (
-        <MuiTableCell align="right" sx={{ padding: "8px 16px", border: 0, ...sx }} {...rest}>
+        <MuiTableCell align="right" sx={{ border: 0, ...sx }} {...rest}>
             <Stack sx={{
                 flexDirection: "row",
                 alignItems: "center",
                 gap: 2,
+                // width: "100%",
                 ...stackSx
             }} {...stackRest}>
                 <Stack sx={{

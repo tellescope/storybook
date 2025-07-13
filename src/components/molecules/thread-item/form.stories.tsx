@@ -12,7 +12,7 @@ import TagOutlinedIcon from '@mui/icons-material/TagOutlined';
 
 
 const meta = {
-    title: 'MOLECULES/ThreadItem',
+    title: 'MOLECULES/Messaging/Thread Item',
     component: ThreadItem,
     parameters: {
         controls: {

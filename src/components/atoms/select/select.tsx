@@ -1,29 +1,23 @@
-import { type FC } from 'react';
+import { type FC, type ReactNode } from 'react';
 import {
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select as MuiSelect,
-    Chip,
-    ListItemText, Stack,
-    type Theme
+    FormControl, Select as MuiSelect,
+    Chip, Stack,
+    type Theme,
+    InputLabel
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
-import CheckIcon from '@mui/icons-material/Check';
-import CheckBox from '../checkbox/checkbox';
 import { FormHelperText } from '@mui/material';
 import type { SelectProps as MuiSelectProps } from '@mui/material/Select';
-import { useWheel } from '../../../custom';
 
 
 type VariantType = 'standard' | 'filled' | 'outlined' | 'patientForm' | 'table';
 type OptionStyle = 'default' | 'checkmark' | 'checkbox';
 
-interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange' | 'value'> {
+interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange' | 'value' | "variant"> {
     label?: string;
     value: string | string[];
     onChange: (event: SelectChangeEvent<string | string[]>) => void;
-    options: string[];
+    // options: string[];
     multiple?: boolean;
     appearance?: VariantType;
     disabled?: boolean;
@@ -31,25 +25,26 @@ interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange'
     helperText?: string;
     optionStyle?: OptionStyle;
     size?: 'small' | 'medium';
+    children: ReactNode;
+    hiddenLabel?: boolean;
 }
 
 const Select: FC<SelectProps> = ({
     label,
     value,
     onChange,
-    options,
+    // options,
+    children,
     multiple = false,
     appearance = 'standard',
     disabled = false,
     error = false,
     helperText,
-    optionStyle = 'default',
     size,
+    hiddenLabel = false,
     ...rest
 }) => {
     const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
-
-    const scrollElementRef = useWheel<HTMLDivElement>();
 
 
     const renderValue = (selected: string | string[]) => {
@@ -57,18 +52,13 @@ const Select: FC<SelectProps> = ({
             return (
                 <Stack
                     component="div"
-                    ref={scrollElementRef}
                     sx={{
                         flexDirection: "row",
                         gap: 1,
                         overflowX: 'auto',
                         overflowY: 'hidden',
                         maxWidth: '100%',
-                        touchAction: 'pan-y',
                         paddingRight: appearance === 'table' ? "40px" : undefined,
-                        "& > *": {
-                            flexShrink: 0, // Prevent chips from shrinking and shifting
-                        },
                         // Hide scrollbar for all major browsers
                         "&::-webkit-scrollbar": {
                             display: "none"
@@ -103,59 +93,6 @@ const Select: FC<SelectProps> = ({
         return selected;
     };
 
-    const renderMenuItem = (option: string) => {
-        if (!multiple) return <MenuItem
-            value={option}
-            disableRipple
-            sx={{
-                "&.Mui-selected, &.Mui-selected:hover": {
-                    backgroundColor: '#DDE1F9',
-                }
-            }}
-        >{option}</MenuItem>;
-
-        if (optionStyle === 'checkmark') {
-            return (
-                <MenuItem key={option} value={option} disableRipple sx={{
-                    justifyContent: 'space-between',
-                    "&.Mui-selected, &.Mui-selected:hover": {
-                        backgroundColor: '#DDE1F9',
-                    }
-                }}>
-                    {option}
-                    {value.includes(option) && <CheckIcon />}
-                </MenuItem>
-            );
-        }
-
-        if (optionStyle === 'checkbox') {
-            return (
-                <MenuItem key={option} value={option} disableRipple
-                    sx={{
-                        "&.Mui-selected, &.Mui-selected:hover": {
-                            backgroundColor: '#DDE1F9',
-                        }
-                    }}
-                >
-                    <CheckBox checked={(value as string[]).includes(option)} />
-                    <ListItemText primary={option} />
-                </MenuItem>
-            );
-        }
-
-        return <MenuItem
-            key={option}
-            value={option}
-            disableRipple
-            sx={{
-                "&.Mui-selected, &.Mui-selected:hover": {
-                    backgroundColor: '#DDE1F9',
-                }
-            }}
-        >
-            {option}
-        </MenuItem>;
-    };
 
     const getSx = (theme: Theme) => {
         if (appearance === 'patientForm') {
@@ -253,18 +190,18 @@ const Select: FC<SelectProps> = ({
         <FormControl
             fullWidth
             variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
-            sx={(theme) => ({ m: 1, ...getSx(theme) })}
+            sx={(theme) => ({ ...getSx(theme) })}
             error={error}
             disabled={disabled}
             size={size}
+            hiddenLabel={hiddenLabel}
         >
-            <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel>
+            {!hiddenLabel ? <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel> : null}
+
             <MuiSelect
-                label={label}
                 multiple={multiple}
                 value={value}
                 onChange={onChange}
-                // input={multiple ? <Input label={label} /> : undefined}
                 renderValue={renderValue}
                 error={error}
                 disabled={disabled}
@@ -278,7 +215,7 @@ const Select: FC<SelectProps> = ({
                 } : undefined}
                 {...rest}
             >
-                {options.map(renderMenuItem)}
+                {children}
             </MuiSelect>
             {helperText && (
                 <FormHelperText error={error}>

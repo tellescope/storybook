@@ -1,25 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import TableCell from './table-cell';
+import TableFooter from './table-footer';
 import type { ComponentProps } from 'react';
 
-type StoryProps = ComponentProps<typeof TableCell> & {
+type StoryProps = ComponentProps<typeof TableFooter> & {
     hasValue: boolean;
 }
 
-
 const meta = {
-    title: 'ATOMS/TableControlElements/TableCell',
-    component: TableCell,
+    title: 'ATOMS/TableControlElements/TableFooter',
+    component: TableFooter,
     parameters: {
         controls: {
             exclude: ["children", "StackProps"]
         },
     },
     argTypes: {
-        icon: {
-            options: ["none", 'left', 'right'],
-            control: { type: 'select' },
-        },
         hasValue: {
             control: { type: 'boolean' },
         },
@@ -29,15 +24,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<StoryProps>;
 
-export const Default: Story = {
+export const Text: Story = {
     args: {
-        icon: 'none',
         hasValue: true,
     },
     render: (args) => {
         const { hasValue, ...rest } = args as StoryProps;
         return (
-            <TableCell {...rest}>{hasValue ? 'Has Value' : undefined}</TableCell>
+            <TableFooter  {...rest} sx={{ width: "300px" }} >
+                {
+                    hasValue ?
+                        <>
+                            100
+                        </>
+                        : undefined
+                }
+            </TableFooter>
         );
     },
 };
