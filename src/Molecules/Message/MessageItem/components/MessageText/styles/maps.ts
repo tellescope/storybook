@@ -62,7 +62,7 @@ export const MessageContainer = styled(Box, {
 export const MessageBubble = styled(Box, {
   shouldForwardProp: (prop) => prop !== "messageType",
 })<{ messageType: MessageType }>(({ messageType }) => ({
-  padding: "10px 16px",
+  padding: "12px 12px 10px 12px",
   maxWidth: "fit-content",
   backgroundColor: bubbleBackgroundColors[messageType],
   borderTopRightRadius: "20px",
