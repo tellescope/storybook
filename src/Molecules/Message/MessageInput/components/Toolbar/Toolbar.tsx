@@ -13,20 +13,22 @@ import { Box, Divider, IconButton } from "@mui/material";
 import { AddTicket, Lightbulb, OpenInFull } from "../../../Icons";
 import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 
-enum ToolType {
-  CHAT = "CHAT",
-  SMS = "SMS",
-  EMAIL = "EMAIL",
-  MMS = "MMS",
-  ASSIGNMENT = "ASSIGNMENT",
-  NOTE = "NOTE",
-  LINK = "LINK",
-  ATTACH = "ATTACH",
-  MESSAGE = "MESSAGE",
-  TICKET = "TICKET",
-  LIGHTBULB = "LIGHTBULB",
-  EXPAND = "EXPAND",
-}
+const ToolType = {
+  CHAT: "CHAT",
+  SMS: "SMS",
+  EMAIL: "EMAIL",
+  MMS: "MMS",
+  ASSIGNMENT: "ASSIGNMENT",
+  NOTE: "NOTE",
+  LINK: "LINK",
+  ATTACH: "ATTACH",
+  MESSAGE: "MESSAGE",
+  TICKET: "TICKET",
+  LIGHTBULB: "LIGHTBULB",
+  EXPAND: "EXPAND",
+} as const;
+
+type ToolType = typeof ToolType[keyof typeof ToolType];
 
 interface IconWrapperProps {
   children: React.ReactNode;
