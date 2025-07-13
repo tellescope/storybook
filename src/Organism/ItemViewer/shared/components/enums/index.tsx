@@ -11,6 +11,14 @@ export const HeaderType = {
     name: "SMS",
     Component: HeaderChat,
   },
+  EMAIL: {
+    name: "EMAIL",
+    Component: HeaderChat,
+  },
+  GROUP: {
+    name: "GROUP",
+    Component: HeaderChat,
+  },
 };
 
 export const EmptyHeaderType = {
@@ -20,6 +28,14 @@ export const EmptyHeaderType = {
   },
   SMS: {
     name: "SMS",
+    Component: null,
+  },
+  EMAIL: {
+    name: "EMAIL",
+    Component: null,
+  },
+  GROUP: {
+    name: "GROUP",
     Component: null,
   },
 };

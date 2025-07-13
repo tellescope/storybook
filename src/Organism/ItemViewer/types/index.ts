@@ -1,0 +1,1 @@
+export type ChatInterface = "CHAT" | "SMS" | "EMAIL" | "GROUP";

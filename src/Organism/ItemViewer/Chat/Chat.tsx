@@ -9,13 +9,14 @@ import { AddCircleOutline, EmojiEmotionsOutlined } from "@mui/icons-material";
 import { IconButton } from "../../../components/atoms/button/icon-button";
 import { EmptyHeaderType, HeaderType } from "../shared/components/enums";
 import { styles } from "../shared/styles/maps";
+import type { ChatInterface } from "../types";
 
 export interface ChatProps {
   messages: IMessage[];
   reactions?: Reaction[];
   enableTeamChat?: boolean;
   setEnableTeamChat?: (value: boolean) => void;
-  chatInterface: "CHAT" | "SMS";
+  chatInterface: ChatInterface;
 }
 
 export const Chat = ({
@@ -27,24 +28,14 @@ export const Chat = ({
 }: ChatProps) => {
   let lastDate: Date | null = null;
 
-  const renderHeader = () => {
-    if (messages.length > 0) {
-      const HeaderComponent = HeaderType[chatInterface].Component;
-      return (
-        <HeaderComponent
-          enableTeamChat={enableTeamChat}
-          setEnableTeamChat={setEnableTeamChat}
-        />
-      );
-    }
-
-    const EmptyHeaderComponent = EmptyHeaderType[chatInterface].Component;
-    return EmptyHeaderComponent ? <EmptyHeaderComponent /> : null;
-  };
-
   return (
     <Box sx={styles.container}>
-      {renderHeader()}
+      <Header
+        messages={messages}
+        chatInterface={chatInterface}
+        enableTeamChat={enableTeamChat}
+        setEnableTeamChat={setEnableTeamChat}
+      />
       <Box sx={styles.messagesContainer(enableTeamChat, messages.length)}>
         {messages.length > 0 ? (
           messages.map((message, index) => {
@@ -86,7 +77,7 @@ export const Chat = ({
       </Box>
       <Box sx={styles.inputContainer(enableTeamChat)}>
         {enableTeamChat && (
-          <Box sx={{ display: "flex"}}>
+          <Box sx={{ display: "flex" }}>
             <IconButton color="secondary">
               <Icon icon={AddCircleOutline} size="medium" />
             </IconButton>
@@ -95,9 +86,36 @@ export const Chat = ({
             </IconButton>
           </Box>
         )}
-        {!enableTeamChat && <Toolbar />}
-        <MessageInput />
+        <Stack display={"flex"} flexDirection={"column"} width={"100%"} gap={2}>
+          {!enableTeamChat && <Toolbar chatInterface={chatInterface} />}
+          <MessageInput />
+        </Stack>
       </Box>
     </Box>
   );
+};
+
+const Header = ({
+  messages,
+  chatInterface,
+  enableTeamChat,
+  setEnableTeamChat,
+}: {
+  messages: IMessage[];
+  chatInterface: ChatInterface;
+  enableTeamChat: boolean;
+  setEnableTeamChat: (value: boolean) => void;
+}) => {
+  if (messages.length > 0) {
+    const HeaderComponent = HeaderType[chatInterface].Component;
+    return (
+      <HeaderComponent
+        enableTeamChat={enableTeamChat}
+        setEnableTeamChat={setEnableTeamChat}
+      />
+    );
+  }
+
+  const EmptyHeaderComponent = EmptyHeaderType[chatInterface].Component;
+  return EmptyHeaderComponent ? <EmptyHeaderComponent /> : null;
 };
