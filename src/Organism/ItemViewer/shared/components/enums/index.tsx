@@ -1,5 +1,5 @@
-import { HeaderChat, HeaderSMS } from "../Header";
-import { EmptyHeaderChat, EmptyHeaderSMS } from "../EmptyHeader";
+import { HeaderChat, HeaderEmail, HeaderSMS } from "../Header";
+import { EmptyHeaderChat, EmptyHeaderEmail, EmptyHeaderSMS } from "../EmptyHeader";
 import type { ChatInterface } from "../../../types";
 import type { ComponentType } from "react";
 
@@ -29,7 +29,7 @@ export const HeaderType: Record<ChatInterface, HeaderTypeObject> = {
   },
   EMAIL: {
     name: "EMAIL",
-    Component: HeaderChat,
+    Component: HeaderEmail,
   },
   GROUP: {
     name: "GROUP",
@@ -48,7 +48,7 @@ export const EmptyHeaderType: Record<ChatInterface, EmptyHeaderTypeObject> = {
   },
   EMAIL: {
     name: "EMAIL",
-    Component: null,
+    Component: EmptyHeaderEmail,
   },
   GROUP: {
     name: "GROUP",

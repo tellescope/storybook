@@ -16,7 +16,7 @@ import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
 enum ToolType {
   CHAT = "CHAT",
   SMS = "SMS",
-  MAIL = "MAIL",
+  EMAIL = "EMAIL",
   GROUP = "GROUP",
   ASSIGNMENT = "ASSIGNMENT",
   NOTE = "NOTE",
@@ -59,7 +59,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
   const toolColors: Partial<Record<ToolType, string>> = {
     [ToolType.CHAT]: "#1C7AE0",        // Blue
     [ToolType.SMS]: "#8B5CF2",        // Green
-    [ToolType.MAIL]: "#6466F1",        // Orange
+    [ToolType.EMAIL]: "#6466F1",        // Orange
     [ToolType.GROUP]: "#15B8A6",       // Purple
     // Only first 4 tools have background colors
   };
@@ -67,7 +67,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
   const tools = [
     { type: ToolType.CHAT, icon: <ChatBubbleOutline /> },
     { type: ToolType.SMS, icon: <TextsmsOutlined /> },
-    { type: ToolType.MAIL, icon: <LocalPostOfficeOutlined /> },
+    { type: ToolType.EMAIL, icon: <LocalPostOfficeOutlined /> },
     { type: ToolType.GROUP, icon: <GroupOutlined /> },
     { type: ToolType.ASSIGNMENT, icon: <AssignmentOutlined /> },
     { type: ToolType.NOTE, icon: <StickyNote2Outlined /> },

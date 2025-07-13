@@ -148,7 +148,7 @@ export const HeaderSMS = ({
             <Stack
               display={"flex"}
               flexDirection={"row"}
-              gap={2}
+              gap={1}
               alignItems={"center"}
             >
               <Icon icon={GroupAddOutlined} size="medium" />
