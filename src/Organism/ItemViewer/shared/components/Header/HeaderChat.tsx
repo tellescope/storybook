@@ -5,7 +5,7 @@ import {
   CallOutlined,
   VideocamOutlined,
   CloseOutlined,
-  SmsOutlined,
+  ChatBubbleOutline,
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
@@ -71,9 +71,9 @@ export const HeaderChat = ({
             alignItems={"center"}
           >
             <Icon
-              icon={SmsOutlined}
+              icon={ChatBubbleOutline}
               size="medium"
-              sx={{ color: "#A754F5" }}
+              sx={{ color: "#1C7AE0" }}
             />
             <Typography variant="h6">
               +123 456 7890

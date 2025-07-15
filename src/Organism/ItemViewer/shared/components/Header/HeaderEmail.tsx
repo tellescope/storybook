@@ -9,7 +9,6 @@ import {
   GroupAddOutlined,
   AddOutlined,
   GroupsOutlined,
-  TextsmsOutlined,
   MailOutline,
 } from "@mui/icons-material";
 import { Icon } from "../../../../../Atoms";

@@ -82,7 +82,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
   ];
   
   return (
-    <Box sx={{ display: "flex", alignItems: "center", width: "100%", justifyContent: "space-between" }}>
+    <Box gap={1} sx={{ display: "flex", alignItems: "center", width: "100%"}}>
       {tools.slice(0, 6).map(({ type, icon }) => {
         const backgroundColor = toolColors[type];
         

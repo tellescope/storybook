@@ -1,4 +1,11 @@
-import { Box, IconButton, Stack } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 
 import {
   CallOutlined,
@@ -6,12 +13,12 @@ import {
   CloseOutlined,
   PersonAddAlt,
   ChatBubbleOutline,
+  MailOutline,
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
+import { FormGroup, Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
-import Select from "../../../../../components/atoms/select/select";
 import { Input } from "../../../../../components/atoms/input/input";
 
 export const EmptyHeaderEmail = () => {
@@ -29,7 +36,7 @@ export const EmptyHeaderEmail = () => {
           alignItems={"center"}
         >
           <Icon
-            icon={ChatBubbleOutline}
+            icon={MailOutline}
             size="medium"
             sx={{ color: "#1C7AE0" }}
           />
@@ -57,39 +64,41 @@ export const EmptyHeaderEmail = () => {
           </IconButton>
         </Box>
       </Box>
-      <Stack display={"flex"} flexDirection={"column"} gap={2}>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          sx={{
-            mr: 2,
-          }}
-        >
+      <Stack display={"flex"} flexDirection={"column"}>
+        <FormGroup variant="standard">
+          <InputLabel id="demo-simple-select-standard-label">TO</InputLabel>
           <Select
-            value={""}
-            label="TO"
-            sx={{
-              margin: 0,
-            }}
-            onChange={() => {}}
-            options={["Option 1", "Option 2", "Option 3"]}
-          />
+            hiddenLabel
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            // value={age}
+            // onChange={handleChange}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value={10}>Ten</MenuItem>
+            <MenuItem value={20}>Twenty</MenuItem>
+            <MenuItem value={30}>Thirty</MenuItem>
+          </Select>
+        </FormGroup>
+        <FormGroup variant="standard">
+          <InputLabel id="cc-label">CC</InputLabel>
           <Select
-            value={""}
-            label="CC"
-            sx={{
-              margin: 0,
-            }}
-            onChange={() => {}}
-            options={["Option 1", "Option 2", "Option 3"]}
+            hiddenLabel
+            labelId="cc-label"
+            id="demo-simple-select"
           />
-    
-        </Box>
-        <Input
-            sx={{ mx: 1 }}
+        </FormGroup>
+        <FormGroup variant="standard">
+          <Input
+            sx={{
+              mt: 2,
+            }}
             placeholder="Subject"
             onChange={() => console.log("subject")}
           />
+        </FormGroup>
         <Box mt={1} ml={1}>
           <Stack
             display={"flex"}
