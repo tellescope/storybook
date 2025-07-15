@@ -13,6 +13,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange }) => 
       value={value}
       onChange={onChange}
       sx={{
+        width: "100%",
         border: "2px solid #1C7AE0",
         borderRadius: "8px",
         "& .MuiOutlinedInput-root": {

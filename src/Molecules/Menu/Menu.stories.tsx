@@ -32,7 +32,7 @@ const Template: Story = (args: any) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
-        items={['Item One', 'Item Two', 'Item Three']}
+        items={['Name', 'Care Team', 'Appointments', 'Messages', 'Documents', 'Settings', 'Logout']}
       />
     </>
   );
