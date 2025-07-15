@@ -34,7 +34,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
-      <Box display="flex" alignItems="center" gap={2}>
+      <Box display="flex" alignItems="center" gap={1}>
         <MuiBreadcrumbs aria-label="breadcrumb">
           {items.map((item, index) => (
             <Link
@@ -49,7 +49,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
           ))}
         </MuiBreadcrumbs>
         {limitedLeftIcons.length > 0 && (
-          <Box display="flex" alignItems="center" gap={1}>
+          <Box display="flex" alignItems="center">
             {limitedLeftIcons.map((icon: React.ReactNode, index: number) => (
               <IconButton
                 key={index}
