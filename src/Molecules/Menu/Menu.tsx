@@ -1,6 +1,6 @@
 // components/Menu/Menu.tsx
 import React, { useState } from "react";
-import { Menu as MuiMenu, MenuItem, ListItemIcon, ListItemText, Checkbox, Switch, TextField, Divider, Stack } from "@mui/material";
+import { Menu as MuiMenu, MenuItem, ListItemIcon, ListItemText, Checkbox, Switch, TextField, Divider, Stack, Box } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import StarIcon from "@mui/icons-material/Star";
 
@@ -39,44 +39,54 @@ export const Menu: React.FC<Props> = ({ anchorEl, open, onClose, dense = false, 
     <MuiMenu anchorEl={anchorEl} open={open} onClose={onClose}>
       {search && (
         <>
-          <MenuItem dense={dense} disableRipple>
+          <Box px={1} pb={1}>
             <TextField
-              size="small"
-              fullWidth
               placeholder="Search..."
-              variant="standard"
-              onChange={(e) => setSearchQuery(e.target.value)}
-              InputProps={{ disableUnderline: true }}
+              sx={{
+                border: "2px solid #1C7AE0",
+                borderRadius: "8px",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    border: "none", // this is the original border color
+                  },
+                  "&:hover fieldset": {
+                    border: "none", // use the original border color on hover
+                  },
+                },
+              }}
+              size="small"
             />
-          </MenuItem>
-          <Divider />
+          </Box>
+
+          <Divider sx={{ mb: 1 }} />
         </>
       )}
 
-      <Stack display="flex" flexDirection="column" gap={1}>
+      <Stack display="flex" flexDirection="column">
         {filteredItems.map((item) => (
           <MenuItem
             key={item}
-            selected={selectedItem === item && itemType !== 'checkbox' && itemType !== 'switch'}
+            selected={selectedItem === item}
             sx={{
               p: 1,
-              borderRadius: '4px',
+              borderRadius: "6px",
               mx: 1,
-              '&.Mui-selected': {
-               backgroundColor: '#DDE1F9',
-               '&:hover': {
-                 backgroundColor: '#DDE1F9',
-               }
-              }
+
+              "&.Mui-selected": {
+                backgroundColor: "#DDE1F9",
+                "&:hover": {
+                  backgroundColor: "#DDE1F9",
+                },
+              },
             }}
             dense={dense}
             onClick={() => {
               if (itemType === "checkbox") {
-               handleToggleCheck(item)
+                handleToggleCheck(item);
               } else if (itemType === "switch") {
-               handleToggleSwitch(item)
+                handleToggleSwitch(item);
               } else {
-               setSelectedItem(item);
+                setSelectedItem(item);
               }
             }}
           >
