@@ -1,8 +1,13 @@
 // components/Menu/Menu.tsx
 import React, { useState } from "react";
-import { Menu as MuiMenu, MenuItem, ListItemIcon, ListItemText, Checkbox, Switch, TextField, Divider, Stack, Box } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import StarIcon from "@mui/icons-material/Star";
+import {
+  Menu as MuiMenu,
+  Divider,
+  Stack,
+  type MenuProps,
+} from "@mui/material";
+import { SearchField } from "./SearchField";
+import { CustomMenuItem } from "./CustomMenuItem";
 
 type ItemType = "normal" | "icon" | "checkmark" | "checkbox" | "switch";
 
@@ -14,9 +19,11 @@ type Props = {
   search?: boolean;
   items?: string[];
   itemType?: ItemType;
+  // received all menu props
+  props: MenuProps;
 };
 
-export const Menu: React.FC<Props> = ({ anchorEl, open, onClose, dense = false, search = false, items = [], itemType = "normal" }) => {
+export const Menu: React.FC<Props> = ({ anchorEl, open, onClose, dense = false, search = false, items = [], itemType = "normal", ...props }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [switchState, setSwitchState] = useState<Record<string, boolean>>({});
@@ -33,77 +40,40 @@ export const Menu: React.FC<Props> = ({ anchorEl, open, onClose, dense = false, 
     }));
   };
 
+  const handleItemClick = (item: string) => {
+    if (itemType === "checkbox") {
+      handleToggleCheck(item);
+    } else if (itemType === "switch") {
+      handleToggleSwitch(item);
+    } else {
+      setSelectedItem(item);
+    }
+  };
+
   const filteredItems = items.filter((item) => item.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <MuiMenu anchorEl={anchorEl} open={open} onClose={onClose}>
+    <MuiMenu {...props} anchorEl={anchorEl} open={open} onClose={onClose}>
       {search && (
         <>
-          <Box px={1} pb={1}>
-            <TextField
-              placeholder="Search..."
-              sx={{
-                border: "2px solid #1C7AE0",
-                borderRadius: "8px",
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    border: "none", // this is the original border color
-                  },
-                  "&:hover fieldset": {
-                    border: "none", // use the original border color on hover
-                  },
-                },
-              }}
-              size="small"
-            />
-          </Box>
-
+          <SearchField value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
           <Divider sx={{ mb: 1 }} />
         </>
       )}
 
       <Stack display="flex" flexDirection="column">
         {filteredItems.map((item) => (
-          <MenuItem
+          <CustomMenuItem
             key={item}
-            selected={selectedItem === item}
-            sx={{
-              p: 1,
-              borderRadius: "6px",
-              mx: 1,
-
-              "&.Mui-selected": {
-                backgroundColor: "#DDE1F9",
-                "&:hover": {
-                  backgroundColor: "#DDE1F9",
-                },
-              },
-            }}
+            item={item}
+            itemType={itemType}
             dense={dense}
-            onClick={() => {
-              if (itemType === "checkbox") {
-                handleToggleCheck(item);
-              } else if (itemType === "switch") {
-                handleToggleSwitch(item);
-              } else {
-                setSelectedItem(item);
-              }
-            }}
-          >
-            {itemType === "icon" && (
-              <ListItemIcon>
-                <StarIcon fontSize="small" />
-              </ListItemIcon>
-            )}
-            {itemType === "checkmark" && (
-              <ListItemIcon>{checkedItems.includes(item) ? <CheckIcon fontSize="small" /> : <span style={{ width: 24 }} />}</ListItemIcon>
-            )}
-            {itemType === "checkbox" && <Checkbox edge="start" checked={checkedItems.includes(item)} tabIndex={-1} disableRipple />}
-            <ListItemText>{item}</ListItemText>
-            {itemType === "switch" && (
-              <Switch edge="end" checked={switchState[item] ?? false} onChange={() => handleToggleSwitch(item)} tabIndex={-1} disableRipple />
-            )}
-          </MenuItem>
+            selected={selectedItem === item}
+            checked={checkedItems.includes(item)}
+            switchOn={switchState[item] ?? false}
+            onClick={() => handleItemClick(item)}
+            onSwitchChange={() => handleToggleSwitch(item)}
+          />
         ))}
       </Stack>
     </MuiMenu>
