@@ -3,11 +3,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button, Divider } from "@mui/material";
 import { Menu } from "./Menu";
-import {
-  MenuItem,
-  CheckboxMenuItem,
-  SwitchMenuItem,
-} from "./items";
+import { MenuItem, CheckboxMenuItem, SwitchMenuItem } from "./items";
 import Star from "@mui/icons-material/Star";
 
 const meta: Meta<typeof Menu> = {
@@ -34,55 +30,29 @@ export const Playground: Story = {
 
     return (
       <>
-        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
-          Open Menu
-        </Button>
+        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
         <Menu {...args} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <MenuItem
-            selected={selected === "Name"}
-            onClick={() => setSelected("Name")}
-            icon={<Star />}
-          >
+          <MenuItem selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
             Name
           </MenuItem>
-          <MenuItem
-            selected={selected === "Care Team"}
-            onClick={() => setSelected("Care Team")}
-          >
+          <MenuItem selected={selected === "Care Team"} onClick={() => setSelected("Care Team")}>
             Care Team
           </MenuItem>
           <Divider />
           <CheckboxMenuItem
             checked={checked.includes("Appointments")}
-            onClick={() =>
-              setChecked((prev) =>
-                prev.includes("Appointments")
-                  ? prev.filter((i) => i !== "Appointments")
-                  : [...prev, "Appointments"]
-              )
-            }
+            onClick={() => setChecked((prev) => (prev.includes("Appointments") ? prev.filter((i) => i !== "Appointments") : [...prev, "Appointments"]))}
           >
             Appointments
           </CheckboxMenuItem>
           <CheckboxMenuItem
             checked={checked.includes("Messages")}
-            onClick={() =>
-              setChecked((prev) =>
-                prev.includes("Messages")
-                  ? prev.filter((i) => i !== "Messages")
-                  : [...prev, "Messages"]
-              )
-            }
+            onClick={() => setChecked((prev) => (prev.includes("Messages") ? prev.filter((i) => i !== "Messages") : [...prev, "Messages"]))}
           >
             Messages
           </CheckboxMenuItem>
           <Divider />
-          <SwitchMenuItem
-            checked={switches.Documents ?? false}
-            onClick={() =>
-              setSwitches((p) => ({ ...p, Documents: !p.Documents }))
-            }
-          >
+          <SwitchMenuItem checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
             Documents
           </SwitchMenuItem>
         </Menu>
