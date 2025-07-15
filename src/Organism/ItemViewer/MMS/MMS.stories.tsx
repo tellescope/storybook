@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MMS } from "./MMS";
-import { sampleMessages, reactions } from "./data";
+import { sampleMessages } from "./data";
 
 const meta: Meta<typeof MMS> = {
   title: "Organism/ItemViewer/MMS",
