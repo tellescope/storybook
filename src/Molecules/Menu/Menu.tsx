@@ -7,12 +7,13 @@ import {
   type MenuProps,
 } from "@mui/material";
 import { SearchField } from "./components";
+import { ItemCheckbox, ItemSwitch, MenuItem } from "./items";
 
 type Props = MenuProps & {
   search?: boolean;
 };
 
-export const Menu: React.FC<Props> = ({
+const MenuComponent: React.FC<Props> = ({
   search = false,
   children,
   ...props
@@ -50,3 +51,9 @@ export const Menu: React.FC<Props> = ({
     </MuiMenu>
   );
 };
+
+export const Menu = Object.assign(MenuComponent, {
+  Item: MenuItem,
+  Switch: ItemSwitch,
+  Checkbox: ItemCheckbox,
+});

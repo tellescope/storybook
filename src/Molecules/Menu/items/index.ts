@@ -1,3 +1,3 @@
-export * from "./MenuItem";
-export * from "./CheckboxMenuItem";
-export * from "./SwitchMenuItem"; 
+export * from "./Item";
+export * from "./ItemCheckbox";
+export * from "./ItemSwitch";

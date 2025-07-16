@@ -11,7 +11,7 @@ type Props = Omit<MenuItemProps, "checked"> & {
   searchableText?: string;
 };
 
-export const SwitchMenuItem: React.FC<Props> = ({
+export const ItemSwitch: React.FC<Props> = ({
   checked,
   children,
   ...props
