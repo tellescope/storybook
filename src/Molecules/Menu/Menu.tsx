@@ -7,7 +7,7 @@ import {
   type MenuProps,
 } from "@mui/material";
 import { SearchField } from "./components";
-import { ItemCheckbox, ItemSwitch, MenuItem } from "./items";
+import { ItemCheckbox, ItemSwitch, Item } from "./items";
 
 type Props = MenuProps & {
   search?: boolean;
@@ -53,7 +53,7 @@ const MenuComponent: React.FC<Props> = ({
 };
 
 export const Menu = Object.assign(MenuComponent, {
-  Item: MenuItem,
+  Item,
   Switch: ItemSwitch,
   Checkbox: ItemCheckbox,
 });

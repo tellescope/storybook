@@ -8,7 +8,7 @@ import Star from "@mui/icons-material/Star";
 const meta: Meta<typeof Menu> = {
   title: "Molecules/Menu",
   component: Menu,
-  tags: ["autodocs"],
+
   argTypes: {
     search: { control: "boolean" },
   },

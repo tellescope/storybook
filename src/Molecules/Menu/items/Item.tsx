@@ -12,7 +12,7 @@ type Props = MenuItemProps & {
   searchableText?: string;
 };
 
-export const MenuItem: React.FC<Props> = ({
+export const Item: React.FC<Props> = ({
   icon,
   children,
   selected,
