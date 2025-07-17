@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FormGroup } from ".";
+import React from "react";
 
 const meta: Meta = {
   title: "Molecules/FormGroup",
@@ -33,6 +34,25 @@ export const Checkbox: StoryObj = {
       ]}
     />
   ),
+};
+
+export const Text: StoryObj = {
+  render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [value, setValue] = React.useState<Record<string, string>>({});
+
+    return (
+      <FormGroup.Text
+        label="Text Group"
+        helperText="This is a helper text"
+        options={[
+          { label: "Option 1", value: "1" },
+        ]}
+        value={value}
+        onChange={setValue}
+      />
+    );
+  },
 };
 
 export const Switch: StoryObj = {

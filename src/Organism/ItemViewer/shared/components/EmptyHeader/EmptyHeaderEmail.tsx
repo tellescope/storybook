@@ -17,7 +17,7 @@ import {
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { FormGroup, Icon } from "../../../../../Atoms";
+import { FormControlAtom, Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
 import { Input } from "../../../../../components/atoms/input/input";
 
@@ -65,7 +65,7 @@ export const EmptyHeaderEmail = () => {
         </Box>
       </Box>
       <Stack display={"flex"} flexDirection={"column"}>
-        <FormGroup variant="standard">
+        <FormControlAtom variant="standard">
           <InputLabel id="demo-simple-select-standard-label">TO</InputLabel>
           <Select
             hiddenLabel
@@ -81,16 +81,16 @@ export const EmptyHeaderEmail = () => {
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
-        </FormGroup>
-        <FormGroup variant="standard">
+        </FormControlAtom>
+        <FormControlAtom variant="standard">
           <InputLabel id="cc-label">CC</InputLabel>
           <Select
             hiddenLabel
             labelId="cc-label"
             id="demo-simple-select"
           />
-        </FormGroup>
-        <FormGroup variant="standard">
+        </FormControlAtom>
+        <FormControlAtom variant="standard">
           <Input
             sx={{
               mt: 2,
@@ -98,7 +98,7 @@ export const EmptyHeaderEmail = () => {
             placeholder="Subject"
             onChange={() => console.log("subject")}
           />
-        </FormGroup>
+        </FormControlAtom>
         <Box mt={1} ml={1}>
           <Stack
             display={"flex"}
