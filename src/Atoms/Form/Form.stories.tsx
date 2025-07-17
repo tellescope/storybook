@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MenuItem, Stack, TextField } from "@mui/material";
-import { FormGroup } from "./FormGroup";
+import { FormGroup } from "./FormControl";
 import { FormGroupLabel } from "./FormGroupLabel";
 import { FormHelperText } from "./FormHelperText";
 
