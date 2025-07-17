@@ -7,7 +7,7 @@ export interface ButtonProps extends Omit<MuiButtonProps, 'color' | 'variant' | 
     appearance?: "contained" | "outlined" | "text";
     color?: "primary" | "secondary" | "info";
     size?: "large" | "medium" | "small";
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     disabled?: boolean;
 }
 

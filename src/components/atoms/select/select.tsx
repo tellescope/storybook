@@ -3,7 +3,8 @@ import {
     FormControl, Select as MuiSelect,
     Chip, Stack,
     type Theme,
-    InputLabel
+    InputLabel,
+    type FormControlProps
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material/Select';
 import { FormHelperText } from '@mui/material';
@@ -27,6 +28,7 @@ interface SelectProps extends Omit<MuiSelectProps<string | string[]>, 'onChange'
     size?: 'small' | 'medium';
     children: ReactNode;
     hiddenLabel?: boolean;
+    FormControlProps?: FormControlProps;
 }
 
 const Select: FC<SelectProps> = ({
@@ -42,6 +44,7 @@ const Select: FC<SelectProps> = ({
     helperText,
     size,
     hiddenLabel = false,
+    FormControlProps,
     ...rest
 }) => {
     const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
@@ -186,15 +189,18 @@ const Select: FC<SelectProps> = ({
         }
     };
 
+    const { sx } = FormControlProps || {}
+
     return (
         <FormControl
             fullWidth
             variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
-            sx={(theme) => ({ ...getSx(theme) })}
+            sx={(theme) => ({ ...getSx(theme), ...sx })}
             error={error}
             disabled={disabled}
             size={size}
             hiddenLabel={hiddenLabel}
+            {...FormControlProps}
         >
             {!hiddenLabel ? <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel> : null}
 

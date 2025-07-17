@@ -1,6 +1,6 @@
 import Select from "../../select/select";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-interface TinySelectProps extends Omit<ComponentProps<typeof Select>, "value" | "onChange" | "children"> {
+interface TinySelectProps extends Omit<ComponentProps<typeof Select>, "value" | "onChange" | "children" | "size"> {
     value?: string;
     onChange?: (value: string) => void;
     children: React.ReactNode;
@@ -9,15 +9,42 @@ interface TinySelectProps extends Omit<ComponentProps<typeof Select>, "value" | 
 import type { SelectChangeEvent } from "@mui/material/Select";
 import type { ComponentProps } from "react";
 
-const TinySelect = ({ value, onChange, children }: TinySelectProps) => {
+const TinySelect = ({ value, onChange, children, MenuProps, sx, ...rest }: TinySelectProps) => {
     const handleChange = (event: SelectChangeEvent<string | string[]>) => {
         if (onChange) {
             onChange(event.target.value as string);
         }
     };
 
+    // Extract sx from MenuProps.PaperProps and MenuProps.MenuListProps, then remove them from MenuProps
+    const { sx: paperSx, ...restPaperProps } = MenuProps?.PaperProps ?? {};
+    const { sx: menuListSx, ...restMenuListProps } = MenuProps?.MenuListProps ?? {};
+    const mergedMenuProps = {
+        ...MenuProps,
+        PaperProps: {
+            ...restPaperProps,
+            sx: {
+                padding: "4px",
+                maxHeight: "200px",
+                width: "220px",
+                ...paperSx,
+            },
+        },
+        MenuListProps: {
+            ...restMenuListProps,
+            sx: {
+                padding: "0px",
+                "& .MuiButtonBase-root": {
+                    fontSize: "0.875rem",
+                    padding: "4px 8px",
+                },
+                ...menuListSx,
+            },
+        },
+    };
     return (
         <Select
+            {...rest}
             value={value ?? ""}
             onChange={handleChange}
             appearance="outlined"
@@ -41,30 +68,16 @@ const TinySelect = ({ value, onChange, children }: TinySelectProps) => {
                 '& .MuiOutlinedInput-notchedOutline': { border: 'none' },
                 "& svg": {
                     right: "3px"
-                }
+                },
+                ...sx
             }}
             size="small"
             hiddenLabel
             IconComponent={KeyboardArrowDownIcon}
             MenuProps={{
-                PaperProps: {
-                    sx: {
-                        padding: "4px",
-                        maxHeight: "200px",
-                        width: "220px"
-                    },
-                },
-                MenuListProps: {
-                    sx: {
-                        padding: "0px",
-                        "& .MuiButtonBase-root": {
-                            fontSize: "0.875rem",
-                            padding: "4px 8px",
-                        }
-                    }
-                },
-                elevation: 8
+                ...mergedMenuProps
             }}
+
         >
             {children}
         </Select>
