@@ -62,3 +62,30 @@ export const Default: Story = {
     search: true,
   },
 };
+
+export const SecondaryMenu: Story = {
+  render: (args) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+    const open = Boolean(anchorEl);
+    const handleClose = () => setAnchorEl(null);
+
+    return (
+      <>
+        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
+        <Menu {...args} anchorEl={anchorEl} open={open} onClose={handleClose}>
+
+          <Menu.SubMenu text="More options">
+            <Menu.Item>Sub-item 1</Menu.Item>
+            <Menu.Item>Sub-item 2</Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.Item>Logout</Menu.Item>
+        </Menu>
+      </>
+    );
+  },
+  args: {
+    search: false,
+  },
+};

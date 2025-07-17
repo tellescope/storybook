@@ -19,7 +19,8 @@ export const ItemCheckbox: React.FC<Props> = ({
   <MuiMenuItem
     selected={checked}
     sx={{
-      p: 1,
+      px: 1,
+      py: 0,
       borderRadius: "6px",
       mx: 1,
       "&.Mui-selected": {

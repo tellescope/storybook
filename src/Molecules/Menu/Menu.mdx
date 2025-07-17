@@ -15,6 +15,7 @@ The Menu component is a customizable dropdown menu built with Material UI v5. It
   - `Menu.Item`: A standard menu item.
   - `Menu.Checkbox`: A menu item with a checkbox.
   - `Menu.Switch`: A menu item with a switch.
+  - `Menu.SubMenu`: A menu item that opens a secondary menu with nested items.
 - **Customizable**: Built on top of MUI's Menu, so it accepts all `MenuProps`.
 
 ## Basic Usage
@@ -27,6 +28,12 @@ The `Menu` component is controlled by `anchorEl`, `open`, and `onClose` props, s
 3. Interact with the different menu items.
 
 <Canvas of={MenuStories.Default} />
+
+## Sub Menu
+
+The Menu component also supports nested sub-menus that open when clicked:
+
+<Canvas of={MenuStories.SecondaryMenu} />
 
 ## Controls
 
@@ -75,6 +82,31 @@ A menu item that functions as a switch.
 </Menu.Switch>
 ```
 
+### Menu.SubMenu
+
+A menu item that opens a secondary menu when clicked. Perfect for organizing related actions into nested groups.
+
+```tsx
+<Menu.SubMenu text="More options" icon={<Star />}>
+  <Menu.Item>Sub-item 1</Menu.Item>
+  <Menu.Item>Sub-item 2</Menu.Item>
+  <Menu.SubMenu text="Nested submenu">
+    <Menu.Item>Deeply nested item</Menu.Item>
+  </Menu.SubMenu>
+</Menu.SubMenu>
+```
+
+**Props:**
+- `text`: The display text for the sub-menu item
+- `icon`: Optional icon to display alongside the text
+- `children`: The menu items to display in the sub-menu
+
+**Behavior:**
+- Click to open/close the sub-menu
+- Sub-menu appears to the right of the parent menu
+- Can be nested multiple levels deep
+- Automatically closes when clicking outside
+
 ## Example
 
 Here is a full example of how to use the `Menu` component with its composable items.
@@ -121,6 +153,15 @@ const MyMenu = () => {
         <Menu.Switch checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
           Documents
         </Menu.Switch>
+        <Divider />
+        <Menu.SubMenu text="More options" icon={<Star />}>
+          <Menu.Item>Export Data</Menu.Item>
+          <Menu.Item>Import Data</Menu.Item>
+          <Menu.SubMenu text="Advanced">
+            <Menu.Item>Debug Mode</Menu.Item>
+            <Menu.Item>Developer Tools</Menu.Item>
+          </Menu.SubMenu>
+        </Menu.SubMenu>
       </Menu>
     </>
   );
@@ -133,4 +174,5 @@ The Menu component leverages Material UI's Menu for accessibility, including:
 
 - **Focus management**: Focus is automatically trapped within the menu.
 - **Keyboard navigation**: Arrow keys can be used to navigate between items, and `Enter` or `Space` can be used to activate them.
-- **Screen reader support**: Proper ARIA labels and roles are automatically applied. 
+- **Screen reader support**: Proper ARIA labels and roles are automatically applied.
+- **Sub-menu navigation**: Sub-menus can be opened with `Enter` or `Space` and closed with `Escape`.

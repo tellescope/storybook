@@ -7,7 +7,7 @@ import {
   type MenuProps,
 } from "@mui/material";
 import { SearchField } from "./components";
-import { ItemCheckbox, ItemSwitch, Item } from "./items";
+import { ItemCheckbox, ItemSwitch, Item, SubMenuItem } from "./items";
 
 type Props = MenuProps & {
   search?: boolean;
@@ -45,7 +45,7 @@ const MenuComponent: React.FC<Props> = ({
         </>
       )}
 
-      <Stack display="flex" flexDirection="column">
+      <Stack display="flex" gap={0.5} flexDirection="column">
         {filteredChildren}
       </Stack>
     </MuiMenu>
@@ -54,6 +54,7 @@ const MenuComponent: React.FC<Props> = ({
 
 export const Menu = Object.assign(MenuComponent, {
   Item,
+  SubMenu: SubMenuItem,
   Switch: ItemSwitch,
   Checkbox: ItemCheckbox,
 });
