@@ -1,0 +1,178 @@
+import { Meta, Canvas, ArgTypes, Story } from "@storybook/addon-docs/blocks"
+import { Menu } from './Menu';
+import * as MenuStories from './Menu.stories.tsx';
+
+<Meta of={MenuStories} />
+
+# Menu
+
+The Menu component is a customizable dropdown menu built with Material UI v5. It can contain various interactive items like simple menu items, checkboxes, and switches. It also has a built-in search functionality.
+
+## Features
+
+- **Searchable**: Includes an optional search bar to filter menu items.
+- **Composable Items**: Supports different types of menu items:
+  - `Menu.Item`: A standard menu item.
+  - `Menu.Checkbox`: A menu item with a checkbox.
+  - `Menu.Switch`: A menu item with a switch.
+  - `Menu.SubMenu`: A menu item that opens a secondary menu with nested items.
+- **Customizable**: Built on top of MUI's Menu, so it accepts all `MenuProps`.
+
+## Basic Usage
+
+The `Menu` component is controlled by `anchorEl`, `open`, and `onClose` props, similar to MUI's Menu. You can compose different item types within the menu.
+
+**To view the menu examples:**
+1. Click on the "Open Menu" button to show the menu.
+2. Use the **Controls** panel to toggle the `search` functionality.
+3. Interact with the different menu items.
+
+<Canvas of={MenuStories.Default} />
+
+## Sub Menu
+
+The Menu component also supports nested sub-menus that open when clicked:
+
+<Canvas of={MenuStories.SecondaryMenu} />
+
+## Controls
+
+The following controls are available for customizing the menu:
+
+- **search**: Toggles the search bar visibility within the menu.
+
+## Props
+
+<ArgTypes of={Menu} />
+
+## Composable Components
+
+The `Menu` component comes with sub-components that can be used as children.
+
+### Menu.Item
+
+A standard menu item that can have an icon and a selected state.
+
+```tsx
+<Menu.Item selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
+  Name
+</Menu.Item>
+```
+
+### Menu.Checkbox
+
+A menu item that functions as a checkbox.
+
+```tsx
+<Menu.Checkbox
+  checked={checked.includes("Appointments")}
+  onClick={() => setChecked((prev) => (prev.includes("Appointments") ? prev.filter((i) => i !== "Appointments") : [...prev, "Appointments"]))}
+>
+  Appointments
+</Menu.Checkbox>
+```
+
+### Menu.Switch
+
+A menu item that functions as a switch.
+
+```tsx
+<Menu.Switch checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
+  Documents
+</Menu.Switch>
+```
+
+### Menu.SubMenu
+
+A menu item that opens a secondary menu when clicked. Perfect for organizing related actions into nested groups.
+
+```tsx
+<Menu.SubMenu text="More options" icon={<Star />}>
+  <Menu.Item>Sub-item 1</Menu.Item>
+  <Menu.Item>Sub-item 2</Menu.Item>
+  <Menu.SubMenu text="Nested submenu">
+    <Menu.Item>Deeply nested item</Menu.Item>
+  </Menu.SubMenu>
+</Menu.SubMenu>
+```
+
+**Props:**
+- `text`: The display text for the sub-menu item
+- `icon`: Optional icon to display alongside the text
+- `children`: The menu items to display in the sub-menu
+
+**Behavior:**
+- Click to open/close the sub-menu
+- Sub-menu appears to the right of the parent menu
+- Can be nested multiple levels deep
+- Automatically closes when clicking outside
+
+## Example
+
+Here is a full example of how to use the `Menu` component with its composable items.
+
+```tsx
+import { useState } from "react";
+import { Button, Divider } from "@mui/material";
+import { Menu } from "./Menu";
+import Star from "@mui/icons-material/Star";
+
+const MyMenu = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [checked, setChecked] = useState<string[]>([]);
+  const [switches, setSwitches] = useState<Record<string, boolean>>({});
+
+  const open = Boolean(anchorEl);
+  const handleClose = () => setAnchorEl(null);
+
+  return (
+    <>
+      <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} search>
+        <Menu.Item selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
+          Name
+        </Menu.Item>
+        <Menu.Item selected={selected === "Care Team"} onClick={() => setSelected("Care Team")}>
+          Care Team
+        </Menu.Item>
+        <Divider />
+        <Menu.Checkbox
+          checked={checked.includes("Appointments")}
+          onClick={() => setChecked((prev) => (prev.includes("Appointments") ? prev.filter((i) => i !== "Appointments") : [...prev, "Appointments"]))}
+        >
+          Appointments
+        </Menu.Checkbox>
+        <Menu.Checkbox
+          checked={checked.includes("Messages")}
+          onClick={() => setChecked((prev) => (prev.includes("Messages") ? prev.filter((i) => i !== "Messages") : [...prev, "Messages"]))}
+        >
+          Messages
+        </Menu.Checkbox>
+        <Divider />
+        <Menu.Switch checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
+          Documents
+        </Menu.Switch>
+        <Divider />
+        <Menu.SubMenu text="More options" icon={<Star />}>
+          <Menu.Item>Export Data</Menu.Item>
+          <Menu.Item>Import Data</Menu.Item>
+          <Menu.SubMenu text="Advanced">
+            <Menu.Item>Debug Mode</Menu.Item>
+            <Menu.Item>Developer Tools</Menu.Item>
+          </Menu.SubMenu>
+        </Menu.SubMenu>
+      </Menu>
+    </>
+  );
+}
+```
+
+## Accessibility
+
+The Menu component leverages Material UI's Menu for accessibility, including:
+
+- **Focus management**: Focus is automatically trapped within the menu.
+- **Keyboard navigation**: Arrow keys can be used to navigate between items, and `Enter` or `Space` can be used to activate them.
+- **Screen reader support**: Proper ARIA labels and roles are automatically applied.
+- **Sub-menu navigation**: Sub-menus can be opened with `Enter` or `Space` and closed with `Escape`.
