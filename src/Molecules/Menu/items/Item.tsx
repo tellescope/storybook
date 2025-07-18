@@ -10,18 +10,21 @@ import CheckIcon from "@mui/icons-material/Check";
 type Props = MenuItemProps & {
   icon?: React.ReactNode;
   searchableText?: string;
+  dense?: boolean;
 };
 
 export const Item: React.FC<Props> = ({
   icon,
   children,
   selected,
+  dense = false,
   ...props
 }) => (
   <MuiMenuItem
     selected={selected}
     sx={{
       p: 1,
+      height: dense ? "32px" : "auto",
       borderRadius: "6px",
       mx: 1,
       "&.Mui-selected": {

@@ -9,11 +9,13 @@ import {
 type Props = Omit<MenuItemProps, "checked"> & {
   checked?: boolean;
   searchableText?: string;
+  dense?: boolean;
 };
 
 export const ItemCheckbox: React.FC<Props> = ({
   checked,
   children,
+  dense = false,
   ...props
 }) => (
   <MuiMenuItem
@@ -21,6 +23,7 @@ export const ItemCheckbox: React.FC<Props> = ({
     sx={{
       px: 1,
       py: 0,
+      height: dense ? "32px" : "auto",
       borderRadius: "6px",
       mx: 1,
       "&.Mui-selected": {

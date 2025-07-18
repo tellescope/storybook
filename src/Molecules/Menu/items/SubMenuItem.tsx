@@ -13,12 +13,14 @@ type Props = Omit<MenuItemProps, 'children'> & {
   icon?: React.ReactNode;
   text: React.ReactNode;
   children: React.ReactNode;
+  dense?: boolean;
 };
 
 export const SubMenuItem: React.FC<Props> = ({
   icon,
   text,
   children,
+  dense = false,
   ...props
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -47,6 +49,7 @@ export const SubMenuItem: React.FC<Props> = ({
         onClick={handleClick}
         sx={{
           p: 1,
+          height: dense ? "32px" : "auto",
           mx: 1,
           cursor: "pointer",
           "&:hover": {
