@@ -11,6 +11,7 @@ The Menu component is a customizable dropdown menu built with Material UI v5. It
 ## Features
 
 - **Searchable**: Includes an optional search bar to filter menu items.
+- **Dense Mode**: Supports a compact layout with 32px item height for space-efficient menus.
 - **Composable Items**: Supports different types of menu items:
   - `Menu.Item`: A standard menu item.
   - `Menu.Checkbox`: A menu item with a checkbox.
@@ -24,10 +25,16 @@ The `Menu` component is controlled by `anchorEl`, `open`, and `onClose` props, s
 
 **To view the menu examples:**
 1. Click on the "Open Menu" button to show the menu.
-2. Use the **Controls** panel to toggle the `search` functionality.
+2. Use the **Controls** panel to toggle the `search` and `dense` functionality.
 3. Interact with the different menu items.
 
 <Canvas of={MenuStories.Default} />
+
+## Dense Mode
+
+The Menu component supports a dense layout that reduces the height of menu items to 32px. This is useful for space-constrained interfaces or when you need to fit more items in a smaller area. The search field also adapts its height when dense mode is enabled.
+
+<Canvas of={MenuStories.Dense} />
 
 ## Sub Menu
 
@@ -40,6 +47,7 @@ The Menu component also supports nested sub-menus that open when clicked:
 The following controls are available for customizing the menu:
 
 - **search**: Toggles the search bar visibility within the menu.
+- **dense**: Enables dense mode with 32px height menu items for compact layouts.
 
 ## Props
 
@@ -129,7 +137,7 @@ const MyMenu = () => {
   return (
     <>
       <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} search>
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose} search dense>
         <Menu.Item selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
           Name
         </Menu.Item>

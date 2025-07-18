@@ -1,5 +1,5 @@
 // components/Menu/Menu.tsx
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import {
   Menu as MuiMenu,
   Divider,
@@ -9,12 +9,19 @@ import {
 import { SearchField } from "./components";
 import { ItemCheckbox, ItemSwitch, Item, SubMenuItem } from "./items";
 
+// Create density context
+const DensityContext = createContext<{ dense: boolean }>({ dense: false });
+
+export const useDensity = () => useContext(DensityContext);
+
 type Props = MenuProps & {
   search?: boolean;
+  dense?: boolean;
 };
 
 const MenuComponent: React.FC<Props> = ({
   search = false,
+  dense = false,
   children,
   ...props
 }) => {
@@ -34,21 +41,24 @@ const MenuComponent: React.FC<Props> = ({
   });
 
   return (
-    <MuiMenu {...props}>
-      {search && (
-        <>
-          <SearchField
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <Divider sx={{ mb: 1 }} />
-        </>
-      )}
+    <DensityContext.Provider value={{ dense }}>
+      <MuiMenu {...props}>
+        {search && (
+          <>
+            <SearchField
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              dense={dense}
+            />
+            <Divider sx={{ mb: 1 }} />
+          </>
+        )}
 
-      <Stack display="flex" gap={0.5} flexDirection="column">
-        {filteredChildren}
-      </Stack>
-    </MuiMenu>
+        <Stack display="flex" gap={0.5} flexDirection="column">
+          {filteredChildren}
+        </Stack>
+      </MuiMenu>
+    </DensityContext.Provider>
   );
 };
 

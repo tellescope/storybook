@@ -4,9 +4,14 @@ import { Box, TextField } from "@mui/material";
 type SearchFieldProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  dense?: boolean;
 };
 
-export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange }) => (
+export const SearchField: React.FC<SearchFieldProps> = ({ 
+  value, 
+  onChange,
+  dense = false 
+}) => (
   <Box px={1} pb={1}>
     <TextField
       placeholder="Search..."
@@ -17,6 +22,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange }) => 
         border: "2px solid #1C7AE0",
         borderRadius: "8px",
         "& .MuiOutlinedInput-root": {
+          height: "32px",
           "& fieldset": {
             border: "none",
           },
@@ -26,9 +32,13 @@ export const SearchField: React.FC<SearchFieldProps> = ({ value, onChange }) => 
           "&.Mui-focused fieldset": {
             border: "none",
           },
+          "& input": {
+            padding: dense ? "6px 12px" : "8px 12px",
+            fontSize: "14px",
+          },
         },
       }}
-      size="small"
+      size={dense ? "small" : "medium"}
     />
   </Box>
 ); 

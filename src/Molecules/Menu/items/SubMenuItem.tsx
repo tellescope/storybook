@@ -8,6 +8,7 @@ import {
   type MenuItemProps,
 } from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import { useDensity } from "../Menu";
 
 type Props = Omit<MenuItemProps, 'children'> & {
   icon?: React.ReactNode;
@@ -23,6 +24,7 @@ export const SubMenuItem: React.FC<Props> = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const menuItemRef = useRef<HTMLLIElement>(null);
+  const { dense } = useDensity();
 
   const handleClick = (event: React.MouseEvent<HTMLLIElement>) => {
     event.stopPropagation();
@@ -46,16 +48,19 @@ export const SubMenuItem: React.FC<Props> = ({
         ref={menuItemRef}
         onClick={handleClick}
         sx={{
-          p: 1,
+          p: dense ? "4px 8px" : "8px",
           mx: 1,
+          minHeight: dense ? "32px" : "auto",
           cursor: "pointer",
           "&:hover": {
             backgroundColor: "rgba(0, 0, 0, 0.04)",
           },
         }}
       >
-        {icon && <ListItemIcon>{icon}</ListItemIcon>}
-        <ListItemText>{text}</ListItemText>
+        {icon && <ListItemIcon sx={{ minWidth: dense ? "24px" : "auto" }}>{icon}</ListItemIcon>}
+        <ListItemText sx={{ "& .MuiListItemText-primary": { fontSize: dense ? "14px" : "inherit" } }}>
+          {text}
+        </ListItemText>
         <ArrowRightIcon sx={{ marginLeft: 4 }} fontSize="small" />
       </MuiMenuItem>
       <MuiMenu
