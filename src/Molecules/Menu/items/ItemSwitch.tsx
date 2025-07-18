@@ -20,36 +20,36 @@ export const ItemSwitch: React.FC<Props> = ({
   const { dense } = useDensity();
   
   return (
-    <MuiMenuItem
-      selected={checked}
-      sx={{
+  <MuiMenuItem
+    selected={checked}
+    sx={{
         p: dense ? "4px 8px" : "8px",
-        borderRadius: "6px",
-        mx: 1,
+      borderRadius: "6px",
+      mx: 1,
         minHeight: dense ? "32px" : "auto",
-        "&.Mui-selected": {
+      "&.Mui-selected": {
+        backgroundColor: "#DDE1F9",
+        "&:hover": {
           backgroundColor: "#DDE1F9",
-          "&:hover": {
-            backgroundColor: "#DDE1F9",
-          },
         },
-      }}
-      {...props}
-    >
+      },
+    }}
+    {...props}
+  >
       <ListItemText sx={{ "& .MuiListItemText-primary": { fontSize: dense ? "14px" : "inherit" } }}>
         {children}
       </ListItemText>
-      <Switch
+    <Switch
         sx={{ 
           marginLeft: "auto", 
           marginRight: dense ? "4px" : "8px"
         }}
-        edge="end"
-        checked={checked}
-        size="small"
-        tabIndex={-1}
-        disableRipple
-      />
-    </MuiMenuItem>
-  );
+      edge="end"
+      checked={checked}
+      size="small"
+      tabIndex={-1}
+      disableRipple
+    />
+  </MuiMenuItem>
+); 
 }; 

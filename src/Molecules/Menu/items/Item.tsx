@@ -22,27 +22,27 @@ export const Item: React.FC<Props> = ({
   const { dense } = useDensity();
   
   return (
-    <MuiMenuItem
-      selected={selected}
-      sx={{
+  <MuiMenuItem
+    selected={selected}
+    sx={{
         p: dense ? "4px 8px" : "8px",
-        borderRadius: "6px",
-        mx: 1,
+      borderRadius: "6px",
+      mx: 1,
         minHeight: dense ? "32px" : "auto",
-        "&.Mui-selected": {
+      "&.Mui-selected": {
+        backgroundColor: "#DDE1F9",
+        "&:hover": {
           backgroundColor: "#DDE1F9",
-          "&:hover": {
-            backgroundColor: "#DDE1F9",
-          },
         },
-      }}
-      {...props}
-    >
+      },
+    }}
+    {...props}
+  >
       {icon && <ListItemIcon sx={{ minWidth: dense ? "24px" : "auto" }}>{icon}</ListItemIcon>}
       <ListItemText sx={{ "& .MuiListItemText-primary": { fontSize: dense ? "14px" : "inherit" } }}>
         {children}
       </ListItemText>
-      {selected && <CheckIcon sx={{ marginLeft: 4 }} fontSize="small" />}
-    </MuiMenuItem>
-  );
+    {selected && <CheckIcon sx={{ marginLeft: 4 }} fontSize="small" />}
+  </MuiMenuItem>
+); 
 }; 

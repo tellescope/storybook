@@ -31,28 +31,58 @@ export const Default: Story = {
     return (
       <>
         <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
-        <Menu {...args} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <Menu.Item selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
+        <Menu
+          {...args}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          sx={{ borderRadius: "80px" }}
+        >
+          <Menu.Item
+            selected={selected === "Name"}
+            onClick={() => setSelected("Name")}
+            icon={<Star />}
+          >
             Name
           </Menu.Item>
-          <Menu.Item selected={selected === "Care Team"} onClick={() => setSelected("Care Team")}>
+          <Menu.Item
+            selected={selected === "Care Team"}
+            onClick={() => setSelected("Care Team")}
+          >
             Care Team
           </Menu.Item>
-          <Divider />
+
           <Menu.Checkbox
             checked={checked.includes("Appointments")}
-            onClick={() => setChecked((prev) => (prev.includes("Appointments") ? prev.filter((i) => i !== "Appointments") : [...prev, "Appointments"]))}
+            onClick={() =>
+              setChecked((prev) =>
+                prev.includes("Appointments")
+                  ? prev.filter((i) => i !== "Appointments")
+                  : [...prev, "Appointments"]
+              )
+            }
           >
             Appointments
           </Menu.Checkbox>
           <Menu.Checkbox
             checked={checked.includes("Messages")}
-            onClick={() => setChecked((prev) => (prev.includes("Messages") ? prev.filter((i) => i !== "Messages") : [...prev, "Messages"]))}
+            onClick={() =>
+              setChecked((prev) =>
+                prev.includes("Messages")
+                  ? prev.filter((i) => i !== "Messages")
+                  : [...prev, "Messages"]
+              )
+            }
           >
             Messages
           </Menu.Checkbox>
-          <Divider />
-          <Menu.Switch checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
+
+          <Menu.Switch
+            checked={switches.Documents ?? false}
+            onClick={() =>
+              setSwitches((p) => ({ ...p, Documents: !p.Documents }))
+            }
+          >
             Documents
           </Menu.Switch>
         </Menu>
@@ -77,29 +107,55 @@ export const Dense: Story = {
 
     return (
       <>
-        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Dense Menu</Button>
+        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
+          Open Dense Menu
+        </Button>
         <Menu {...args} anchorEl={anchorEl} open={open} onClose={handleClose}>
-          <Menu.Item selected={selected === "Name"} onClick={() => setSelected("Name")} icon={<Star />}>
+          <Menu.Item
+            selected={selected === "Name"}
+            onClick={() => setSelected("Name")}
+            icon={<Star />}
+          >
             Name
           </Menu.Item>
-          <Menu.Item selected={selected === "Care Team"} onClick={() => setSelected("Care Team")}>
+          <Menu.Item
+            selected={selected === "Care Team"}
+            onClick={() => setSelected("Care Team")}
+          >
             Care Team
           </Menu.Item>
           <Divider />
           <Menu.Checkbox
             checked={checked.includes("Appointments")}
-            onClick={() => setChecked((prev) => (prev.includes("Appointments") ? prev.filter((i) => i !== "Appointments") : [...prev, "Appointments"]))}
+            onClick={() =>
+              setChecked((prev) =>
+                prev.includes("Appointments")
+                  ? prev.filter((i) => i !== "Appointments")
+                  : [...prev, "Appointments"]
+              )
+            }
           >
             Appointments
           </Menu.Checkbox>
           <Menu.Checkbox
             checked={checked.includes("Messages")}
-            onClick={() => setChecked((prev) => (prev.includes("Messages") ? prev.filter((i) => i !== "Messages") : [...prev, "Messages"]))}
+            onClick={() =>
+              setChecked((prev) =>
+                prev.includes("Messages")
+                  ? prev.filter((i) => i !== "Messages")
+                  : [...prev, "Messages"]
+              )
+            }
           >
             Messages
           </Menu.Checkbox>
           <Divider />
-          <Menu.Switch checked={switches.Documents ?? false} onClick={() => setSwitches((p) => ({ ...p, Documents: !p.Documents }))}>
+          <Menu.Switch
+            checked={switches.Documents ?? false}
+            onClick={() =>
+              setSwitches((p) => ({ ...p, Documents: !p.Documents }))
+            }
+          >
             Documents
           </Menu.Switch>
         </Menu>
@@ -123,7 +179,6 @@ export const SecondaryMenu: Story = {
       <>
         <Button onClick={(e) => setAnchorEl(e.currentTarget)}>Open Menu</Button>
         <Menu {...args} anchorEl={anchorEl} open={open} onClose={handleClose}>
-
           <Menu.SubMenu text="More options">
             <Menu.Item>Sub-item 1</Menu.Item>
             <Menu.Item>Sub-item 2</Menu.Item>
