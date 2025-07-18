@@ -1,4 +1,4 @@
-import { Badge, Box, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Paper, Stack, Typography } from "@mui/material";
+import { Badge, Box, ListItemIcon, ListItemText, ListSubheader, Menu, MenuItem, MenuList, Paper, Stack, Typography } from "@mui/material";
 import { createContext, useContext, useEffect, useState, type JSX, type ReactNode } from "react";
 import { Button } from "../../../atoms/button/button";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -7,6 +7,7 @@ import TinySelect from "../../../atoms/table-control-elements/tiny-select/tiny-s
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 type SortItem = { field: string, order: string };
 
@@ -29,7 +30,7 @@ type DetailSelectContextType = {
   defaultOpen?: boolean;
 
   onAddSort?: (field: string) => void;
-  onDeleteSort?: (field: string) => void;
+  onDeleteSort?: () => void;
   onChangeSort?: (field: string, order: string) => void;
   onChangeSortOrder?: (field: string, order: string) => void;
 
@@ -59,7 +60,7 @@ type StateProps = {
   defaultOpen?: boolean;
 
   onAddSort?: (field: string) => void;
-  onDeleteSort?: (field: string) => void;
+  onDeleteSort?: () => void;
   onChangeSort?: (field: string, order: string) => void;
   onChangeSortOrder?: (field: string, order: string) => void;
 
@@ -156,17 +157,14 @@ const addSortStyle = {
 
 // Main menu component
 function DetailSelectSort() {
-  const { sort, setSort, defaultOpen, onChangeSort, onAddSort, onDeleteSort, onChangeSortOrder } = useContext(DetailSelectContext)!;
+  const { sort, setSort, defaultOpen, onChangeSort, onAddSort, onDeleteSort, onChangeSortOrder, availableSortFields } = useContext(DetailSelectContext)!;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
   const [anchorAddSort, setAnchorAddSort] = useState<null | HTMLElement>(null);
-  const [anchorDeleteSort, setAnchorDeleteSort] = useState<null | HTMLElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleClickOnAddSort = (e: React.MouseEvent<HTMLLIElement>) => setAnchorAddSort(e.currentTarget);
-  const handleClickOnDeleteSort = (e: React.MouseEvent<HTMLLIElement>) => setAnchorDeleteSort(e.currentTarget);
   const handleCloseAdd = () => setAnchorAddSort(null);
-  const handleCloseDelete = () => setAnchorDeleteSort(null);
 
   const handleSetSortField = (field: string, replaced: string) => {
     setSort(prev => prev.map((item) => {
@@ -186,15 +184,19 @@ function DetailSelectSort() {
   };
 
   const handleAddSort = (field: string) => {
-    setSort(prev => [...prev, { field, order: 'ascending' }]);
+    setSort(prev => {
+      return [...prev, { field, order: 'ascending' }]
+    });
     onAddSort?.(field);
-    handleCloseAdd();
+    if (sort.length === availableSortFields.length - 1) {
+      handleCloseAdd();
+    }
   };
 
-  const handleDeleteSort = (field: string) => {
-    setSort(prev => prev.filter(item => item.field !== field));
-    onDeleteSort?.(field);
-    handleCloseDelete();
+
+  const handleDeleteSort = () => {
+    setSort([]);
+    onDeleteSort?.();
   };
 
   const usedFields = sort.map(s => s.field);
@@ -235,8 +237,23 @@ function DetailSelectSort() {
         }}
         onClick={handleClick}
       >
-        <ArrowUpwardIcon sx={{ fontSize: 18, color: '#0288D1' }} />
-        <Typography sx={{ color: '#0288D1', fontWeight: 500, ml: 0.5 }} variant="body2">Value</Typography>
+        {
+          sort.length > 1 ? (
+            <SwapVertIcon sx={{ fontSize: 22, color: '#0288D1' }} />
+          ) : (
+            <ArrowUpwardIcon sx={{ fontSize: 18, color: '#0288D1' }} />
+          )
+        }
+        <Typography sx={{ color: '#0288D1', fontWeight: 500, ml: 0.5 }} variant="body2">
+          {
+            sort.length === 0 ?
+              "Value"
+              :
+              sort.length === 1
+                ? `${sort[0].field}`
+                : `${sort.length} Sorts`
+          }
+        </Typography>
         <KeyboardArrowDownIcon sx={{ color: '#0288D1', ml: 0.5 }} />
       </Button>
 
@@ -286,14 +303,24 @@ function DetailSelectSort() {
               },
             }}
           >
-            <MenuItem onClick={handleClickOnAddSort} sx={{ color: 'text.disabled' }}>
-              <ListItemIcon sx={{ color: 'text.disabled' }}><AddIcon fontSize="small" /></ListItemIcon>
-              <ListItemText><Typography variant="body2">Add sort</Typography></ListItemText>
-            </MenuItem>
-            <MenuItem onClick={handleClickOnDeleteSort} sx={{ color: 'text.disabled' }}>
-              <ListItemIcon sx={{ color: 'text.disabled' }}><DeleteIcon fontSize="small" /></ListItemIcon>
-              <ListItemText><Typography variant="body2">Delete sort</Typography></ListItemText>
-            </MenuItem>
+            {/* Remove the add sort option if all fields are used */}
+            {
+              sort.length !== availableSortFields.length ? (
+                <MenuItem onClick={handleClickOnAddSort} sx={{ color: 'text.disabled' }}>
+                  <ListItemIcon sx={{ color: 'text.disabled' }}><AddIcon fontSize="small" /></ListItemIcon>
+                  <ListItemText><Typography variant="body2">Add sort</Typography></ListItemText>
+                </MenuItem>
+              ) : null
+            }
+            {/* Remove the add sort option if not all fields are used */}
+            {
+              sort.length > 0 ? (
+                <MenuItem sx={{ color: 'text.disabled' }} onClick={handleDeleteSort} disabled={sort.length === 0}>
+                  <ListItemIcon sx={{ color: 'text.disabled' }}><DeleteIcon fontSize="small" /></ListItemIcon>
+                  <ListItemText><Typography variant="body2">Delete sort</Typography></ListItemText>
+                </MenuItem>
+              ) : null
+            }
           </MenuList>
         </Paper>
       </Menu>
@@ -303,14 +330,6 @@ function DetailSelectSort() {
         anchorEl={anchorAddSort}
         onClose={handleCloseAdd}
         onAddSort={handleAddSort}
-        usedFields={usedFields}
-      />
-
-      <DeleteSortMenu
-        open={Boolean(anchorDeleteSort)}
-        anchorEl={anchorDeleteSort}
-        onClose={handleCloseDelete}
-        onDeleteSort={handleDeleteSort}
         usedFields={usedFields}
       />
     </>
@@ -381,30 +400,35 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
 
         }}
       >
-        <Input
-          appearance="distinct"
-          placeholder="Search For Property"
-          size="small"
-          sx={{
-            mb: "4px",
-            mx: "4px",
-            "& .MuiInputBase-input": {
-              padding: "4px 8px"
-            },
-          }}
-          onKeyDown={(e) => {
-            e.stopPropagation(); // prevent key events from being captured by the menu
-          }}
-          // elevation={1}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          value={searchTerm}
-        />
+        <ListSubheader disableGutters sx={{ lineHeight: "normal" }}>
+          <Input
+            appearance="distinct"
+            placeholder="Search For Property"
+            size="small"
+            sx={{
+              width: "100%",
+              "& .MuiInputBase-input": {
+                padding: "4px 8px"
+              }
+            }}
+            FormControlProps={{
+              sx: { width: "100%", mb: "4px", }
+            }}
+            onKeyDown={(e) => {
+              e.stopPropagation(); // prevent key events from being captured by the menu
+            }}
+            // elevation={1}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+          />
+        </ListSubheader>
         {/* </ListSubheader> */}
         {search.map(f => (
-          <MenuItem key={f.value} value={f.value} disabled={usedFields.includes(f.value) && f.value !== field}>
-            <ListItemIcon>{f.icon}</ListItemIcon>
-            <ListItemText>{f.label}</ListItemText>
-          </MenuItem>
+          usedFields.includes(f.value) ? null : // Skip if the field is already used
+            <MenuItem key={f.value} value={f.value} disabled={usedFields.includes(f.value) && f.value !== field}>
+              <ListItemIcon>{f.icon}</ListItemIcon>
+              <ListItemText>{f.label}</ListItemText>
+            </MenuItem>
 
         ))}
         {
@@ -488,11 +512,14 @@ function AddSortMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
           placeholder="Search For Property"
           size="small"
           sx={{
-            mb: "4px",
-            mx: "4px",
+
+            width: "100%",
             "& .MuiInputBase-input": {
               padding: "4px 8px"
             }
+          }}
+          FormControlProps={{
+            sx: { width: "100%", mb: "4px", }
           }}
           onKeyDown={(e) => {
             e.stopPropagation(); // prevent key events from being captured by the menu
@@ -501,10 +528,11 @@ function AddSortMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
           value={searchTerm}
         />
         {search.map(f => (
-          <MenuItem key={f.value} onClick={() => onAddSort(f.value)} disabled={usedFields.includes(f.value)}>
-            <ListItemIcon>{f.icon}</ListItemIcon>
-            <ListItemText>{f.label}</ListItemText>
-          </MenuItem>
+          usedFields.includes(f.value) ? null : // Skip if the field is already used
+            <MenuItem key={f.value} onClick={() => onAddSort(f.value)} disabled={usedFields.includes(f.value)}>
+              <ListItemIcon>{f.icon}</ListItemIcon>
+              <ListItemText>{f.label}</ListItemText>
+            </MenuItem>
         ))}
         {
           search.length === 0 && (
@@ -518,70 +546,6 @@ function AddSortMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
   );
 }
 
-// Delete sort popup
-function DeleteSortMenu({ open, anchorEl, onClose, onDeleteSort, usedFields }: {
-  open: boolean;
-  anchorEl: null | HTMLElement;
-  onClose: () => void;
-  onDeleteSort: (field: string) => void;
-  usedFields: string[];
-}) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const { availableSortFields } = useContext(DetailSelectContext)!;
-  const search = availableSortFields.filter(f => f.label.toLowerCase().includes(searchTerm.toLowerCase()));
-  return (
-    <Menu open={open} onClose={onClose} anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'bottom', horizontal: -10 }}
-      MenuListProps={{
-        disablePadding: true,
-        sx: { px: "4px" },
-        autoFocusItem: false,
-      }}
-      sx={{
-        "& .MuiPaper-root": {
-          width: "220px !important",
-          border: "1px solid #0000001F",
-          borderRadius: "5px"
-        }
-      }}
-      elevation={1}
-    >
-      <MenuList sx={addSortStyle} autoFocusItem={false}>
-        <Input
-          autoFocus
-          appearance="distinct"
-          placeholder="Search For Property"
-          size="small"
-          sx={{
-            mb: "4px",
-            mx: "4px",
-            "& .MuiInputBase-input": {
-              padding: "4px 8px"
-            }
-          }}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyDown={(e) => {
-            e.stopPropagation(); // prevent key events from being captured by the menu
-          }}
-          value={searchTerm}
-        />
-        {search.map(f => (
-          <MenuItem key={f.value} onClick={() => onDeleteSort(f.value)} disabled={!usedFields.includes(f.value)}>
-            <ListItemIcon>{f.icon}</ListItemIcon>
-            <ListItemText>{f.label}</ListItemText>
-          </MenuItem>
-        ))}
-        {
-          search.length === 0 && (
-            <MenuItem disabled>
-              <ListItemText>No fields found</ListItemText>
-            </MenuItem>
-          )
-        }
-      </MenuList>
-    </Menu>
-  );
-}
 
 /* Filter Select Detail Variant */
 const DetailSelectFilterMenuStyle = {
@@ -716,7 +680,6 @@ const DetailSelectPending = () => {
           </Typography>
           <KeyboardArrowDownIcon sx={{ color: !filter?.value ? "#0000001F" : '#0288D1', ml: 0.5 }} />
         </Badge>
-
       </Button>
 
       <Menu
@@ -752,9 +715,13 @@ const DetailSelectPending = () => {
             placeholder="Type a value..."
             size="small"
             sx={{
+              width: "100%",
               "& .MuiInputBase-input": {
                 padding: "4px 8px"
               },
+            }}
+            FormControlProps={{
+              sx: { width: "100%" }
             }}
             // elevation={1}
             onChange={(e) => handleChangeFilterValue(e.target.value)}

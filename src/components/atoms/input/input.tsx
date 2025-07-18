@@ -3,7 +3,7 @@ import {
     InputAdornment,
     TextField as MuiTextField,
 } from '@mui/material';
-import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField';
+import type { TextFieldProps as MuiTextFieldProps, FormControlProps as MuiFormControlProps } from '@mui/material';
 import { useState, type ChangeEvent, type ReactNode } from 'react';
 
 type BaseProps = {
@@ -13,6 +13,7 @@ type BaseProps = {
     defaultValue?: string;
     startIcon?: ReactNode;
     endIcon?: ReactNode;
+    FormControlProps?: MuiFormControlProps
 };
 
 
@@ -48,13 +49,14 @@ export const Input = (props: InputProps) => {
             endIcon,
             placeholder,
             sx,
+            FormControlProps,
             ...rest
         } = props;
 
         const hasStartAdornment = !!startIcon;
         const pos = getPos("outlined");
         return (
-            <FormControl variant={"outlined"} size={size} error={error}>
+            <FormControl variant={"outlined"} size={size} error={error} {...FormControlProps}>
                 <MuiTextField
                     variant={"outlined"}
                     value={currentValue}
@@ -151,13 +153,14 @@ export const Input = (props: InputProps) => {
         sx,
         InputLabelProps,
         InputProps,
+        FormControlProps,
         ...rest
     } = props;
     const hasStartAdornment = !!startIcon;
     const pos = getPos(appearance);
 
     return (
-        <FormControl variant={appearance} size={size} error={error}>
+        <FormControl variant={appearance} size={size} error={error}  {...FormControlProps}>
             <MuiTextField
                 variant={appearance}
                 value={currentValue}

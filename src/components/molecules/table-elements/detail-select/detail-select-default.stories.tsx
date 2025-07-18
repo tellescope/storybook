@@ -64,7 +64,7 @@ const filterOptions = [
 export const Default: Story = {
     render: ({ appearance, active, hasValue }) => {
         const [filter, setFilter] = useState<{ value: string; filterOption: string } | null>(null);
-        const [sort, setSort] = useState<{ field: string, order: string }[]>([{ field: 'last name', order: 'ascending' }]);
+        const [sort, setSort] = useState<{ field: string, order: string }[]>([{ field: 'name', order: 'ascending' }]);
 
         useEffect(() => {
             if (appearance === "filter") {
@@ -75,7 +75,7 @@ export const Default: Story = {
                 }
             } else {
                 if (hasValue) {
-                    setSort([{ field: 'last name', order: 'ascending' }]);
+                    setSort([{ field: 'name', order: 'ascending' }]);
                 } else {
                     setSort([]);
                 }
@@ -109,7 +109,7 @@ export const Default: Story = {
             // onChangeSort={(field, order) => console.log("Sort changed", { field, order })}
             // onChangeSortOrder={(field, order) => console.log("Sort order changed", { field, order })}
             // onAddSort={(field) => console.log("Sort added", field)}
-            // onDeleteSort={(field) => console.log("Sort deleted", field)}
+            // onDeleteSort={() => console.log("All Sortdeleted")}
 
             // OnSetFilterOption={(option) => console.log("Filter option set", option)}
             // OnSetFilterValue={(value) => console.log("Filter value set", value)}
@@ -120,3 +120,25 @@ export const Default: Story = {
 };
 
 
+
+
+/*
+    Detail Select props needs to refactor to support the following:
+    - appearance: 'sort'
+    - sort: { field: string, order: 'ascending' | 'descending' }[]
+    - setSort: React.Dispatch<React.SetStateAction<{ field: string, order: 'ascending' | 'descending' }[]>>
+    - availableSortFields: { label: string, value: string, icon: JSX.Element }[]
+    - onChangeSort?: (field: string, order: 'ascending' | 'descending') => void
+    - onChangeSortOrder?: (field: string, order: 'ascending' | 'descending') => void
+    - onAddSort?: (field: string) => void
+    - onDeleteSort?: () => void
+    Or
+    - appearance: 'filter'
+    - filter: { value: string, filterOption: string } | null
+    - setFilter: React.Dispatch<React.SetStateAction<{ value: string, filterOption: string } | null>>
+    - filterOptions: { label: string, value: string }[]
+    - defaultOpen?: boolean
+    - onChangeFilter?: (field: string) => void
+
+    => depnding on the appearance
+*/

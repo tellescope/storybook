@@ -207,10 +207,15 @@ function FilterMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
                     placeholder="Search For Property"
                     size="small"
                     sx={{
-                        mb: "4px",
-                        mx: "4px",
+                        width: "100%",
                         "& .MuiInputBase-input": {
                             padding: "4px 8px"
+                        }
+                    }}
+                    FormControlProps={{
+                        sx: {
+                            width: "100%",
+                            mb: "4px",
                         }
                     }}
                     onKeyDown={(e) => {

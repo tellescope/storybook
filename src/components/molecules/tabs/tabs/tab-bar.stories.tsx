@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Tabs from './tabs';
-import StarIcon from '@mui/icons-material/Star';
+import Tabs from './tab-bar';
 import { Typography } from '@mui/material';
 import CalendarViewMonthRoundedIcon from '@mui/icons-material/CalendarViewMonthRounded';
 
@@ -9,12 +8,7 @@ const meta = {
     component: Tabs,
     parameters: {
         controls: {
-            include: ['appearance', 'icon'],
-        },
-    },
-    argTypes: {
-        appearance: {
-            control: { type: 'select', options: ['default', 'table'] },
+            include: [''],
         },
     },
 } satisfies Meta<typeof Tabs>;
@@ -22,20 +16,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const tabs = [
-    {
-        label: "Tab",
-        icon: <StarIcon />
-    },
-    {
-        label: "Tab",
-        icon: <StarIcon />
-    },
-    {
-        label: "Tab",
-        icon: <StarIcon />
-    }
-];
 const tabPanels = [
     {
         content: <Typography variant="body2">Content for Tab 1</Typography>
@@ -50,30 +30,25 @@ const tabPanels = [
 
 const tabsTable = [
     {
-        label: "Tab",
+        label: "All Contacts",
         icon: <CalendarViewMonthRoundedIcon />
     },
     {
-        label: "Tab",
+        label: "Patients",
         icon: <CalendarViewMonthRoundedIcon />
     },
 ];
 
-export const Standard: Story = {
+export const Topbar: Story = {
     args: {
         tabs: [],
         tabPanels: [],
-        appearance: "table",
-        icon: true,
     },
-    render: ({ appearance, icon }) => {
-
+    render: () => {
         return (
             <Tabs
-                tabs={appearance === "table" ? tabsTable : tabs}
+                tabs={tabsTable}
                 tabPanels={tabPanels}
-                appearance={appearance}
-                icon={icon}
             />
         )
     }
