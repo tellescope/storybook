@@ -1,7 +1,7 @@
 import { Add } from "@mui/icons-material";
 import { Box, Tabs as MuiTabs, Stack, Tab, Typography } from "@mui/material";
 import { useState, type FC, type JSX } from "react";
-import { IconButton } from "../../../atoms/button/icon-button";
+import { IconButton } from "../../atoms/button/icon-button";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import SearchIcon from '@mui/icons-material/Search';
