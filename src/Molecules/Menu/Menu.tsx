@@ -1,11 +1,6 @@
 // components/Menu/Menu.tsx
 import React, { useState, createContext, useContext } from "react";
-import {
-  Menu as MuiMenu,
-  Divider,
-  Stack,
-  type MenuProps,
-} from "@mui/material";
+import { Menu as MuiMenu, Divider, Stack, type MenuProps } from "@mui/material";
 import { SearchField } from "./components";
 import { ItemCheckbox, ItemSwitch, Item, SubMenuItem } from "./items";
 
@@ -34,7 +29,8 @@ const MenuComponent: React.FC<Props> = ({
         children: React.ReactNode;
       };
       const childText =
-        searchableText || (typeof childChildren === "string" ? childChildren : "");
+        searchableText ||
+        (typeof childChildren === "string" ? childChildren : "");
       return childText.toLowerCase().includes(searchQuery.toLowerCase());
     }
     return true;
@@ -42,7 +38,16 @@ const MenuComponent: React.FC<Props> = ({
 
   return (
     <DensityContext.Provider value={{ dense }}>
-      <MuiMenu {...props}>
+      <MuiMenu 
+        {...props}
+        sx={{
+          '& .MuiPaper-root': {
+            borderRadius: '6px',
+            overflow: 'hidden'
+          },
+          ...props.sx
+        }}
+      >
         {search && (
           <>
             <SearchField
@@ -54,7 +59,7 @@ const MenuComponent: React.FC<Props> = ({
           </>
         )}
 
-        <Stack display="flex" gap={0.5} flexDirection="column">
+        <Stack display="flex" gap={0} flexDirection="column">
           {filteredChildren}
         </Stack>
       </MuiMenu>
