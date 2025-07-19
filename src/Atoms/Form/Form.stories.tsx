@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { MenuItem, Stack, TextField } from "@mui/material";
-import { FormGroup } from "./FormGroup";
+import { FormControlAtom } from "./FormControl";
 import { FormGroupLabel } from "./FormGroupLabel";
 import { FormHelperText } from "./FormHelperText";
 
-const meta: Meta<typeof FormGroup> = {
+const meta: Meta<typeof FormControlAtom> = {
   title: "Atoms/Form",
-  component: FormGroup,
+  component: FormControlAtom,
   parameters: {
     layout: "centered",
     docs: {
@@ -20,7 +20,7 @@ const meta: Meta<typeof FormGroup> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FormGroup>;
+type Story = StoryObj<typeof FormControlAtom>;
 
 export const Default: Story = {
   args: {
@@ -30,7 +30,7 @@ export const Default: Story = {
     // type: "text",
   },
   render: (args) => (
-    <FormGroup {...args}>
+    <FormControlAtom {...args}>
       <FormGroupLabel>Label</FormGroupLabel>
       <TextField
         hiddenLabel
@@ -40,7 +40,7 @@ export const Default: Story = {
       <FormHelperText>
         We will never share your email with anyone.
       </FormHelperText>
-    </FormGroup>
+    </FormControlAtom>
   ),
 };
 
@@ -51,7 +51,7 @@ export const Error: Story = {
     // labelSize: "default",
   },
   render: (args) => (
-    <FormGroup {...args}>
+    <FormControlAtom {...args}>
       <FormGroupLabel error>Label</FormGroupLabel>
       <TextField
         error
@@ -62,7 +62,7 @@ export const Error: Story = {
       <FormHelperText error>
         We will never share your email with anyone.
       </FormHelperText>
-    </FormGroup>
+    </FormControlAtom>
   ),
 };
 
@@ -73,7 +73,7 @@ export const TwoInputs: Story = {
     // labelSize: "default",
   },
   render: (args) => (
-    <FormGroup {...args}>
+    <FormControlAtom {...args}>
       <FormGroupLabel>Label</FormGroupLabel>
       <Stack direction="row" spacing={2} sx={{ width: "max-content" }}>
         <TextField
@@ -95,14 +95,14 @@ export const TwoInputs: Story = {
         </TextField>
       </Stack>
       <FormHelperText>Helper Text</FormHelperText>
-    </FormGroup>
+    </FormControlAtom>
   ),
 };
 
 export const ThreeInputs: Story = {
   args: {},
   render: (args) => (
-    <FormGroup {...args}>
+    <FormControlAtom {...args}>
       <FormGroupLabel>Label</FormGroupLabel>
       <Stack direction="row" spacing={2} sx={{ width: "max-content" }}>
         <TextField
@@ -128,6 +128,6 @@ export const ThreeInputs: Story = {
       <FormHelperText>
         We will never share your email with anyone.
       </FormHelperText>
-    </FormGroup>
+    </FormControlAtom>
   ),
 };

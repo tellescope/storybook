@@ -10,11 +10,13 @@ import { useDensity } from "../Menu";
 type Props = Omit<MenuItemProps, "checked"> & {
   checked?: boolean;
   searchableText?: string;
+  dense?: boolean;
 };
 
 export const ItemCheckbox: React.FC<Props> = ({
   checked,
   children,
+
   ...props
 }) => {
   const { dense } = useDensity();

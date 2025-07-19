@@ -2,8 +2,9 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button, Divider } from "@mui/material";
-import { Menu } from "./Menu";
+
 import Star from "@mui/icons-material/Star";
+import { Menu } from "./Menu";
 
 const meta: Meta<typeof Menu> = {
   title: "Molecules/Menu",

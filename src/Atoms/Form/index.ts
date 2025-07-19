@@ -1,3 +1,3 @@
-export * from "./FormGroup";
+export * from "./FormControl";
 export * from "./FormGroupLabel";
 export * from "./FormHelperText";
