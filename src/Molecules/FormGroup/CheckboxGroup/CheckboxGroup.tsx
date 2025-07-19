@@ -17,15 +17,17 @@ type Option = {
 export const CheckboxGroup = ({
   label,
   helperText,
+  labelSize,
   options,
 }: {
   label: string;
   helperText: string;
+  labelSize?: "default" | "large";
   options: Option[];
 }) => {
   return (
     <FormControlAtom variant="standard">
-      <FormGroupLabel>{label}</FormGroupLabel>
+      <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
       <MuiFormGroup>
         {options.map((option) => (
           <FormControlLabel

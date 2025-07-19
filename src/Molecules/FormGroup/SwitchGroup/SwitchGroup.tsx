@@ -15,15 +15,17 @@ type Option = {
 export const SwitchGroup = ({
   label,
   helperText,
+  labelSize,
   options,
 }: {
   label: string;
+  labelSize?: "default" | "large";
   helperText: string;
   options: Option[];
 }) => {
   return (
     <FormControlAtom>
-      <FormGroupLabel>{label}</FormGroupLabel>
+      <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
       <Stack p={1} direction="column" gap={2}>
         {options.map((option) => (
           <FormControlLabel

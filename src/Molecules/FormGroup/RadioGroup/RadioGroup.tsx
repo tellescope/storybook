@@ -18,15 +18,17 @@ type Option = {
 export const RadioGroup = ({
   label,
   helperText,
+  labelSize,
   options,
 }: {
   label: string;
+  labelSize?: "default" | "large";
   helperText: string;
   options: Option[];
 }) => {
   return (
     <FormControlAtom variant="standard">
-      <FormGroupLabel>{label}</FormGroupLabel>
+      <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
       <MuiRadioGroup>
         {options.map((option) => (
           <FormControlLabel
