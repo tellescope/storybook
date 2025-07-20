@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SentForm } from "./SentForm";
-import { Description, FormIntro } from "./Steps";
+import { Description, FormIntro, TextField } from "./Steps";
 import Graphic from "./Steps/Graphic";
 
 const meta = {
@@ -26,6 +26,9 @@ export const Default: Story = {
       },
       {
         content: <Graphic />,
+      },
+      {
+        content: <TextField />,
       },
     ],
   },
