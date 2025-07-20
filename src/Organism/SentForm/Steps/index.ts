@@ -6,3 +6,4 @@ export * from "./QuestionsGroup";
 export * from "./LongTextField";
 export * from "./NumberField";
 export * from "./EmailField";
+export * from "./PhoneNumber";
