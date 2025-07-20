@@ -8,3 +8,6 @@ export * from "./NumberField";
 export * from "./EmailField";
 export * from "./PhoneNumber";
 export * from "./MultipleChoice";
+export * from "./CheckboxField";
+export * from "./SelectField";
+export * from "./MultipleSelectField";
