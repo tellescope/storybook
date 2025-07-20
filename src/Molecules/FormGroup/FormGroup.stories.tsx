@@ -112,11 +112,12 @@ export const Selectable: StoryObj = {
     <FormGroup.Selectable
       label="Selectable Group"
       labelSize="large"
+      onChange={(values) => console.log("onChange", values)}
       helperText="This is a helper text"
       options={[
-        { id: "1", label: "This is a selectable  question ", value: "1" },
-        { id: "2", label: "This is a selectable  question ", value: "2" },
-        { id: "3", label: "This is a selectable  question ", value: "3" },
+        { id: "1", label: "This is a selectable  question ", value: "value1" },
+        { id: "2", label: "This is a selectable  question ", value: "value2" },
+        { id: "3", label: "This is a selectable  question ", value: "value3" },
       ]}
     />
   ),
