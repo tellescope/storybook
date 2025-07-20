@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SentForm } from "./SentForm";
 import { Description, FormIntro } from "./Steps";
+import Graphic from "./Steps/Graphic";
 
 const meta = {
   title: "Organism/SentForm",
@@ -22,6 +23,9 @@ export const Default: Story = {
       },
       {
         content: <Description />,
+      },
+      {
+        content: <Graphic />,
       },
     ],
   },

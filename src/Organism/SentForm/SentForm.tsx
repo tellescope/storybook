@@ -42,7 +42,7 @@ export const SentForm = ({ steps, onComplete }: SentFormProps) => {
       width={"100vw"}
       display={"flex"}
       justifyContent={"center"}
-      height={"100vh"}
+      minHeight={"100vh"}
     >
       <Box
         display={"flex"}
