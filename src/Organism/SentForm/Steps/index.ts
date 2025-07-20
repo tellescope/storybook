@@ -5,3 +5,4 @@ export * from "./TextField";
 export * from "./QuestionsGroup";
 export * from "./LongTextField";
 export * from "./NumberField";
+export * from "./EmailField";
