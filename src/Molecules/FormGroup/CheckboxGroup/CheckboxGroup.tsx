@@ -31,7 +31,7 @@ export const CheckboxGroup = ({
       <MuiFormGroup>
         {options.map((option) => (
           <FormControlLabel
-            key={option.value}
+            key={option.value}    
             value={option.value}
             control={<CheckBox />}
             label={option.label}

@@ -15,7 +15,7 @@ export const MultipleSelectField = () => {
       <Box pt={"48px"}>
         <Stack gap={"12px"}>
           <Typography variant="h5">What would you like to be called?</Typography>
-          <FormControlAtom  variant="outlined" fullWidth>
+          <FormControlAtom variant="outlined" fullWidth>
             <Select
               appearance="outlined"
               size="small"
@@ -27,6 +27,12 @@ export const MultipleSelectField = () => {
               sx={{
                 backgroundColor: "white",
                 width: "100%",
+                // disable option select shadow
+                "& .MuiPaper-root": {
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  boxShadow: "none",
+                },
               }}
             />
           </FormControlAtom>

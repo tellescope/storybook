@@ -26,6 +26,11 @@ export const SelectField = () => {
               sx={{
                 backgroundColor: "white",
                 width: "100%",
+                "& .MuiPaper-root": {
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  boxShadow: "none",
+                },
               }}
             />
           </FormControlAtom>
