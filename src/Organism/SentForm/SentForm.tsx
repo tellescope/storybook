@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, Typography } from "@mui/material";
+import { Box, FormControlLabel, Typography, useTheme } from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
 import CheckBox from "../../components/atoms/checkbox/checkbox";
 import { Button } from "../../components/atoms/button/button";
@@ -39,21 +39,28 @@ export const SentForm = ({ steps, onComplete }: SentFormProps) => {
   return (
     <Box
       bgcolor={"#F4F3FA"}
-      width={"100vw"}
-      display={"flex"}
-      justifyContent={"center"}
-      minHeight={"100vh"}
+      width="100vw"
+      minHeight="100vh"
+      display="flex"
+      justifyContent="center"
+      sx={{
+        px: { xs: "24px", sm: "24px" },
+        py: { xs: 2, sm: 0 },
+      }}
     >
       <Box
         display={"flex"}
         justifyContent={"space-between"}
         flexDirection={"column"}
+        width={{ xs: "100%", sm: "100%  ", md: 600, lg: 720 }}
+        minHeight="100vh"
+        mx={{ xs: 0, sm: "auto" }}
       >
         <LinearProgress
           sx={{
-            mt: "24px",
-            height: "16px",
-            width: "720px",
+            mt: { xs: "16px", sm: "24px" },
+            height: { xs: "8px", sm: "16px" },
+            width: "100%",
             borderRadius: "8px",
             backgroundColor: "#bbc6e9",
             "& .MuiLinearProgress-bar": {
@@ -64,20 +71,23 @@ export const SentForm = ({ steps, onComplete }: SentFormProps) => {
           value={progress}
         />
         {currentStep !== 0 && (
-          <Box pt={"48px"}>
-            <img src={TellescopeLogo} alt="Tellescope Logo" />
+          <Box pt={{ xs: "24px", sm: "48px" }} display="flex">
+            <img
+              src={TellescopeLogo}
+              alt="Tellescope Logo"
+              style={{
+                maxWidth: "160px",
+                width: "100%",
+                height: "auto",
+              }}
+            />
           </Box>
         )}
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          width={"720px"}
-          height={"100%"}
-        >
+        <Box display={"flex"} flexDirection={"column"} width="100%" height={"100%"}>
           <Box height={"100%"}>{currentStepData.content}</Box>
         </Box>
         <Box display={"flex"} flexDirection={"column"}>
-          <Box sx={{ px: "10px", width: "720px" }}>
+          <Box sx={{ px: { xs: "0px", sm: "10px" }, width: "100%" }}>
             {currentStep === 0 && (
               <FormControlLabel
                 sx={{ gap: 0, alignItems: "flex-start" }}
@@ -94,16 +104,14 @@ export const SentForm = ({ steps, onComplete }: SentFormProps) => {
                 }
                 label={
                   <Typography variant="caption" color="text.secondary">
-                    a longer label and will displayed at a smaller size in order
-                    to conserve valuable space. This can be used to display some
-                    disclaimer about terms or conditions that might be a bit too
-                    long for a normal label area
+                    a longer label and will displayed at a smaller size in order to conserve valuable space. This can be used to display some disclaimer about
+                    terms or conditions that might be a bit too long for a normal label area
                   </Typography>
                 }
               />
             )}
           </Box>
-          <Box py="48px" width={"100%"}>
+          <Box py={{ xs: "24px", sm: "48px" }} width={"100%"}>
             <Button
               onClick={handleNext}
               sx={{
@@ -113,6 +121,8 @@ export const SentForm = ({ steps, onComplete }: SentFormProps) => {
                   backgroundColor: "#E5E7EB",
                   color: "#9CA3AF",
                 },
+                // fontSize: { xs: "1rem", sm: "1.125rem" },
+                // py: { xs: 1.25, sm: 2 },
               }}
               fullWidth
             >
