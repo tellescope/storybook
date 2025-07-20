@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SentForm } from "./SentForm";
-import { Description, FormIntro, TextField, QuestionsGroup, LongTextField } from "./Steps";
+import { Description, FormIntro, TextField, QuestionsGroup, LongTextField, NumberField } from "./Steps";
 import Graphic from "./Steps/Graphic";
 
 const meta = {
@@ -35,6 +35,9 @@ export const Default: Story = {
       },
       {
         content: <LongTextField />,
+      },
+      {
+        content: <NumberField />,
       },
     ],
   },

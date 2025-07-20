@@ -1,6 +1,5 @@
-import { Box, FormHelperText, Stack, Typography } from "@mui/material";
-import { FormControlAtom, FormGroupLabel } from "../../../Atoms/Form";
-import { Input } from "../../../components/atoms/input/input";
+import { Box, Stack, Typography } from "@mui/material";
+import { FormControlAtom } from "../../../Atoms/Form";
 import Textarea from "../../../components/atoms/textarea/textarea";
 
 export const LongTextField = () => {
