@@ -42,15 +42,7 @@ export const Text: StoryObj = {
     const [value, setValue] = React.useState<Record<string, string>>({});
 
     return (
-      <FormGroup.Text
-        label="Text Group"
-        helperText="This is a helper text"
-        options={[
-          { label: "Option 1", value: "1" },
-        ]}
-        value={value}
-        onChange={setValue}
-      />
+      <FormGroup.Text label="Text Group" helperText="This is a helper text" options={[{ label: "Option 1", value: "1" }]} value={value} onChange={setValue} />
     );
   },
 };
@@ -67,18 +59,10 @@ export const Switch: StoryObj = {
       ]}
     />
   ),
-}; 
+};
 
 export const TextArea: StoryObj = {
-  render: () => (
-    <FormGroup.TextArea
-      label="Text Area Group"
-      helperText="This is a helper text"
-      options={[
-        { label: "Option 1", value: "1" },
-      ]}
-    />
-  ),
+  render: () => <FormGroup.TextArea label="Text Area Group" helperText="This is a helper text" options={[{ label: "Option 1", value: "1" }]} />,
 };
 
 export const Select: StoryObj = {
@@ -106,6 +90,6 @@ export const Selectable: StoryObj = {
         { id: "2", label: "This is a selectable  question ", value: "2" },
         { id: "3", label: "This is a selectable  question ", value: "3" },
       ]}
-      />
+    />
   ),
 };

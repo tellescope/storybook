@@ -25,9 +25,7 @@ export const SelectableGroup = ({
   onChange?: (value: string | string[]) => void;
   multiple?: boolean;
 }) => {
-  const [internalValue, setInternalValue] = useState<string | string[]>(
-    multiple ? [] : ""
-  );
+  const [internalValue, setInternalValue] = useState<string | string[]>(multiple ? [] : "");
 
   const isControlled = controlledValue !== undefined;
   const value = isControlled ? controlledValue : internalValue;
@@ -63,37 +61,33 @@ export const SelectableGroup = ({
 
   return (
     <FormControl>
-      <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
+      <FormGroupLabel sx={{ color: "black" }} labelSize={labelSize}>
+        {label}
+      </FormGroupLabel>
       <Stack direction="column" gap={1.5}>
         {options.map((option) => (
           <Box
             key={option.id}
             onClick={() => handleOptionClick(option.value)}
             sx={{
-              border: "1px solid",
+              border: "1.5px solid",
               height: "80px",
               width: "456px",
               display: "flex",
               borderRadius: "4px",
               alignItems: "center",
-              borderColor: "#4A5C9280",
+              borderColor: isSelected(option.value) ? "primary.main" : "#4A5C9280",
               padding: 2,
               cursor: "pointer",
-              backgroundColor: isSelected(option.value)
-                ? "rgba(25, 118, 210, 0.04)"
-                : "transparent",
+              backgroundColor: "transparent",
               transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                borderColor: "primary.main",
-                backgroundColor: "rgba(25, 118, 210, 0.04)",
-              },
             }}
           >
             <Typography
               variant="body1"
               sx={{
                 color: "#4A5C92",
-                fontWeight: 500,
+                fontWeight: 600,
               }}
             >
               {option.label}
