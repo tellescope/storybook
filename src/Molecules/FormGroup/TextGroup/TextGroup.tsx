@@ -55,8 +55,9 @@ export const TextGroup = ({
           <TextField
             variant="outlined"
             size="small"
+            hiddenLabel
             key={option.value}
-            label={option.label}
+            // label={option.label}
             value={value[option.value] || ""}
             onChange={(e) => handleChange(option.value, e.target.value)}
           />

@@ -19,17 +19,19 @@ export const RadioGroup = ({
   label,
   helperText,
   labelSize,
+  onChange,
   options,
 }: {
   label: string;
   labelSize?: "default" | "large";
   helperText: string;
   options: Option[];
+  onChange: (value: string) => void;
 }) => {
   return (
     <FormControlAtom variant="standard">
       <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
-      <MuiRadioGroup>
+      <MuiRadioGroup onChange={(e) => onChange(e.target.value)}>
         {options.map((option) => (
           <FormControlLabel
             key={option.value}
