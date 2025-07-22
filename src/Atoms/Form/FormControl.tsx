@@ -6,14 +6,16 @@ export interface FormControlAtomProps {
   error?: boolean;
   helperText?: React.ReactNode;
   variant?: "standard" | "outlined" | "filled";
+  fullWidth?: boolean;
 }
 export const FormControlAtom: React.FC<FormControlProps> = ({
   children,
   error = false,
   variant = "standard",
+  fullWidth = false,
 }) => {
   return (
-    <FormControl component="fieldset" variant={variant} error={error}>
+    <FormControl component="fieldset" variant={variant} error={error} fullWidth={fullWidth}>
       {children}
     </FormControl>
   );

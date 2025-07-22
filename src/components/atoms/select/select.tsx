@@ -247,7 +247,7 @@ const Select: FC<SelectProps> = ({
         <FormControl
             fullWidth
             variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
-            sx={(theme) => ({ m: 1, ...getSx(theme) })}
+            sx={(theme) => ({ ...getSx(theme) })}
             error={error}
             disabled={disabled}
             size={size}

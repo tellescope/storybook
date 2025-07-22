@@ -1,4 +1,5 @@
 import { FormControlLabel, Stack } from "@mui/material";
+import { useState } from "react";
 
 import {
   FormControlAtom,
@@ -17,12 +18,41 @@ export const SwitchGroup = ({
   helperText,
   labelSize,
   options,
+  onChange,
+  value: controlledValue,
 }: {
   label: string;
   labelSize?: "default" | "large";
   helperText: string;
   options: Option[];
+  onChange?: (value: string[]) => void;
+  value?: string[];
 }) => {
+  const [internalValue, setInternalValue] = useState<string[]>([]);
+
+  const isControlled = controlledValue !== undefined;
+  const value = isControlled ? controlledValue : internalValue;
+
+  const handleSwitchChange = (switchValue: string, checked: boolean) => {
+    const currentValues = value || [];
+    let newSelectedValues: string[];
+
+    if (checked) {
+      newSelectedValues = currentValues.includes(switchValue)
+        ? currentValues
+        : [...currentValues, switchValue];
+    } else {
+      newSelectedValues = currentValues.filter(val => val !== switchValue);
+    }
+
+    if (onChange) {
+      onChange(newSelectedValues);
+    }
+    if (!isControlled) {
+      setInternalValue(newSelectedValues);
+    }
+  };
+
   return (
     <FormControlAtom>
       <FormGroupLabel labelSize={labelSize}>{label}</FormGroupLabel>
@@ -34,6 +64,8 @@ export const SwitchGroup = ({
               <Switch
                 label={option.label}
                 formlabelProps={{ labelPlacement: "end" }}
+                checked={value?.includes(option.value) || false}
+                onChange={(e) => handleSwitchChange(option.value, e.target.checked)}
               />
             }
             label={""}

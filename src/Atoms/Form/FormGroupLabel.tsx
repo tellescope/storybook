@@ -1,10 +1,12 @@
 import React from "react";
 import { InputLabel } from "@mui/material";
+import type { SxProps } from "@mui/system";
 
 export interface FormGroupLabelProps {
   children?: React.ReactNode;
   labelSize?: "default" | "large";
   error?: boolean;
+  sx?: SxProps;
   disabled?: boolean;
 }
 
@@ -13,6 +15,7 @@ export const FormGroupLabel: React.FC<FormGroupLabelProps> = ({
   labelSize = "default",
   error,
   disabled,
+  sx,
 }) => {
   return (
     <InputLabel
@@ -24,6 +27,7 @@ export const FormGroupLabel: React.FC<FormGroupLabelProps> = ({
         mb: 1,
         position: "static",
         transform: "none",
+        ...sx,
       }}
     >
       {children}
