@@ -1,6 +1,11 @@
-import { Box, Stack, Typography } from "@mui/material"
+import { Box, Stack, Typography } from "@mui/material";
+import type { FC } from "react";
 
-const Reset = () => {
+interface ResetProps {
+    onClick?: () => void;
+}
+
+const Reset: FC<ResetProps> = ({ onClick }) => {
     return (
         <Stack sx={{
             flexDirection: "row",
@@ -16,7 +21,7 @@ const Reset = () => {
                     color: "#0000008F"
                 }
             }
-        }}>
+        }} onClick={onClick}>
             <Box sx={{
                 background: "#C85A15",
                 width: "8px",

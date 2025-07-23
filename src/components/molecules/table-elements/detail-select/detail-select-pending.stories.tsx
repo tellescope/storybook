@@ -1,21 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DetailSelect from './detail-select-pending';
-import { useState, type ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import TagIcon from '@mui/icons-material/Tag';
-import AddIcon from '@mui/icons-material/Add';
-import { Typography } from '@mui/material';
+import DetailSelectPending from './detail-select-pending';
 
 
-type StoryProps = ComponentProps<typeof DetailSelect> & {
+type StoryProps = ComponentProps<typeof DetailSelectPending> & {
     active: boolean;
 }
 
 const meta = {
     title: 'MOLECULES/Table Elements/Detail Select',
-    component: DetailSelect,
+    component: DetailSelectPending,
     parameters: {
         controls: {
             include: ["active",],
@@ -46,7 +44,6 @@ const availableFilterFields = [
 
 export const Pending: Story = {
     render: ({ active }) => {
-        const [sort, setSort] = useState<string[]>(["last name"]);
 
         /*
             - This methods helps developer make the component more interactive.
@@ -54,18 +51,10 @@ export const Pending: Story = {
         */
 
         return (
-            <DetailSelect
-                defaultOpen={active}
-                sort={sort}
-                setSort={setSort}
+            <DetailSelectPending
+                open={active}
                 availableFilterFields={availableFilterFields}
-                // onChangeFilter={(field) => console.log("Filter changed", { field })}
-                buttonContent={
-                    <>
-                        <AddIcon sx={{ fontSize: 18, }} />
-                        <Typography sx={{ fontWeight: 500, ml: 0.5 }} variant="body2">Filter</Typography>
-                    </>
-                }
+            // onChangeFilter={(field) => console.log("Filter changed", { field })}
             />
         )
     }

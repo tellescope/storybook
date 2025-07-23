@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DetailSelect from './detail-select-default';
-import { useEffect, useState, type ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
@@ -28,14 +28,12 @@ const meta = {
             control: { type: 'boolean' },
         },
         appearance: {
-            control: { type: 'select', options: ['sort', 'filter'] },
+            control: {
+                type: "select",
+            },
+            options: ["sort", "filter"], // explicitly define options
         },
     },
-    args: {
-        appearance: 'sort',
-        hasValue: false,
-        active: false,
-    }
 } satisfies Meta<StoryProps>;
 
 export default meta;
@@ -62,26 +60,12 @@ const filterOptions = [
 
 
 export const Default: Story = {
-    render: ({ appearance, active, hasValue }) => {
-        const [filter, setFilter] = useState<{ value: string; filterOption: string } | null>(null);
-        const [sort, setSort] = useState<{ field: string, order: string }[]>([{ field: 'name', order: 'ascending' }]);
-
-        useEffect(() => {
-            if (appearance === "filter") {
-                if (hasValue) {
-                    setFilter({ value: 'example', filterOption: 'contains' });
-                } else {
-                    setFilter(null);
-                }
-            } else {
-                if (hasValue) {
-                    setSort([{ field: 'name', order: 'ascending' }]);
-                } else {
-                    setSort([]);
-                }
-            }
-        }, [appearance, hasValue]);
-
+    args: {
+        appearance: "sort",
+        active: false,
+        hasValue: false,
+    },
+    render: (props: StoryProps) => {
         /* 
             - This methods helps developer make the component more interactive.
                 - Appearance "Sort"
@@ -96,25 +80,27 @@ export const Default: Story = {
         */
 
         return (
-            <DetailSelect
-                defaultOpen={active}
-                appearance={appearance}
-                filter={filter}
-                setFilter={setFilter}
-                sort={sort}
-                setSort={setSort}
-                availableSortFields={availableSortFields}
-                filterOptions={filterOptions}
+            <>
+                {props.appearance === "sort" ? (
+                    <DetailSelect
+                        open={props.active}
+                        appearance="sort"
+                        availableSortFields={availableSortFields}
+                        value={props.hasValue ? [{ field: 'name', order: 'ascending' }] : []}
+                    // onChangeSort, onChangeSortOrder, onAddSort, onDeleteSort handlers can be added here
+                    />
+                ) : (
+                    <DetailSelect
+                        open={props.active}
+                        appearance="filter"
+                        filterOptions={filterOptions}
+                        value={props.hasValue ? { value: 'a', filterOption: 'contains' } : null}
+                        field='name'
 
-            // onChangeSort={(field, order) => console.log("Sort changed", { field, order })}
-            // onChangeSortOrder={(field, order) => console.log("Sort order changed", { field, order })}
-            // onAddSort={(field) => console.log("Sort added", field)}
-            // onDeleteSort={() => console.log("All Sortdeleted")}
-
-            // OnSetFilterOption={(option) => console.log("Filter option set", option)}
-            // OnSetFilterValue={(value) => console.log("Filter value set", value)}
-            // OnClearFilter={() => console.log("Filter cleared")}
-            />
+                    // OnSetFilterOption, OnSetFilterValue, OnClearFilter handlers can be added here
+                    />
+                )}
+            </>
         )
     }
 };

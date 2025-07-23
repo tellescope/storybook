@@ -11,8 +11,6 @@ import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 type SortItem = { field: string, order: string };
 
-
-
 type DetailSelectContextType = {
   filter: { value: string; filterOption: string } | null;
   sort: SortItem[];
@@ -26,97 +24,98 @@ type DetailSelectContextType = {
   filterOptions: {
     label: string;
     value: string;
-  }[]
-  defaultOpen?: boolean;
+  }[];
+  open?: boolean;
+  valueSort?: SortItem[];
+  valueFilter?: { value: string; filterOption: string } | null;
+  filterField?: string;
 
   onAddSort?: (field: string) => void;
   onDeleteSort?: () => void;
-  onChangeSort?: (field: string, order: string) => void;
-  onChangeSortOrder?: (field: string, order: string) => void;
+  onChangeSort?: (field: string, order: "ascending" | "descending", oldField: string) => void;
+  onChangeSortOrder?: (field: string, order: "ascending" | "descending") => void;
 
-  OnSetFilterOption?: (option: string) => void;
-  OnSetFilterValue?: (value: string) => void;
-  OnClearFilter?: () => void;
+  onSetFilterOption?: (option: string) => void;
+  onSetFilterValue?: (value: string) => void;
+  onClearFilter?: () => void;
 };
 
 const DetailSelectContext = createContext<DetailSelectContextType | undefined>(undefined);
 
-
-type StateProps = {
-  filter?: { value: string; filterOption: string } | null;
-  setFilter?: React.Dispatch<React.SetStateAction<{ value: string; filterOption: string } | null>>;
-  sort?: SortItem[];
-  setSort?: React.Dispatch<React.SetStateAction<SortItem[]>>;
-  appearance?: 'sort' | 'filter';
+type Sortprops = {
+  appearance: 'sort';
   availableSortFields: {
     label: string;
     value: string;
     icon: JSX.Element;
   }[],
+  open?: boolean;
+  value?: SortItem[];
+
+  onAddSort?: (field: string) => void;
+  onDeleteSort?: () => void;
+  onChangeSort?: (field: string, order: "ascending" | "descending", oldField: string) => void;
+  onChangeSortOrder?: (field: string, order: "ascending" | "descending") => void;
+}
+
+type FilterProps = {
+  appearance: 'filter';
   filterOptions: {
     label: string;
     value: string;
   }[],
-  defaultOpen?: boolean;
+  open?: boolean;
+  value?: { value: string; filterOption: string } | null;
+  field: string;
 
-  onAddSort?: (field: string) => void;
-  onDeleteSort?: () => void;
-  onChangeSort?: (field: string, order: string) => void;
-  onChangeSortOrder?: (field: string, order: string) => void;
-
-  OnSetFilterOption?: (option: string) => void;
-  OnSetFilterValue?: (value: string) => void;
-  OnClearFilter?: () => void;
+  onSetFilterOption?: (option: string) => void;
+  onSetFilterValue?: (value: string) => void;
+  onClearFilter?: () => void;
 };
 
+type StateProps = (FilterProps | Sortprops);
 
-
-function ProviderWrapper({
-  filter: propFilter,
-  setFilter: propSetFilter,
-  sort: propSort,
-  setSort: propSetSort,
-  availableSortFields,
-  filterOptions,
-  children,
-  defaultOpen,
-  ...rest
-}: Omit<StateProps, "appearance"> & { children: ReactNode }) {
+function ProviderWrapper(props: StateProps & { children?: ReactNode }) {
   // Internal state if not provided
   const [internalFilter, internalSetFilter] = useState<{ value: string; filterOption: string } | null>(null);
-  const [internalSort, internalSetSort] = useState<SortItem[]>([{ field: 'name', order: 'ascending' }]);
+  const [internalSort, internalSetSort] = useState<SortItem[]>([]);
 
   const value = {
-    filter: propFilter !== undefined ? propFilter : internalFilter,
-    setFilter: propSetFilter !== undefined ? propSetFilter : internalSetFilter,
-    sort: propSort !== undefined ? propSort : internalSort,
-    setSort: propSetSort !== undefined ? propSetSort : internalSetSort,
-    availableSortFields: availableSortFields,
-    filterOptions: filterOptions,
-    defaultOpen,
-    ...rest
+    ...props,
+    filter: internalFilter,
+    setFilter: internalSetFilter,
+    sort: internalSort,
+    setSort: internalSetSort,
+    availableSortFields: 'availableSortFields' in props ? props.availableSortFields : [],
+    filterOptions: 'filterOptions' in props ? props.filterOptions : [],
+    open: props.open,
+    valueSort: 'value' in props && props.appearance === 'sort' ? props.value : undefined,
+    valueFilter: 'value' in props && props.appearance === 'filter' ? props.value : undefined,
+    filterField: 'field' in props && props.appearance === 'filter' ? props.field : undefined
   };
 
-  return <DetailSelectContext.Provider value={value}>{children}</DetailSelectContext.Provider>;
+  return <DetailSelectContext.Provider value={value}>{props.children}</DetailSelectContext.Provider>;
 }
 
-
 // Final export
-export default function DetailSelect({ appearance = "sort", ...rest }: StateProps) {
+export default function DetailSelect(props: StateProps) {
   return (
-    <ProviderWrapper {...rest} >
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: 240, gap: 1 }}>
-        <DetailSelectContent appearance={appearance} />
+    <ProviderWrapper {...props} >
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <DetailSelectContent appearance={props.appearance} />
       </Box>
     </ProviderWrapper>
   );
 }
 
-
-const DetailSelectContent = ({ appearance = "sort" }: { appearance?: 'sort' | 'filter' }) => {
+const DetailSelectContent = ({ appearance }: { appearance: 'sort' | 'filter' }) => {
   return (
     appearance === "filter" ? <DetailSelectPending /> : <DetailSelectSort />
   )
+}
+
+const randomStringId = () => {
+  return Math.random().toString(36).substring(2, 15);
 }
 
 /* Default Select Detail Variant */
@@ -154,10 +153,9 @@ const addSortStyle = {
   }
 };
 
-
 // Main menu component
 function DetailSelectSort() {
-  const { sort, setSort, defaultOpen, onChangeSort, onAddSort, onDeleteSort, onChangeSortOrder, availableSortFields } = useContext(DetailSelectContext)!;
+  const { sort, setSort, open, onChangeSort, onAddSort, onDeleteSort, onChangeSortOrder, availableSortFields, valueSort } = useContext(DetailSelectContext)!;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
   const [anchorAddSort, setAnchorAddSort] = useState<null | HTMLElement>(null);
 
@@ -165,6 +163,7 @@ function DetailSelectSort() {
   const handleClose = () => setAnchorEl(null);
   const handleClickOnAddSort = (e: React.MouseEvent<HTMLLIElement>) => setAnchorAddSort(e.currentTarget);
   const handleCloseAdd = () => setAnchorAddSort(null);
+
 
   const handleSetSortField = (field: string, replaced: string) => {
     setSort(prev => prev.map((item) => {
@@ -175,10 +174,10 @@ function DetailSelectSort() {
       }
       return item;
     }));
-    onChangeSort?.(field, sort.find(item => item.field === replaced)?.order || 'ascending')
+    onChangeSort?.(field, (sort.find(item => item.field === replaced)?.order as "ascending" | "descending") || 'ascending', replaced);
   };
 
-  const handleSetSortOrder = (order: string, field: string) => {
+  const handleSetSortOrder = (order: "ascending" | "descending", field: string) => {
     setSort(prev => prev.map((item) => item.field === field ? { ...item, order } : item));
     onChangeSortOrder?.(field, order);
   };
@@ -202,10 +201,13 @@ function DetailSelectSort() {
   const usedFields = sort.map(s => s.field);
 
 
+
+  const randomId = randomStringId()
+
   useEffect(() => {
     // Simulate a reference to a button
-    const menu = document.getElementById('menu-button');
-    if (defaultOpen) {
+    const menu = document.getElementById(randomId);
+    if (open) {
       if (menu) {
         setAnchorEl(menu);
       }
@@ -213,7 +215,14 @@ function DetailSelectSort() {
     else {
       setAnchorEl(null);
     }
-  }, [defaultOpen])
+  }, [open]);
+
+
+  // when Provide a Value
+  useEffect(() => {
+    setSort(valueSort || [])
+  }, [valueSort])
+
 
 
 
@@ -221,7 +230,7 @@ function DetailSelectSort() {
     <>
       <Button
         color="info"
-        id="menu-button"
+        id={randomId}
         sx={{
           backgroundColor: '#0288D114',
           borderRadius: '16px',
@@ -233,7 +242,6 @@ function DetailSelectSort() {
             backgroundColor: '#0288D129'
           },
           boxShadow: "none !important"
-
         }}
         onClick={handleClick}
       >
@@ -343,7 +351,7 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
   order: string;
   usedFields: string[];
   onSetField: (field: string, replaced: string) => void;
-  onSetOrder: (order: string, field: string) => void;
+  onSetOrder: (order: "ascending" | "descending", field: string) => void;
 }) {
   const { availableSortFields } = useContext(DetailSelectContext)!;
   const [localField, setLocalField] = useState(field);
@@ -360,17 +368,21 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
   }
 
   const handleSetLocalOrder = (order: string) => {
-    setLocalOrder(order);
-    onSetOrder(order, localField);
+    if (order === "ascending" || order === "descending") {
+      setLocalOrder(order);
+      onSetOrder(order, localField);
+    }
   }
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     if (searchTerm === "") return;
     setSearchTerm("");
-  }, [])
+  }, []);
 
   const search = availableSortFields.filter(f => f.label.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  const isEqual = usedFields.length === availableSortFields.length;
 
   return (
     <Box sx={{ display: 'flex', gap: "2px" }}>
@@ -379,6 +391,11 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
         onChange={handleSetLocalField}
         FormControlProps={{ sx: { width: "auto" } }}
         MenuProps={{
+          anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: 8,
+          },
           MenuListProps: {
             sx: {
               padding: "8px 0"
@@ -400,28 +417,32 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
 
         }}
       >
-        <ListSubheader disableGutters sx={{ lineHeight: "normal" }}>
-          <Input
-            appearance="distinct"
-            placeholder="Search For Property"
-            size="small"
-            sx={{
-              width: "100%",
-              "& .MuiInputBase-input": {
-                padding: "4px 8px"
-              }
-            }}
-            FormControlProps={{
-              sx: { width: "100%", mb: "4px", }
-            }}
-            onKeyDown={(e) => {
-              e.stopPropagation(); // prevent key events from being captured by the menu
-            }}
-            // elevation={1}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
-          />
-        </ListSubheader>
+        {
+          isEqual ? null : (
+            <ListSubheader disableGutters sx={{ lineHeight: "normal" }}>
+              <Input
+                appearance="distinct"
+                placeholder="Search For Property"
+                size="small"
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-input": {
+                    padding: "4px 8px"
+                  }
+                }}
+                FormControlProps={{
+                  sx: { width: "100%", mb: "4px", }
+                }}
+                onKeyDown={(e) => {
+                  e.stopPropagation(); // prevent key events from being captured by the menu
+                }}
+                // elevation={1}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm}
+              />
+            </ListSubheader>
+          )
+        }
         {/* </ListSubheader> */}
         {search.map(f => (
           usedFields.includes(f.value) ? null : // Skip if the field is already used
@@ -429,12 +450,18 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
               <ListItemIcon>{f.icon}</ListItemIcon>
               <ListItemText>{f.label}</ListItemText>
             </MenuItem>
-
         ))}
         {
-          search.length === 0 && (
+          search.length === 0 && searchTerm !== "" && availableSortFields.length > 0 && (
             <MenuItem disabled>
               <ListItemText>No fields found</ListItemText>
+            </MenuItem>
+          )
+        }
+        {
+          isEqual && (
+            <MenuItem disabled>
+              <ListItemText>All Sorts are Applied</ListItemText>
             </MenuItem>
           )
         }
@@ -448,7 +475,7 @@ function SortRow({ field, order, onSetField, onSetOrder, usedFields }: {
           anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
           transformOrigin: {
             vertical: "top",
-            horizontal: 100,
+            horizontal: 78,
           },
           PaperProps: {
             sx: {
@@ -535,7 +562,7 @@ function AddSortMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
             </MenuItem>
         ))}
         {
-          search.length === 0 && (
+          search.length === 0 && searchTerm !== "" && availableSortFields.length > 0 && (
             <MenuItem disabled>
               <ListItemText>No fields found</ListItemText>
             </MenuItem>
@@ -545,7 +572,6 @@ function AddSortMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
     </Menu>
   );
 }
-
 
 /* Filter Select Detail Variant */
 const DetailSelectFilterMenuStyle = {
@@ -563,7 +589,7 @@ const DetailSelectFilterMenuStyle = {
 };
 
 const DetailSelectPending = () => {
-  const { filter, setFilter, defaultOpen, OnSetFilterValue, OnClearFilter, OnSetFilterOption } = useContext(DetailSelectContext)!;
+  const { filter, setFilter, open, onSetFilterValue, onClearFilter, onSetFilterOption, valueFilter, filterField } = useContext(DetailSelectContext)!;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
@@ -574,10 +600,11 @@ const DetailSelectPending = () => {
       value: prev?.value ?? "",
       filterOption: field || "contains"
     }));
-    OnSetFilterOption?.(field);
+    onSetFilterOption?.(field);
+
   };
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(filter?.value || "");
 
   useEffect(() => {
     if (searchTerm === "") return;
@@ -588,20 +615,23 @@ const DetailSelectPending = () => {
     setSearchTerm(value);
     if (value === "") {
       setFilter(null);
-      OnClearFilter?.();
+      onClearFilter?.();
     } else {
       setFilter((prev) => ({
         value: value || "",
         filterOption: prev?.filterOption ?? "contains"
       }));
-      OnSetFilterValue?.(value);
+      onSetFilterValue?.(value);
     }
   }
 
+
+  const randomId = randomStringId();
+
   useEffect(() => {
     // Simulate a reference to a button
-    const menu = document.getElementById('menu-button');
-    if (defaultOpen) {
+    const menu = document.getElementById(randomId);
+    if (open) {
       if (menu) {
         setAnchorEl(menu);
       }
@@ -609,16 +639,23 @@ const DetailSelectPending = () => {
     else {
       setAnchorEl(null);
     }
-  }, [defaultOpen])
+  }, [open])
 
+  // When provide a Value 
+  useEffect(() => {
+    setFilter(valueFilter || null);
+    setSearchTerm(valueFilter?.value || "");
+  }, [valueFilter])
+
+  const active = filter?.filterOption === "is empty" || filter?.filterOption === "is not empty";
 
   return (
     <>
       <Button
         color="info"
-        id={"menu-button"}
+        id={randomId}
         sx={{
-          backgroundColor: filter?.value ? '#0288D114' : "transparent",
+          backgroundColor: filter?.value || active ? '#0288D114' : "transparent",
           borderRadius: '16px',
           display: 'inline-flex',
           alignItems: 'center',
@@ -626,7 +663,7 @@ const DetailSelectPending = () => {
 
           textTransform: "capitalize",
           "&:hover": {
-            backgroundColor: filter?.value ? '#0288D129' : "#EEEDF4"
+            backgroundColor: filter?.value || active ? '#0288D129' : "#EEEDF4"
           },
           boxShadow: "none !important"
 
@@ -635,13 +672,13 @@ const DetailSelectPending = () => {
       >
         <Badge color="error" variant="dot" sx={{ alignItems: "center" }} >
           <Typography
-            sx={{ color: !filter?.value ? "#0000008F" : '#0288D1', fontWeight: 500, ml: 0.5 }} variant="body2"
+            sx={{ color: filter?.value || active ? '#0288D1' : "#0000008F", fontWeight: 500, ml: 0.5 }} variant="body2"
           >
             <Typography
               sx={{
                 fontWeight: 600,
                 mr: 0.5,
-                color: !filter?.value ? "#0000008F" : undefined,
+                color: filter?.value || active ? undefined : "#0000008F",
                 fontSize: "0.875rem"
               }}
               component={"span"}
@@ -654,26 +691,30 @@ const DetailSelectPending = () => {
                 display: "inline-flex",
                 fontSize: "0.875rem"
               }}>
-              {filter?.filterOption ? `${filter?.filterOption} :` : ""}
+              {/* {filter?.filterOption ? `${filter?.filterOption} :` : ""} */}
+              {filterField} {filter?.value || active ? ":" : ""}
             </Typography>
             <Box sx={{
-              maxWidth: "50px",
+              maxWidth: "120px",
               display: "inline-flex",
             }}>
               <Typography
                 sx={{
                   mr: 0.5,
                   fontSize: "0.875rem",
-                  maxWidth: "50px",
+                  maxWidth: "120px",
                   textOverflow: "ellipsis",
                   overflow: "hidden",
                   whiteSpace: "nowrap",
+                  textTransform: filter?.value && filter?.filterOption !== "is empty" && filter?.filterOption !== "is not empty" ? "none" : "capitalize",
                 }}
                 component="span"
                 noWrap={true}
               >
                 {
-                  filter?.value || "Value"
+                  // filter?.value || "Value"
+
+                  filter?.filterOption && active ? `${filter?.filterOption}` : filter?.value && filter?.value.length > 0 ? filter.value : ""
                 }
               </Typography>
             </Box>
@@ -687,10 +728,6 @@ const DetailSelectPending = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        transformOrigin={{
-          vertical: -5,
-          horizontal: 'left',
-        }}
         elevation={1}
         MenuListProps={{ sx: { padding: 0 } }}
       >
@@ -703,30 +740,35 @@ const DetailSelectPending = () => {
             gap: 1,
             width: 220,
             border: "1px solid #0000001F",
-            borderRadius: "5px"
+            borderRadius: "5px",
           }}
         >
           <FilterRow
+            filterField={filterField || undefined}
             field={filter?.filterOption || "contains"}
             onSetField={handleSetFilter}
           />
-          <Input
-            appearance="distinct"
-            placeholder="Type a value..."
-            size="small"
-            sx={{
-              width: "100%",
-              "& .MuiInputBase-input": {
-                padding: "4px 8px"
-              },
-            }}
-            FormControlProps={{
-              sx: { width: "100%" }
-            }}
-            // elevation={1}
-            onChange={(e) => handleChangeFilterValue(e.target.value)}
-            value={searchTerm}
-          />
+          {
+            active ? null : (
+              <Input
+                appearance="distinct"
+                placeholder="Type a value..."
+                size="small"
+                sx={{
+                  width: "100%",
+                  "& .MuiInputBase-input": {
+                    padding: "4px 8px"
+                  },
+                }}
+                FormControlProps={{
+                  sx: { width: "100%" }
+                }}
+                // elevation={1}
+                onChange={(e) => handleChangeFilterValue(e.target.value)}
+                value={searchTerm}
+              />
+            )
+          }
         </Paper>
       </Menu>
     </>
@@ -734,9 +776,10 @@ const DetailSelectPending = () => {
 }
 
 // Filter row component
-function FilterRow({ field, onSetField, }: {
+function FilterRow({ field, onSetField, filterField }: {
   field: string;
   onSetField: (field: string) => void;
+  filterField?: string
 }) {
   const { filterOptions } = useContext(DetailSelectContext)!;
   const [localField, setLocalField] = useState<string>(field);
@@ -757,16 +800,21 @@ function FilterRow({ field, onSetField, }: {
       alignItems: "center",
     }}>
       <Typography
-        sx={{ fontSize: "12px", color: "#0000001F" }}
+        sx={{ fontSize: "12px", color: "#0000001F", textTransform: "capitalize" }}
         component={"span"}
       >
-        Name
+        {filterField}
       </Typography>
       <TinySelect
         value={localField}
         onChange={handleSetLocalField}
         FormControlProps={{ sx: { width: "auto" } }}
         MenuProps={{
+          anchorOrigin: { vertical: 20 as const, horizontal: 'center' as const },
+          // transformOrigin: {
+          //   vertical: -30 as const,
+          //   horizontal: 'center' as const
+          // },
           PaperProps: {
             sx: {
               ...DetailSelectFilterMenuStyle.sx,

@@ -20,7 +20,9 @@ const TinySelect = ({ value, onChange, children, MenuProps, sx, ...rest }: TinyS
     const { sx: paperSx, ...restPaperProps } = MenuProps?.PaperProps ?? {};
     const { sx: menuListSx, ...restMenuListProps } = MenuProps?.MenuListProps ?? {};
     const mergedMenuProps = {
+
         ...MenuProps,
+
         PaperProps: {
             ...restPaperProps,
             sx: {

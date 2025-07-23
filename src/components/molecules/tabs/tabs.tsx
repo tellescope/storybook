@@ -20,7 +20,7 @@ function CustomTabPanel(props: TabPanelProps) {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && children}
         </div>
     );
 }
@@ -44,10 +44,12 @@ interface TabsProps {
     icon?: boolean;
     value?: number;
     onChange?: (event: React.SyntheticEvent, newValue: number) => void;
+    defaultTab?: number;
+
 }
 
-const Tabs: FC<TabsProps> = ({ tabs, tabPanels, appearance, icon = true, value, onChange }) => {
-    const [selectedValue, setSelectedValue] = useState(value || 0);
+const Tabs: FC<TabsProps> = ({ tabs, tabPanels, appearance, icon = true, value, onChange, defaultTab }) => {
+    const [selectedValue, setSelectedValue] = useState(value || defaultTab || 0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setSelectedValue(newValue);

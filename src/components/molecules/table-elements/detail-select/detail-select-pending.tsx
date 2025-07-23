@@ -1,58 +1,61 @@
-import { Box, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from "@mui/material";
+import { Box, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Typography } from "@mui/material";
 import { createContext, useContext, useEffect, useState, type JSX, type ReactNode } from "react";
 import { Button } from "../../../atoms/button/button";
 import { Input } from "../../../atoms/input/input";
+import AddIcon from '@mui/icons-material/Add';
 
 type SortItem = string;
 
 
 type DetailSelectContextType = {
-    sort: SortItem[];
-    setSort: React.Dispatch<React.SetStateAction<SortItem[]>>;
+    sort: SortItem;
+    setSort: React.Dispatch<React.SetStateAction<SortItem>>;
     availableFilterFields: {
         label: string;
         value: string;
         icon: JSX.Element;
     }[],
-    defaultOpen?: boolean;
+    open?: boolean;
     onChangeFilter?: (field: string) => void;
-    buttonContent: ReactNode;
+    valueSort?: SortItem;
+    buttonContent?: ReactNode;
+    placeholder?: string;
+    onClose?: () => void;
 };
 
 const DetailSelectContext = createContext<DetailSelectContextType | undefined>(undefined);
 
 
 type StateProps = {
-    sort?: SortItem[];
-    setSort?: React.Dispatch<React.SetStateAction<SortItem[]>>;
-    appearance?: 'sort' | 'filter';
     availableFilterFields: {
         label: string;
         value: string;
         icon: JSX.Element;
     }[],
-    defaultOpen?: boolean;
+    open?: boolean;
     onChangeFilter?: (field: string) => void;
-    buttonContent: ReactNode;
+    value?: SortItem;
+    buttonContent?: ReactNode;
+    placeholder?: string;
+    onClose?: () => void;
 };
 
 
 function ProviderWrapper({
-    sort: propSort,
-    setSort: propSetSort,
     availableFilterFields,
-    defaultOpen,
+    open,
     children,
     ...rest
 }: Omit<StateProps, "appearance"> & { children: ReactNode }) {
     // Internal state if not provided
-    const [internalSort, internalSetSort] = useState<SortItem[]>(["name"]);
+    const [internalSort, internalSetSort] = useState<SortItem>("name");
 
     const value = {
-        sort: propSort !== undefined ? propSort : internalSort,
-        setSort: propSetSort !== undefined ? propSetSort : internalSetSort,
+        sort: internalSort,
+        setSort: internalSetSort,
         availableFilterFields: availableFilterFields,
-        defaultOpen,
+        open,
+
         ...rest
     };
 
@@ -64,11 +67,15 @@ function ProviderWrapper({
 export default function DetailSelectPending({ ...rest }: StateProps) {
     return (
         <ProviderWrapper {...rest} >
-            <Box sx={{ display: 'flex', flexDirection: 'column', width: 240, gap: 1 }}>
-                <DetailSelectFilter />
-            </Box>
+            {/* <Box sx={{ display: 'flex', flexDirection: 'column', width: 240, gap: 1 }}> */}
+            <DetailSelectFilter />
+            {/* </Box> */}
         </ProviderWrapper>
     );
+}
+
+const randomStringId = () => {
+    return Math.random().toString(36).substring(2, 15);
 }
 
 
@@ -93,68 +100,85 @@ const FilterMenuStyle = {
 
 // Main menu component
 function DetailSelectFilter() {
-    const { sort, setSort, defaultOpen, onChangeFilter, buttonContent } = useContext(DetailSelectContext)!;
+    const { sort, setSort, open, onChangeFilter, buttonContent, valueSort, placeholder, onClose } = useContext(DetailSelectContext)!;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
-    const handleClose = () => setAnchorEl(null);
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => setAnchorEl(e.currentTarget);
+    const handleClose = () => {
+        setAnchorEl(null);
+        onClose?.();
+    };
 
-    const handleAddSort = (field: string) => {
-        setSort(() => [field]);
+    const handleChangeValue = (field: string) => {
+        setSort(() => field);
         onChangeFilter?.(field);
         handleClose();
     };
 
+    const randomId = randomStringId();
+
     useEffect(() => {
         // Simulate a reference to a button
-        const button = document.getElementById('menu-button');
-        if (defaultOpen) {
+        const button = document.getElementById(randomId);
+        if (open) {
             if (button) {
                 setAnchorEl(button);
             }
         }
         else {
-            setAnchorEl(null);
+            handleClose();
         }
-    }, [defaultOpen]);
+    }, [open]);
+
+    // when Provide a Value
+    useEffect(() => {
+        setSort(valueSort || "")
+    }, [valueSort]);
 
 
     return (
         <>
-            <Button
-                id="menu-button"
-                appearance="text"
-                sx={{
-                    // backgroundColor: '#0288D114',
-                    background: anchorEl ? "#EEEDF4" : undefined,
-                    color: anchorEl ? "#0000008F" : "#00000040",
-                    borderRadius: '16px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    px: 1, py: 0.5, width: 'fit-content',
-                    textTransform: "capitalize",
-                    "&:hover": {
-                        backgroundColor: '#EEEDF4',
-                        color: "#0000008F",
-                    },
-                    boxShadow: "none !important"
+            {
+                !buttonContent ?
+                    <Button
+                        id={randomId}
+                        appearance="text"
+                        sx={{
+                            // backgroundColor: '#0288D114',
+                            background: anchorEl ? "#EEEDF4" : undefined,
+                            color: anchorEl ? "#0000008F" : "#00000040",
+                            borderRadius: '16px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            px: 1, py: 0.5, width: 'fit-content',
+                            textTransform: "capitalize",
+                            "&:hover": {
+                                backgroundColor: '#EEEDF4',
+                                color: "#0000008F",
+                            },
+                            boxShadow: "none !important"
 
-                }}
-                onClick={handleClick}
-            >
-                {
-                    buttonContent
-                }
-
-            </Button>
-
+                        }}
+                        onClick={handleClick}
+                    >
+                        <AddIcon sx={{ fontSize: 18, }} />
+                        <Typography sx={{ fontWeight: 500, ml: 0.5 }} variant="body2">Filter</Typography>
+                    </Button>
+                    :
+                    <Box id={randomId} sx={{ width: "fit-content" }} onClick={handleClick}>
+                        {
+                            buttonContent
+                        }
+                    </Box>
+            }
 
             <FilterMenu
                 open={Boolean(anchorEl)}
                 anchorEl={anchorEl}
                 onClose={handleClose}
-                onAddSort={handleAddSort}
+                onChange={handleChangeValue}
                 usedFields={sort}
+                placeholder={placeholder}
             />
         </>
     );
@@ -162,12 +186,13 @@ function DetailSelectFilter() {
 
 
 // Filter menu component
-function FilterMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
+function FilterMenu({ open, anchorEl, onClose, onChange, usedFields, placeholder = "Search For Property" }: {
     open: boolean;
     anchorEl: null | HTMLElement;
     onClose: () => void;
-    onAddSort: (field: string) => void;
-    usedFields: string[];
+    onChange: (field: string) => void;
+    usedFields: string;
+    placeholder?: string;
 }) {
     const [searchTerm, setSearchTerm] = useState<string>("");
     const { availableFilterFields } = useContext(DetailSelectContext)!;
@@ -204,7 +229,7 @@ function FilterMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
                 <Input
                     autoFocus={true}
                     appearance="distinct"
-                    placeholder="Search For Property"
+                    placeholder={placeholder}
                     size="small"
                     sx={{
                         width: "100%",
@@ -225,13 +250,20 @@ function FilterMenu({ open, anchorEl, onClose, onAddSort, usedFields }: {
                     value={searchTerm}
                 />
                 {search.map(f => (
-                    <MenuItem key={f.value} onClick={() => onAddSort(f.value)} selected={usedFields.includes(f.value)}>
+                    <MenuItem key={f.value} onClick={() => onChange(f.value)} selected={usedFields.includes(f.value)}>
                         <ListItemIcon>{f.icon}</ListItemIcon>
                         <ListItemText>{f.label}</ListItemText>
                     </MenuItem>
                 ))}
                 {
-                    search.length === 0 && (
+                    availableFilterFields.length === 0 ? (
+                        <MenuItem disabled>
+                            <ListItemText>All Fields Are Applied</ListItemText>
+                        </MenuItem>
+                    ) : null
+                }
+                {
+                    search.length === 0 && searchTerm !== "" && availableFilterFields.length > 0 && (
                         <MenuItem disabled>
                             <ListItemText>No fields found</ListItemText>
                         </MenuItem>

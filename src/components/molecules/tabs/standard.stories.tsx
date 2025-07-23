@@ -38,13 +38,13 @@ const tabs = [
 ];
 const tabPanels = [
     {
-        content: <Typography variant="body2">Content for Tab 1</Typography>
+        content: <Typography variant="body2" sx={{ p: 2 }}>Content for Tab 1</Typography>
     },
     {
-        content: <Typography variant="body2">Content for Tab 2</Typography>
+        content: <Typography variant="body2" sx={{ p: 2 }}>Content for Tab 2</Typography>
     },
     {
-        content: <Typography variant="body2">Content for Tab 3</Typography>
+        content: <Typography variant="body2" sx={{ p: 2 }}>Content for Tab 3</Typography>
     }
 ];
 

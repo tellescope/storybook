@@ -1,10 +1,6 @@
 import { Add } from "@mui/icons-material";
 import { Box, Tabs as MuiTabs, Stack, Tab, Typography } from "@mui/material";
-import { useState, type FC, type JSX } from "react";
-import { IconButton } from "../../atoms/button/icon-button";
-import FilterListIcon from '@mui/icons-material/FilterList';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import SearchIcon from '@mui/icons-material/Search';
+import { useState, type FC, type JSX, type ReactNode } from "react";
 
 function a11yProps(index: number) {
     return {
@@ -24,7 +20,7 @@ function CustomTabPanel(props: TabPanelProps) {
             aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
-            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+            {value === index && children}
         </div>
     );
 }
@@ -46,10 +42,13 @@ interface TabsProps {
     }[],
     value?: number;
     onChange?: (event: React.SyntheticEvent, newValue: number) => void;
+
+    tableControls?: ReactNode;
+    defaultTab?: number;
 }
 
-const Tabs: FC<TabsProps> = ({ tabs, tabPanels, value, onChange }) => {
-    const [selectedValue, setSelectedValue] = useState(value || 0);
+const TabBar: FC<TabsProps> = ({ tabs, tabPanels, value, onChange, tableControls, defaultTab }) => {
+    const [selectedValue, setSelectedValue] = useState(value || defaultTab || 0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setSelectedValue(newValue);
@@ -131,15 +130,9 @@ const Tabs: FC<TabsProps> = ({ tabs, tabPanels, value, onChange }) => {
                     }
                 </MuiTabs>
                 <Stack sx={{ flexDirection: "row", gap: 1, }}>
-                    <IconButton color="default" size="small" >
-                        <FilterListIcon />
-                    </IconButton>
-                    <IconButton color="default" size="small">
-                        <SwapVertIcon />
-                    </IconButton>
-                    <IconButton color="default" size="small">
-                        <SearchIcon />
-                    </IconButton>
+                    {
+                        tableControls
+                    }
                 </Stack>
             </Stack>
             {
@@ -153,4 +146,4 @@ const Tabs: FC<TabsProps> = ({ tabs, tabPanels, value, onChange }) => {
     )
 }
 
-export default Tabs
+export default TabBar
