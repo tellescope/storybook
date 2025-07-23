@@ -11,6 +11,7 @@ export interface IMessage {
   };
   link?: string;
   scheduledTime?: string;
+  isTranslated?: boolean;
 }
 
 

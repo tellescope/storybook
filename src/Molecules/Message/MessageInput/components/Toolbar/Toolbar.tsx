@@ -46,7 +46,8 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
         backgroundColor: isSelected ? backgroundColor : "transparent",
         transition: "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
         "&:hover": {
-          backgroundColor
+          backgroundColor,
+          color: "white",
         },
       }}
     >
