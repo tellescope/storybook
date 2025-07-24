@@ -13,21 +13,21 @@ import { Header } from "../shared/components/Header";
 
 export interface ChatProps {
   content: IMessage[];
-  reactions?: Reaction[];
   enableTeamChat?: boolean;
   setEnableTeamChat?: (value: boolean) => void;
   chatInterface: ChatInterface;
+  setChatInterface?: (value: ChatInterface) => void;
 }
 
 export const Chat = ({
   content,
-  reactions,
   enableTeamChat = false,
   setEnableTeamChat = () => {},
   chatInterface,
+  setChatInterface = () => {},
 }: ChatProps) => {
   let lastDate: Date | null = null;
-
+  
   return (
     <Box sx={styles.container}>
       <Header
@@ -56,7 +56,7 @@ export const Chat = ({
                   avatar={message.avatar}
                   key={index}
                   message={message}
-                  reactions={reactions}
+                  reactions={message.reactions}
                 />
               </>
             );
@@ -87,7 +87,12 @@ export const Chat = ({
           </Box>
         )}
         <Stack display={"flex"} flexDirection={"column"} width={"100%"} gap={2}>
-          {!enableTeamChat && <Toolbar chatInterface={chatInterface} />}
+          {!enableTeamChat && (
+            <Toolbar
+              chatInterface={chatInterface}
+              setChatInterface={setChatInterface}
+            />
+          )}
           <MessageInput />
         </Stack>
       </Box>

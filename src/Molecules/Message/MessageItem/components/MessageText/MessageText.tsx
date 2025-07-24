@@ -26,6 +26,7 @@ export const MessageText = ({
   chatInterface,
 }: TextProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
+  console.log(reactions)
   return (
     <Container messageType={messageType}>
       {showAvatar && <Avatar src={avatar} sx={{ width: 32, height: 32 }} />}

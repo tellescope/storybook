@@ -21,6 +21,7 @@ export const MessageItem = ({
   chatInterface,
 }: MessageItemProps) => {
   const styles = useMessageItemStyles({ messageType: message.type });
+  console.log(reactions, "awdawdw")
   return (
     <Box sx={styles.root}>
       <MessageContent

@@ -10,6 +10,7 @@ export interface IMessage {
     fileName: string;
   };
   link?: string;
+  reactions?: Reaction[];
   scheduledTime?: string;
   isTranslated?: boolean;
 }

@@ -56,7 +56,7 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
   );
 };
 
-export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => {
+export const Toolbar = ({ chatInterface, setChatInterface }: { chatInterface: ChatInterface; setChatInterface: (value: ChatInterface) => void }) => {
 
 
   const toolColors: Partial<Record<ToolType, string>> = {
@@ -93,7 +93,7 @@ export const Toolbar = ({ chatInterface }: { chatInterface: ChatInterface }) => 
               key={type}
               isSelected={chatInterface === type}
               backgroundColor={backgroundColor}
-              onClick={() => {}}
+              onClick={() => setChatInterface(type as ChatInterface)}
             >
               {icon}
             </IconWrapper>

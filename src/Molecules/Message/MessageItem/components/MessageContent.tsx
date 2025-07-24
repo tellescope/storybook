@@ -55,6 +55,8 @@ export const MessageContent = ({
     isTranslated,
   };
 
+  console.log(reactions)
+
   const TypedComponent = Component as any;
   return <TypedComponent {...commonProps} {...props} />;
 }; 
