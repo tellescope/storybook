@@ -1,65 +1,35 @@
 import { useState } from "react";
-import { Chat } from "./Organism/ItemViewer/Chat/Chat"
 import type { ChatInterface } from "./Organism/ItemViewer/types";
+import { mockMessages } from "./data/mock";
+import { MessageHeader } from "./Organism/ItemViewer/shared";
+import { MessageInput } from "./Molecules/Message/components/ChatInput";
+import { Messages } from "./Molecules/Message/Messages";
 
 function App() {
-
   const [activateTeamChat, setActivateTeamChat] = useState(false);
+  const [content, setContent] = useState(mockMessages);
   const [switchMode, setSwitchMode] = useState<ChatInterface>("CHAT");
 
   const handleActivateTeamChat = () => {
-    setActivateTeamChat(prev => !prev);
-  }
+    setActivateTeamChat((prev) => !prev);
+  };
+
+  const handleDeleteChatSample = () => {
+    setContent([]);
+  };
 
   return (
-    <>
-      <Chat
-        enableTeamChat={activateTeamChat}
-        setEnableTeamChat={handleActivateTeamChat}
-        chatInterface={switchMode}
-        setChatInterface={setSwitchMode}
-        content={[{
-          text: "Hello",
-          type: "INCOMING",
-          isTranslated: true,
-          createdAt: new Date(),
-          image: {
-            url: "https://picsum.photos/200/100",
-            fileName: "image.jpg",
-          },
-          reactions: [{
-            icon: "😎",
-            count: 1,
-          }],
-        }, {
-          text: "Hello",
-          createdAt: new Date(),
-          type: "OUTGOING",
-          scheduledTime: new Date(),
-          avatar: "https://picsum.photos/200/100",
-          reactions: [{
-            icon: "😎",
-            count: 1,
-          }, {
-            icon: "🙈",
-            count: 1,
-          }],
-        },
-        {
-          text: "This is team chat sample bubble chat",
-          createdAt: new Date(),
-          type: "TEAM_CHAT",
-          reactions: [{
-            icon: "😎",
-            count: 1,
-          }, {
-            icon: "🙈",
-            count: 1,
-          }],
-        }]}
-      />
-    </>
-  )
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <div style={{ width: "800px", boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.1)", borderRadius: 2, display: "flex", flexDirection: "column", height: 700 }}>
+        <MessageHeader content={content} chatInterface={switchMode} enableTeamChat={activateTeamChat} setEnableTeamChat={handleActivateTeamChat} />
+        <Messages content={content} enableTeamChat={activateTeamChat} />
+        <MessageInput enableTeamChat={activateTeamChat} chatInterface={switchMode} setChatInterface={setSwitchMode} />
+      </div>
+      <div style={{ marginLeft: "20px" }}>
+        <button onClick={handleDeleteChatSample}>Delete chat sample</button>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;

@@ -2,7 +2,7 @@ import { type SxProps } from "@mui/material";
 
 interface IChatStyles {
   container: SxProps;
-  messagesContainer: (enableTeamChat: boolean, messagesLength: number) => SxProps;
+  messagesContainer: (messagesLength: number, enableTeamChat: boolean) => SxProps; 
   emptyContainer: SxProps;
   emptyMessageBox: SxProps;
   inputContainer: (enableTeamChat: boolean) => SxProps;
@@ -17,11 +17,11 @@ export const styles: IChatStyles = {
     flexDirection: "column",
     height: 800,
   },
-  messagesContainer: (enableTeamChat, messagesLength) => ({
+  messagesContainer: (messagesLength: number, enableTeamChat: boolean) => ({
     py: 2,
     overflow: "auto",
     flex: 1,
-    bgcolor: enableTeamChat ? "#EFF0F2" : "",
+    bgcolor: enableTeamChat ? "#EFF0F2" : "#FFF",
     display: "flex",
     flexDirection: "column",
     justifyContent: messagesLength === 0 ? "center" : "flex-start",

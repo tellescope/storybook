@@ -1,10 +1,10 @@
 import { Avatar, Stack } from "@mui/material";
 
 import type { IMessage, MessageType } from "../../../types";
-import { Reactions } from "../Reactions/Reactions";
-import { Container, MessageBubble, MessageContainer, MessageContent } from "./styles/maps";
-import { Image, Translated, Scheduled } from "../../../components";
 
+import { Container, MessageBubble, MessageContainer, MessageContent } from "./styles/maps";
+import { Image, Translated, Scheduled, Role } from "../../../components";
+import { Reactions } from "../../../components/Reactions/Reactions";
 
 interface TextProps {
   messageType: MessageType;
@@ -27,6 +27,7 @@ export const MessageText = ({ messageType, message }: TextProps) => {
         <Stack display={"flex"} flexDirection={"row"} gap={1.4} mt={0.5} alignItems={"center"}>
           <Translated isTranslated={message.isTranslated ?? false} />
           <Scheduled scheduledTime={message.scheduledTime ?? null} />
+          <Role isTeamChatEnabled={message.type == "TEAM_CHAT"} role={message?.role} />
           <Reactions reactions={message.reactions} messageType={messageType} />
         </Stack>
       </MessageContainer>

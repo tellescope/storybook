@@ -10,8 +10,9 @@ import {
   StickyNote2Outlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton } from "@mui/material";
-import { AddTicket, Lightbulb, OpenInFull } from "../../../Icons";
-import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
+import { AddTicket, Lightbulb, OpenInFull } from "../../Icons";
+
+export type ChatInterface = "CHAT" | "SMS" | "EMAIL" | "MMS";
 
 const ToolType = {
   CHAT: "CHAT",

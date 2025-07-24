@@ -2,8 +2,9 @@ import { Box, IconButton, InputBase } from "@mui/material";
 import TextFieldsIcon from "@mui/icons-material/TextFields";
 
 import { Mic } from "@mui/icons-material";
-import { Send } from "../../../Icons";
+
 import { useMessageInputStyles } from "./styles/maps";
+import { Send } from "../Icons";
 
 
 interface MessageInputProps {
@@ -11,7 +12,7 @@ interface MessageInputProps {
   error?: boolean;
 }
 
-export const MessageInput = ({ disabled, error }: MessageInputProps) => {
+export const Input = ({ disabled, error }: MessageInputProps) => {
   const styles = useMessageInputStyles({ disabled, error });
 
   return (

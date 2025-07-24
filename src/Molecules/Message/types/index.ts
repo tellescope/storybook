@@ -5,6 +5,7 @@ export interface IMessage {
   text: string;
   avatar?: string;
   createdAt?: Date;
+  role?: string;
   image?: {
     url: string;
     fileName: string;

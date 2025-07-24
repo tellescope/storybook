@@ -1,7 +1,11 @@
 import { Box, styled } from "@mui/material";
+import type { MessageType } from "../../../types";
 
-import { reactionsContainerJustifyContent } from "../../MessageText/styles/maps";
-import type { MessageType } from "../../../../types";
+export const reactionsContainerJustifyContent: Record<MessageType, string> = {
+  INCOMING: "flex-start",
+  OUTGOING: "flex-end",
+  TEAM_CHAT: "flex-end",
+};
 
 export const ReactionsContainer = styled(Box, {
     shouldForwardProp: (prop) => prop !== "messageType",

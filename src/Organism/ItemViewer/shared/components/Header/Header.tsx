@@ -9,7 +9,7 @@ interface HeaderProps {
   setEnableTeamChat: (value: boolean) => void;
 }
 
-export const Header = ({
+export const MessageHeader = ({
   content,
   chatInterface,
   enableTeamChat,

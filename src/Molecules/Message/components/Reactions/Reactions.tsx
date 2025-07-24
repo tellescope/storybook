@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import type { MessageType, Reaction } from "../../../types";
+
 import { ReactionItem, ReactionsContainer, ReactionsWrapper } from "./styles/maps";
+import type { MessageType, Reaction } from "../../types";
 
 interface ReactionsProps {
   reactions: Reaction[] | undefined;
@@ -8,8 +9,8 @@ interface ReactionsProps {
 }
 
 export const Reactions = ({ reactions, messageType }: ReactionsProps) => {
-  
-  if (reactions?.length === 0) {
+
+  if (!reactions) {
     return null;
   }
 
