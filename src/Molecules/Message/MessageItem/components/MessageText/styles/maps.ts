@@ -60,14 +60,14 @@ export const MessageContainer = styled(Box, {
 }));
 
 export const MessageBubble = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "messageType",
-})<{ messageType: MessageType }>(({ messageType }) => ({
+  shouldForwardProp: (prop) => prop !== "messageType" && prop !== "haveImage",
+})<{ messageType: MessageType; haveImage: boolean }>(({ messageType, haveImage }) => ({
   padding: "12px 12px 10px 12px",
   maxWidth: "fit-content",
   backgroundColor: bubbleBackgroundColors[messageType],
   borderTopRightRadius: "20px",
   display: "flex",
-  flexDirection: "row",
+  flexDirection: haveImage ? "column" : "row",
   borderTopLeftRadius: "20px",
   borderBottomLeftRadius: messageBubbleBorderBottomLeftRadius[messageType],
   borderBottomRightRadius: messageBubbleBorderBottomRightRadius[messageType],

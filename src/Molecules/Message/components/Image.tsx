@@ -1,15 +1,40 @@
-import { Box } from "@mui/material";
+import {  Stack, Typography } from "@mui/material";
+import type { MessageType } from "../types";
+import { messageTextColors } from "../MessageItem/components/MessageText/styles/maps";
+import { Icon } from "../../../Atoms";
+import { Download } from "@mui/icons-material";
 
-export const Image = ({ src }: { src: string }) => {
+interface ImageProps {
+  image: {
+    url: string;
+    fileName: string;
+  } | null;
+  messageType: MessageType;
+}
+
+export const Image = ({ image, messageType }: ImageProps) => {
+  if (!image) {
+    return null;
+  }
   return (
-    <Box>
+    <Stack display={"flex"} pb={1} flexDirection={"column"} gap={1}>
       <img
-        src={src}
+        src={image.url}
         style={{
           borderRadius: "10px",
         }}
         alt="message-image"
       />
-    </Box>
+      <Stack display={"flex"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"center"}>
+        <Typography variant="caption" sx={{ color: messageTextColors[messageType] }}>
+          {image.fileName}
+        </Typography>
+        <Icon
+          onClick={() => alert("download action will be fired inside Image component")}
+          icon={Download}
+          sx={{ cursor: "pointer", color: messageTextColors[messageType] }}
+        />
+      </Stack>
+    </Stack>
   );
 };

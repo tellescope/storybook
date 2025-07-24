@@ -3,29 +3,30 @@ import { Avatar, Stack } from "@mui/material";
 import type { IMessage, MessageType } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
 import { Container, MessageBubble, MessageContainer, MessageContent } from "./styles/maps";
-import { Image, Translated } from "../../../components";
+import { Image, Translated, Scheduled } from "../../../components";
+
 
 interface TextProps {
-  children: React.ReactNode;
   messageType: MessageType;
   message: IMessage;
 }
 
-export const MessageText = ({ children, messageType, message }: TextProps) => {
+export const MessageText = ({ messageType, message }: TextProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
 
   return (
     <Container messageType={messageType}>
       {showAvatar && <Avatar src={message.avatar} sx={{ width: 32, height: 32 }} />}
       <MessageContainer messageType={messageType}>
-        <Image src={message.image?.url ?? ""} />
-        <MessageBubble messageType={messageType}>
+        <MessageBubble haveImage={!!message.image} messageType={messageType}>
+          <Image image={message.image || null} messageType={messageType} />
           <MessageContent variant="body1" messageType={messageType}>
-            {children}
+            {message.text}
           </MessageContent>
         </MessageBubble>
-        <Stack display={"flex"} flexDirection={"row"} gap={1.4} alignItems={"center"}>
+        <Stack display={"flex"} flexDirection={"row"} gap={1.4} mt={0.5} alignItems={"center"}>
           <Translated isTranslated={message.isTranslated ?? false} />
+          <Scheduled scheduledTime={message.scheduledTime ?? null} />
           <Reactions reactions={message.reactions} messageType={messageType} />
         </Stack>
       </MessageContainer>

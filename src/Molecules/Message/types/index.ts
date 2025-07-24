@@ -11,7 +11,7 @@ export interface IMessage {
   };
   link?: string;
   reactions?: Reaction[];
-  scheduledTime?: string;
+  scheduledTime?: Date | null;
   isTranslated?: boolean;
 }
 

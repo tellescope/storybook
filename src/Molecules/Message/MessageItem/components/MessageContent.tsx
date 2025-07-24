@@ -6,7 +6,7 @@ interface MessageContentProps {
 }
 
 const getMessageComponent = (message: IMessage) => {
-  return { Component: MessageText, props: { children: message.text } };
+  return { Component: MessageText, props: message };
 };
 
 export const MessageContent = ({

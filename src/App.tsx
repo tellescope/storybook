@@ -24,7 +24,7 @@ function App() {
           isTranslated: true,
           createdAt: new Date(),
           image: {
-            url: "https://picsum.photos/200/300",
+            url: "https://picsum.photos/200/100",
             fileName: "image.jpg",
           },
           reactions: [{
@@ -35,6 +35,20 @@ function App() {
           text: "Hello",
           createdAt: new Date(),
           type: "OUTGOING",
+          scheduledTime: new Date(),
+          avatar: "https://picsum.photos/200/100",
+          reactions: [{
+            icon: "😎",
+            count: 1,
+          }, {
+            icon: "🙈",
+            count: 1,
+          }],
+        },
+        {
+          text: "This is team chat sample bubble chat",
+          createdAt: new Date(),
+          type: "TEAM_CHAT",
           reactions: [{
             icon: "😎",
             count: 1,
