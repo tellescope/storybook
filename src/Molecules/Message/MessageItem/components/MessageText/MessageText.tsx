@@ -32,11 +32,12 @@ export const MessageText = ({
       {showAvatar && <Avatar src={avatar} sx={{ width: 32, height: 32 }} />}
       <MessageContainer messageType={messageType}>
         <MessageBubble messageType={messageType}>
+          
           <MessageContent variant="body1" messageType={messageType}>
             {children}
           </MessageContent>
         </MessageBubble>
-        {messageType === "INCOMING" && chatInterface === "MMS" && (
+        {/* {messageType === "INCOMING" && chatInterface === "MMS" && (
           <Box>
             <Typography fontWeight={600} variant="caption">
               +1 202 555-0123
@@ -60,7 +61,7 @@ export const MessageText = ({
               </Typography>
             </Box>
           </Stack>
-        )}
+        )} */}
         <Reactions reactions={reactions} messageType={messageType} />
       </MessageContainer>
     </Container>

@@ -22,14 +22,25 @@ function App() {
           text: "Hello",
           type: "INCOMING",
           createdAt: new Date(),
+          image: {
+            url: "https://picsum.photos/200/300",
+            fileName: "image.jpg",
+          },
           reactions: [{
-            icon: "like",
+            icon: "😎",
             count: 1,
           }],
         }, {
           text: "Hello",
           createdAt: new Date(),
           type: "OUTGOING",
+          reactions: [{
+            icon: "😎",
+            count: 1,
+          }, {
+            icon: "🙈",
+            count: 1,
+          }],
         }]}
       />
     </>

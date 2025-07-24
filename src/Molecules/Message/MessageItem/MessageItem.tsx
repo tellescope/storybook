@@ -7,7 +7,6 @@ import type { ChatInterface } from "../../../Organism/ItemViewer/types";
 
 interface MessageItemProps {
   message: IMessage;
-  reactions?: Reaction[];
   avatar?: string;
   scheduledTime?: string;
   chatInterface?: ChatInterface;
@@ -15,18 +14,17 @@ interface MessageItemProps {
 
 export const MessageItem = ({
   message,
-  reactions,
   avatar,
   scheduledTime,
   chatInterface,
 }: MessageItemProps) => {
   const styles = useMessageItemStyles({ messageType: message.type });
-  console.log(reactions, "awdawdw")
+
   return (
     <Box sx={styles.root}>
       <MessageContent
         message={message}
-        reactions={reactions}
+        reactions={message.reactions}
         avatar={avatar}
         scheduledTime={scheduledTime}        
         chatInterface={chatInterface}

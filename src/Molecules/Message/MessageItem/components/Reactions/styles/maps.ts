@@ -18,7 +18,7 @@ export const ReactionsContainer = styled(Box, {
     backgroundColor: "#EFF0F2",
     display: "flex",
     alignItems: "center",
-    gap: "4px",
+    gap: "8px",
   });
   
   export const ReactionItem = styled(Box)({

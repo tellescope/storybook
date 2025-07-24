@@ -16,24 +16,24 @@ interface MessageContentProps {
 }
 
 const getMessageComponent = (message: IMessage) => {
-  if (message.image) {
-    return { Component: MessageImage, props: { image: message.image } };
-  }
-  if (message.link) {
-    return { Component: MessageLink, props: { link: message.link } };
-  }
-  if (message.isTranslated) {
-    return { Component: MessageTranslate, props: { children: message.text, isTranslated: message.isTranslated } };
-  } 
-  if (message.scheduledTime) {
-    return {
-      Component: MessageScheduled,
-      props: {
-        scheduledTime: message.scheduledTime,
-        children: message.text,
-      },
-    };
-  }
+  // if (message.image) {
+  //   return { Component: MessageImage, props: { image: message.image } };
+  // }
+  // if (message.link) {
+  //   return { Component: MessageLink, props: { link: message.link } };
+  // }
+  // if (message.isTranslated) {
+  //   return { Component: MessageTranslate, props: { children: message.text, isTranslated: message.isTranslated } };
+  // } 
+  // if (message.scheduledTime) {
+  //   return {
+  //     Component: MessageScheduled,
+  //     props: {
+  //       scheduledTime: message.scheduledTime,
+  //       children: message.text,
+  //     },
+  //   };
+  // }
   return { Component: MessageText, props: { children: message.text } };
 };
 
@@ -46,6 +46,7 @@ export const MessageContent = ({
   isTranslated,
 }: MessageContentProps) => {
   const { Component, props } = getMessageComponent(message);
+  
   const commonProps = {
     messageType: message.type,
     reactions,
@@ -54,8 +55,6 @@ export const MessageContent = ({
     scheduledTime,
     isTranslated,
   };
-
-  console.log(reactions)
 
   const TypedComponent = Component as any;
   return <TypedComponent {...commonProps} {...props} />;

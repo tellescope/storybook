@@ -8,6 +8,7 @@ interface ReactionsProps {
 }
 
 export const Reactions = ({ reactions, messageType }: ReactionsProps) => {
+  
   if (reactions.length === 0) {
     return null;
   }
