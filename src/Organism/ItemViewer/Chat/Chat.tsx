@@ -53,10 +53,8 @@ export const Chat = ({
                   <DateSeparator date={message.createdAt} />
                 )}
                 <MessageItem
-                  // avatar={message.avatar}
                   key={index}
                   message={message}
-                  // reactions={message.reactions}
                 />
               </>
             );

@@ -21,6 +21,7 @@ function App() {
         content={[{
           text: "Hello",
           type: "INCOMING",
+          isTranslated: true,
           createdAt: new Date(),
           image: {
             url: "https://picsum.photos/200/300",

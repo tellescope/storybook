@@ -3,20 +3,20 @@ import type { MessageType, Reaction } from "../../../types";
 import { ReactionItem, ReactionsContainer, ReactionsWrapper } from "./styles/maps";
 
 interface ReactionsProps {
-  reactions: Reaction[];
+  reactions: Reaction[] | undefined;
   messageType: MessageType;
 }
 
 export const Reactions = ({ reactions, messageType }: ReactionsProps) => {
   
-  if (reactions.length === 0) {
+  if (reactions?.length === 0) {
     return null;
   }
 
   return (
     <ReactionsContainer messageType={messageType}>
       <ReactionsWrapper>
-        {reactions.map((reaction) => (
+        {reactions?.map((reaction) => (
           <ReactionItem key={reaction.icon}>
             <Box>{reaction.icon}</Box>
             <Typography variant="caption" color="black">

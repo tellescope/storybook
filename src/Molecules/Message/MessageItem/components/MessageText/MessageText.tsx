@@ -1,68 +1,33 @@
-import { Avatar, Box, Stack, Typography } from "@mui/material";
+import { Avatar, Stack } from "@mui/material";
 
-import type { MessageType, Reaction } from "../../../types";
+import type { IMessage, MessageType } from "../../../types";
 import { Reactions } from "../Reactions/Reactions";
-import {
-  Container,
-  MessageBubble,
-  MessageContainer,
-  MessageContent,
-} from "./styles/maps";
-import type { ChatInterface } from "../../../../../Organism/ItemViewer/types";
+import { Container, MessageBubble, MessageContainer, MessageContent } from "./styles/maps";
+import { Image, Translated } from "../../../components";
 
 interface TextProps {
   children: React.ReactNode;
   messageType: MessageType;
-  reactions?: Reaction[];
-  avatar?: string;
-  chatInterface?: ChatInterface;
+  message: IMessage;
 }
 
-export const MessageText = ({
-  children,
-  messageType,
-  reactions = [],
-  avatar,
-  chatInterface,
-}: TextProps) => {
+export const MessageText = ({ children, messageType, message }: TextProps) => {
   const showAvatar = messageType === "OUTGOING" || messageType === "TEAM_CHAT";
-  console.log(reactions)
+
   return (
     <Container messageType={messageType}>
-      {showAvatar && <Avatar src={avatar} sx={{ width: 32, height: 32 }} />}
+      {showAvatar && <Avatar src={message.avatar} sx={{ width: 32, height: 32 }} />}
       <MessageContainer messageType={messageType}>
+        <Image src={message.image?.url ?? ""} />
         <MessageBubble messageType={messageType}>
-          
           <MessageContent variant="body1" messageType={messageType}>
             {children}
           </MessageContent>
         </MessageBubble>
-        {/* {messageType === "INCOMING" && chatInterface === "MMS" && (
-          <Box>
-            <Typography fontWeight={600} variant="caption">
-              +1 202 555-0123
-            </Typography>
-          </Box>
-        )}
-        {messageType == "TEAM_CHAT" && (
-          <Stack
-            display={"flex"}
-            mt={0.5}
-            flexDirection={"row"}
-            alignItems={"center"}
-            gap={1}
-          >
-            <Typography variant="caption" color="#8B5CF2">
-              Nutritionist
-            </Typography>
-            <Box px={1} py={0.5} bgcolor="#F4F0FF" borderRadius={10}>
-              <Typography variant="caption" color="#8B5CF2">
-                Team
-              </Typography>
-            </Box>
-          </Stack>
-        )} */}
-        <Reactions reactions={reactions} messageType={messageType} />
+        <Stack display={"flex"} flexDirection={"row"} gap={1.4} alignItems={"center"}>
+          <Translated isTranslated={message.isTranslated ?? false} />
+          <Reactions reactions={message.reactions} messageType={messageType} />
+        </Stack>
       </MessageContainer>
     </Container>
   );
