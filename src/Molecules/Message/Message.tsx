@@ -4,7 +4,7 @@ import { MessageContainer, MessageInput, Messages } from "./components";
 import type { IMessage } from "./types";
 import { MessageHeader } from "./MessageHeader";
 
-function Wrapper({ content }: { content: IMessage[] }) {
+function Message({ content }: { content: IMessage[] }) {
     const [activateTeamChat, setActivateTeamChat] = useState(false);
     const [contentData, setContentData] = useState(content);
     const [switchMode, setSwitchMode] = useState<ChatInterface>("CHAT");
@@ -22,4 +22,4 @@ function Wrapper({ content }: { content: IMessage[] }) {
     );
 }
 
-export default Wrapper;
+export default Message;

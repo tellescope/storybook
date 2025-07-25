@@ -1,8 +1,8 @@
 import type { IMessage } from "../../Molecules";
-import Wrapper from "../../Molecules/Message/Wrapper";
+import Message from "../../Molecules/Message/Message";
 
 export const ItemViewer = ({ content }: { content: IMessage[] }) => {
     return (
-        <Wrapper content={content} />
+        <Message content={content} />
     );
 };

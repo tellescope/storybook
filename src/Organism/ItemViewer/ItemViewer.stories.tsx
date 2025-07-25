@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Wrapper from "../../Molecules/Message/Wrapper";
+import Wrapper from "../../Molecules/Message/Message";
 import { mockMessages } from "../../data/mock";
 
 
