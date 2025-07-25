@@ -3,8 +3,8 @@ import {
   MarkEmailUnreadOutlined,
   AddReactionOutlined,
 } from "@mui/icons-material";
-import { Nice } from "../Icons";
-import type { MessageType } from "../types";
+import { Nice } from "../../Icons";
+import type { MessageType } from "../../types";
 
 interface MessageOptionsProps {
   haveUnreadMessages?: boolean;

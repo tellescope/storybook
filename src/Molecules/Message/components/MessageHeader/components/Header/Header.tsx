@@ -1,6 +1,6 @@
-import type { IMessage } from "../../../../../Molecules/Message/types";
+import type { IMessage } from "../../../../types";
 import { EmptyHeaderType, HeaderType } from "../enums";
-import type { ChatInterface } from "../../../types";
+import type { ChatInterface } from "../../../../types";
 
 interface HeaderProps {
   content: IMessage[];

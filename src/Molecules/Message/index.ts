@@ -1,2 +1,2 @@
-export * from "./MessageOptions"
+export * from "./components/MessageOptions"
 export * from "./types"; 

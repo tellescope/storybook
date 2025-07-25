@@ -10,10 +10,10 @@ import {
   GroupAddOutlined,
   AddOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
 import { useState } from "react";
-import { TeamChatSwitch } from "../../../../../Molecules/Message/components";
+import { TeamChatSwitch } from "../../..";
 
 const transition = "all 0.3s ease-in-out";
 

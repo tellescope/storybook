@@ -9,17 +9,17 @@ import {
   GroupAddOutlined,
   AddOutlined,
   GroupsOutlined,
-  TextsmsOutlined,
+  MailOutline,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import Switch from "../../../../../components/atoms/switch/switch";
-import Select from "../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../../../../Molecules/Message/components";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+
+import Select from "../../../../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../../..";
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderSMS = ({
+export const HeaderEmail = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
@@ -72,12 +72,8 @@ export const HeaderSMS = ({
             gap={2}
             alignItems={"center"}
           >
-            <Icon
-              icon={TextsmsOutlined}
-              size="medium"
-              sx={{ color: "#A754F5" }}
-            />
-            <Typography variant="h6">+123 456 7890</Typography>
+            <Icon icon={MailOutline} size="medium" sx={{ color: "#6466F1" }} />
+            <Typography variant="h6">Email subject example</Typography>
             <Button
               appearence="outlined"
               size="small"
@@ -90,10 +86,7 @@ export const HeaderSMS = ({
               Assign
             </Button>
           </Stack>
-          <TeamChatSwitch
-            checked={enableTeamChat}
-            setChecked={setEnableTeamChat}
-          />
+          <TeamChatSwitch checked={enableTeamChat} setChecked={setEnableTeamChat} />
         </Box>
         {!enableTeamChat && (
           <Box
@@ -105,7 +98,7 @@ export const HeaderSMS = ({
           >
             <Select
               value={""}
-              label="From: +123 456 7890"
+              label="CC"
               sx={{
                 margin: 0,
               }}

@@ -1,6 +1,6 @@
 import { HeaderChat, HeaderEmail, HeaderMMS, HeaderSMS } from "../Header";
 import { EmptyHeaderChat, EmptyHeaderEmail, EmptyHeaderMMS, EmptyHeaderSMS } from "../EmptyHeader";
-import type { ChatInterface } from "../../../types";
+import type { ChatInterface } from "../../../../types";
 import type { ComponentType } from "react";
 
 type HeaderComponentProps = {

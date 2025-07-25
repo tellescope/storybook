@@ -3,7 +3,7 @@ import { MessageContent } from "./components";
 
 import { useMessageItemStyles } from "./styles/maps";
 import type { IMessage } from "../../types";
-import { MessageOptions } from "../../MessageOptions";
+import { MessageOptions } from "../MessageOptions";
 
 interface MessageBubbleProps {
   message: IMessage;

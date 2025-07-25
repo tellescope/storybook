@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Wrapper from "../../Molecules/Message/Message";
+import ItemViewer from "./ItemViewer";
 import { mockMessages } from "../../data/mock";
 
 
-const meta: Meta<typeof Wrapper> = {
+const meta: Meta<typeof ItemViewer> = {
     title: "Organism/ItemViewer/ItemViewer",
-    component: Wrapper,
+    component: ItemViewer,
     parameters: {
         layout: "centered",
         docs: {

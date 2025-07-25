@@ -6,7 +6,7 @@ import { AddCircleOutline, EmojiEmotionsOutlined, Mic } from "@mui/icons-materia
 
 import { Toolbar } from "../Toolbar/Toolbar";
 
-import { styles } from "../../MessageHeader";
+import { styles } from "../MessageHeader";
 import type { ChatInterface } from "../../types";
 import { useMessageInputStyles } from "./styles/maps";
 import { Send } from "../../Icons";

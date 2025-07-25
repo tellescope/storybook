@@ -11,11 +11,11 @@ import {
   GroupsOutlined,
   GroupOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import Switch from "../../../../../components/atoms/switch/switch";
-import Select from "../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../../../../Molecules/Message/components";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import Switch from "../../../../../../components/atoms/switch/switch";
+import Select from "../../../../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../../..";
 
 const transition = "all 0.3s ease-in-out";
 

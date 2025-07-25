@@ -15,10 +15,10 @@ import {
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { FormControlAtom, Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import { Input } from "../../../../../components/atoms/input/input";
-import Select from "../../../../../components/atoms/select/select";
+import { FormControlAtom, Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import { Input } from "../../../../../../components/atoms/input/input";
+import Select from "../../../../../../components/atoms/select/select";
 
 export const EmptyHeaderEmail = () => {
   return (
