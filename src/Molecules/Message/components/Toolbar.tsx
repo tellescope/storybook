@@ -10,7 +10,7 @@ import {
   StickyNote2Outlined,
 } from "@mui/icons-material";
 import { Box, Divider, IconButton } from "@mui/material";
-import { AddTicket, Lightbulb, OpenInFull } from "../../Icons";
+import { AddTicket, Lightbulb, OpenInFull } from "../Icons";
 
 export type ChatInterface = "CHAT" | "SMS" | "EMAIL" | "MMS";
 
@@ -29,7 +29,7 @@ const ToolType = {
   EXPAND: "EXPAND",
 } as const;
 
-type ToolType = typeof ToolType[keyof typeof ToolType];
+type ToolType = (typeof ToolType)[keyof typeof ToolType];
 
 interface IconWrapperProps {
   children: React.ReactNode;
@@ -38,7 +38,12 @@ interface IconWrapperProps {
   onClick: () => void;
 }
 
-const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWrapperProps) => {
+const IconWrapper = ({
+  children,
+  isSelected,
+  backgroundColor,
+  onClick,
+}: IconWrapperProps) => {
   return (
     <IconButton
       onClick={onClick}
@@ -46,10 +51,12 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
         color: isSelected ? "white" : "black",
         backgroundColor: isSelected ? backgroundColor : "transparent",
         transition: "background-color 0.2s ease-in-out, color 0.2s ease-in-out",
-        "&:hover": {
-          backgroundColor,
-          color: "white",
-        },
+        "&:hover": isSelected
+          ? { backgroundColor, color: "white" }
+          : { backgroundColor: "transparent", color: "black" },
+        "&:focus": isSelected
+          ? { backgroundColor, color: "white" }
+          : { backgroundColor: "transparent", color: "black" },
       }}
     >
       {children}
@@ -57,14 +64,18 @@ const IconWrapper = ({ children, isSelected, backgroundColor, onClick }: IconWra
   );
 };
 
-export const Toolbar = ({ chatInterface, setChatInterface }: { chatInterface: ChatInterface; setChatInterface: (value: ChatInterface) => void }) => {
-
-
+export const Toolbar = ({
+  chatInterface,
+  setChatInterface,
+}: {
+  chatInterface: ChatInterface;
+  setChatInterface: (value: ChatInterface) => void;
+}) => {
   const toolColors: Partial<Record<ToolType, string>> = {
-    [ToolType.CHAT]: "#1C7AE0",        // Blue
-    [ToolType.SMS]: "#8B5CF2",        // Green
-    [ToolType.EMAIL]: "#6466F1",        // Orange
-    [ToolType.MMS]: "#15B8A6",       // Purple
+    [ToolType.CHAT]: "#1C7AE0", // Blue
+    [ToolType.SMS]: "#8B5CF2", // Green
+    [ToolType.EMAIL]: "#6466F1", // Orange
+    [ToolType.MMS]: "#15B8A6", // Purple
     // Only first 4 tools have background colors
   };
 
@@ -82,12 +93,12 @@ export const Toolbar = ({ chatInterface, setChatInterface }: { chatInterface: Ch
     { type: ToolType.LIGHTBULB, icon: <Lightbulb /> },
     { type: ToolType.EXPAND, icon: <OpenInFull /> },
   ];
-  
+
   return (
-    <Box gap={1} sx={{ display: "flex", alignItems: "center", width: "100%"}}>
+    <Box gap={1} sx={{ display: "flex", alignItems: "center", width: "100%" }}>
       {tools.slice(0, 6).map(({ type, icon }) => {
         const backgroundColor = toolColors[type];
-        
+
         if (backgroundColor) {
           return (
             <IconWrapper
@@ -103,7 +114,7 @@ export const Toolbar = ({ chatInterface, setChatInterface }: { chatInterface: Ch
           return (
             <IconButton
               key={type}
-              onClick={() => {}}
+              // onClick={() => setChatInterface(type as ChatInterface)}
               sx={{
                 color: "black",
                 transition: "color 0.2s ease-in-out",
@@ -114,11 +125,14 @@ export const Toolbar = ({ chatInterface, setChatInterface }: { chatInterface: Ch
           );
         }
       })}
-      <Divider orientation="vertical" sx={{ height: 32, borderColor: '#E2E8F0' }} />
+      <Divider
+        orientation="vertical"
+        sx={{ height: 32, borderColor: "#E2E8F0" }}
+      />
       {tools.slice(6).map(({ type, icon }) => (
         <IconButton
           key={type}
-          onClick={() => {}}
+          // onClick={() => setChatInterface(type as ChatInterface)}
           sx={{
             color: "black",
             transition: "color 0.2s ease-in-out",

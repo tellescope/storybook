@@ -1,12 +1,8 @@
 import { Box, InputBase, Stack } from "@mui/material";
-
 import { IconButton } from "../../../components/atoms/button/icon-button";
 import { Icon } from "../../../Atoms";
 import { AddCircleOutline, EmojiEmotionsOutlined, Mic } from "@mui/icons-material";
-
-import { Toolbar } from "../components/Toolbar/Toolbar";
-
-
+import { Toolbar } from "../components/Toolbar";
 import type { ChatInterface } from "../types";
 import { useMessageInputStyles } from "./styles/maps";
 import { Send } from "../Icons";
@@ -59,7 +55,6 @@ export const MessageInput = ({ enableTeamChat, chatInterface, setChatInterface, 
               </IconButton>
             </Box>
           </Box>
-
         </Box>
       </Stack>
     </Box>
