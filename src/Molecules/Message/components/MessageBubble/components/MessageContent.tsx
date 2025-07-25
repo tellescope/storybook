@@ -1,4 +1,5 @@
-import type {  IMessage } from "../../types";
+
+import type { IMessage } from "../../../types";
 import { MessageText } from "./MessageText/MessageText";
 
 interface MessageContentProps {
@@ -13,7 +14,7 @@ export const MessageContent = ({
   message,
 }: MessageContentProps) => {
   const { Component, props } = getMessageComponent(message);
-  
+
   const commonProps = {
     messageType: message.type,
     message

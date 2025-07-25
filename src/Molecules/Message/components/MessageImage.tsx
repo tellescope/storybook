@@ -1,8 +1,9 @@
 import {  Stack, Typography } from "@mui/material";
 import type { MessageType } from "../types";
-import { messageTextColors } from "../MessageItem/components/MessageText/styles/maps";
+
 import { Icon } from "../../../Atoms";
 import { Download } from "@mui/icons-material";
+import { messageTextColors } from "./MessageBubble/components/MessageText/styles/maps";
 
 interface ImageProps {
   image: {
@@ -12,7 +13,7 @@ interface ImageProps {
   messageType: MessageType;
 }
 
-export const Image = ({ image, messageType }: ImageProps) => {
+export const MessageImage = ({ image, messageType }: ImageProps) => {
   if (!image) {
     return null;
   }

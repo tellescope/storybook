@@ -4,7 +4,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 type TranslatedProps = {
   isTranslated: boolean;
 };
-export const Translated = ({ isTranslated }: TranslatedProps) => {
+export const MessageTranslated = ({ isTranslated }: TranslatedProps) => {
   if (!isTranslated) {
     return null;
   }

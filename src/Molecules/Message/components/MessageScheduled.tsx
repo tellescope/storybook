@@ -1,9 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
 
-type ScheduledProps = {
+type MessageScheduledProps = {
   scheduledTime: Date | null;
 };
-export const Scheduled = ({ scheduledTime }: ScheduledProps) => {
+export const MessageScheduled = ({ scheduledTime }: MessageScheduledProps) => {
   if (!scheduledTime) {
     return null;
   }

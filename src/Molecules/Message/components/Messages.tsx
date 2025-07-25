@@ -1,7 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
-import type { IMessage } from "./types";
-import { DateSeparator, styles } from "../../Organism/ItemViewer/shared";
-import { MessageItem } from "./MessageItem/MessageItem";
+import type { IMessage } from "../types";
+
+
+import { DateSeparator, styles } from "../MessageHeader";
+import { MessageBubble } from "./MessageBubble/MessageBubble";
 
 export interface ChatProps {
   content: IMessage[];
@@ -11,8 +13,8 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
   let lastDate: Date | null = null;
 
   return (
-    <Box sx={styles.messagesContainer(content.length, enableTeamChat)}>
-      {content.length > 0 ? (
+    <Box sx={styles.messagesContainer(content?.length, enableTeamChat)}>
+      {content?.length > 0 ? (
         content.map((message, index) => {
           const showDateSeparator = message.createdAt && (!lastDate || lastDate.toDateString() !== message.createdAt.toDateString());
           lastDate = message.createdAt ? new Date(message.createdAt) : lastDate;
@@ -20,7 +22,7 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
           return (
             <>
               {showDateSeparator && message.createdAt && <DateSeparator date={message.createdAt} />}
-              <MessageItem key={index} message={message} />
+              <MessageBubble key={index} message={message} />
             </>
           );
         })

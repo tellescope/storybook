@@ -4,7 +4,7 @@ type RoleProps = {
   isTeamChatEnabled: boolean;
   role: string | undefined;
 };
-export const Role = ({ isTeamChatEnabled, role }: RoleProps) => {
+export const MessageRole = ({ isTeamChatEnabled, role }: RoleProps) => {
   if (!role || !isTeamChatEnabled) {
     return null;
   }
