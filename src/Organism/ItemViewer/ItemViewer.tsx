@@ -1,6 +1,9 @@
 import { useState } from "react";
 import type { ChatInterface, IMessage } from "../../Molecules";
-import { MessageContainer, MessageHeader, MessageInput, Messages } from "../../Molecules/Message/components";
+import { MessageContainer } from "../../Molecules/Message/components/MessageContainer";
+import { MessageHeader } from "../../Molecules/Message/MessageHeader/components/Header";
+import { MessageInput } from "../../Molecules/Message/MessageInput/MessageInput";
+import { Messages } from "../../Molecules/Message/Messages";
 
 function ItemViewer({ content }: { content: IMessage[] }) {
     const [activateTeamChat, setActivateTeamChat] = useState(false);

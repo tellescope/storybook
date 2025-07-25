@@ -8,18 +8,16 @@ import {
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
-  GroupsOutlined,
-  MailOutline,
+  GroupOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../../Atoms";
-import { Button } from "../../../../../../components/atoms/button/button";
-
-import Select from "../../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../..";
+import { Icon } from "../../../../../Atoms";
+import { Button } from "../../../../../components/atoms/button/button";
+import Select from "../../../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../../../components";
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderEmail = ({
+export const HeaderMMS = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
@@ -72,8 +70,8 @@ export const HeaderEmail = ({
             gap={2}
             alignItems={"center"}
           >
-            <Icon icon={MailOutline} size="medium" sx={{ color: "#6466F1" }} />
-            <Typography variant="h6">Email subject example</Typography>
+            <Icon icon={GroupOutlined} size="medium" sx={{ color: "#15B8A6" }} />
+            <Typography variant="h6">Chat Subject example</Typography>
             <Button
               appearence="outlined"
               size="small"
@@ -86,7 +84,10 @@ export const HeaderEmail = ({
               Assign
             </Button>
           </Stack>
-          <TeamChatSwitch checked={enableTeamChat} setChecked={setEnableTeamChat} />
+          <TeamChatSwitch
+            checked={enableTeamChat}
+            setChecked={setEnableTeamChat}
+          />
         </Box>
         {!enableTeamChat && (
           <Box
@@ -97,8 +98,9 @@ export const HeaderEmail = ({
             }}
           >
             <Select
-              value={""}
-              label="CC"
+              value={["Option 1", "Option 2", "Option 3"]}
+
+              multiple
               sx={{
                 margin: 0,
               }}

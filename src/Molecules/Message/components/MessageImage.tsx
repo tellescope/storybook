@@ -3,7 +3,7 @@ import type { MessageType } from "../types";
 
 import { Icon } from "../../../Atoms";
 import { Download } from "@mui/icons-material";
-import { messageTextColors } from "./MessageBubble/components/MessageText/styles/maps";
+import { messageTextColors } from "../MessageBubble/components/MessageText/styles/maps";
 
 interface ImageProps {
   image: {

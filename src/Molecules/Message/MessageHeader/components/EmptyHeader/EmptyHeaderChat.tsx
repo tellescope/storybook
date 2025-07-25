@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack } from "@mui/material";
+import { Box, IconButton, MenuItem, Stack } from "@mui/material";
 
 import {
   CallOutlined,
@@ -9,11 +9,12 @@ import {
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../../Atoms";
-import { Button } from "../../../../../../components/atoms/button/button";
-import Select from "../../../../../../components/atoms/select/select";
+import { Button } from "../../../../../components/atoms/button/button";
+import { FormControlAtom, Icon } from "../../../../../Atoms";
+import Select from "../../../../../components/atoms/select/select";
+import { Input } from "../../../../../components/atoms/input/input";
 
-export const EmptyHeaderSMS = () => {
+export const EmptyHeaderChat = () => {
   return (
     <Box p={2}>
       <Box
@@ -30,7 +31,7 @@ export const EmptyHeaderSMS = () => {
           <Icon
             icon={ChatBubbleOutline}
             size="medium"
-            sx={{ color: "#8B5CF2" }}
+            sx={{ color: "#1C7AE0" }}
           />
           <Button
             appearence="outlined"
@@ -56,33 +57,26 @@ export const EmptyHeaderSMS = () => {
           </IconButton>
         </Box>
       </Box>
-      <Stack display={"flex"} flexDirection={"column"} gap={2}>
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          sx={{
-            mr: 2,
-          }}
-        >
-          <Select
-            value={""}
-            label="From"
-            sx={{
-              margin: 0,
-            }}
-            onChange={() => {}}
-            options={["Option 1", "Option 2", "Option 3"]}
-          />
+      <Stack display={"flex"} flexDirection={"column"}>
+        <FormControlAtom variant="standard">
           <Select
             value={""}
             label="To"
+            options={["James", "John", "Jane"]}
+            onChange={() => console.log("to")}
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+          ></Select>
+        </FormControlAtom>
+        <FormControlAtom variant="standard">
+          <Input
             sx={{
-              margin: 0,
+              mt: 2,
             }}
-            onChange={() => {}}
-            options={["Option 1", "Option 2", "Option 3"]}
+            placeholder="Subject"
+            onChange={() => console.log("subject")}
           />
-        </Box>
+        </FormControlAtom>
         <Box mt={1} ml={1}>
           <Stack
             display={"flex"}

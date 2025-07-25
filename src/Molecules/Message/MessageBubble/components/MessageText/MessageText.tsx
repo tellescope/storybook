@@ -1,11 +1,11 @@
 import { Avatar, Stack } from "@mui/material";
 import { Container, MessageBubble, MessageContainer, MessageContent } from "./styles/maps";
-import type { IMessage, MessageType } from "../../../../types";
-import { MessageImage } from "../../../MessageImage";
-import { MessageTranslated } from "../../../MessageTranslated";
-import { MessageScheduled } from "../../../MessageScheduled";
-import { MessageRole } from "../../../MessageRole";
-import { Reactions } from "../../../Reactions/Reactions";
+import type { IMessage, MessageType } from "../../../types";
+import { MessageImage } from "../../../components/MessageImage";
+import { MessageTranslated } from "../../../components/MessageTranslated";
+import { MessageScheduled } from "../../../components/MessageScheduled";
+import { MessageRole } from "../../../components/MessageRole";
+import { Reactions } from "../../../components/Reactions/Reactions";
 
 interface TextProps {
   messageType: MessageType;

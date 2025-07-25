@@ -5,7 +5,4 @@ export * from "./MessageRole";
 export * from "./MessageContainer";
 export * from "./TeamChatSwitch";
 export * from "./MessageContainer";
-export * from "./MessageInput/MessageInput";
-export * from "./Messages";
-export * from "./MessageHeader";
-export * from "./MessageOptions";
+

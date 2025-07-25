@@ -1,7 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import type { IMessage } from "../types";
-
-
+import type { IMessage } from "./types";
 import { DateSeparator, styles } from "./MessageHeader";
 import { MessageBubble } from "./MessageBubble/MessageBubble";
 
