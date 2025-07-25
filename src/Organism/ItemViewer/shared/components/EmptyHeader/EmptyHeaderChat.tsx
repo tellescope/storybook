@@ -1,4 +1,4 @@
-import { Box, IconButton, InputLabel, MenuItem, Stack } from "@mui/material";
+import { Box, IconButton, MenuItem, Stack } from "@mui/material";
 
 import {
   CallOutlined,
@@ -59,9 +59,9 @@ export const EmptyHeaderChat = () => {
       </Box>
       <Stack display={"flex"} flexDirection={"column"}>
         <FormControlAtom variant="standard">
-          <InputLabel id="demo-simple-select-standard-label">TO</InputLabel>
           <Select
             value={""}
+            label="To"
             options={["James", "John", "Jane"]}
             onChange={() => console.log("to")}
             labelId="demo-simple-select-standard-label"

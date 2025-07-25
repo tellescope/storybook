@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Badge, Box, IconButton, Stack, Typography } from "@mui/material";
 
 import {
   InfoOutlined,
@@ -9,11 +9,11 @@ import {
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
-  GroupsOutlined,
 } from "@mui/icons-material";
 import { Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
-import Switch from "../../../../../components/atoms/switch/switch";
+import { useState } from "react";
+import { TeamChatSwitch } from "../../../../../Molecules/Message/components";
 
 const transition = "all 0.3s ease-in-out";
 
@@ -24,6 +24,14 @@ export const HeaderChat = ({
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
 }) => {
+
+  const [checked, setChecked] = useState(enableTeamChat);
+
+  const handleChange = (value: boolean) => {
+    setChecked(value);
+    setEnableTeamChat(value);
+  };
+
   return (
     <Box>
       <Box
@@ -84,41 +92,24 @@ export const HeaderChat = ({
               sx={{
                 borderRadius: "10px",
                 textTransform: "none",
+                borderColor: "#CAC4D0",
+                color: "#CAC4D0",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  borderColor: "#CAC4D0",
+                },
               }}
               endIcon={<PersonAddAlt />}
             >
               Assign
             </Button>
           </Stack>
-          <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            gap={1}
-            px={1}
-            borderRadius={1}
-            bgcolor={enableTeamChat ? "#DED3FE" : ""}
-            alignItems={"center"}
-            sx={{
-              transition,
-            }}
-          >
-            <Icon icon={GroupsOutlined} size="medium" />
-            <Switch
-              checked={enableTeamChat}
-              onChange={(e) => setEnableTeamChat(e.target.checked)}
-              sx={{
-                "& .MuiSwitch-switchBase.Mui-checked": {
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "rgba(28, 122, 224, 0.04)",
-                  },
-                },
-                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                  backgroundColor: "#1C7AE0",
-                },
-              }}
-            />
-          </Stack>
+
+          <TeamChatSwitch
+            checked={checked}
+            setChecked={handleChange}
+          />
+
         </Box>
         {!enableTeamChat && (
           <Box mt={1} ml={1}>

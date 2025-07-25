@@ -30,7 +30,7 @@ export const EmptyHeaderSMS = () => {
           <Icon
             icon={ChatBubbleOutline}
             size="medium"
-            sx={{ color: "#1C7AE0" }}
+            sx={{ color: "#8B5CF2" }}
           />
           <Button
             appearence="outlined"

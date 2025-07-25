@@ -1,9 +1,7 @@
 import {
   Box,
   IconButton,
-  InputLabel,
   MenuItem,
-  Select,
   Stack,
 } from "@mui/material";
 
@@ -20,6 +18,7 @@ import {
 import { FormControlAtom, Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
 import { Input } from "../../../../../components/atoms/input/input";
+import Select from "../../../../../components/atoms/select/select";
 
 export const EmptyHeaderEmail = () => {
   return (
@@ -66,28 +65,33 @@ export const EmptyHeaderEmail = () => {
       </Box>
       <Stack display={"flex"} flexDirection={"column"}>
         <FormControlAtom variant="standard">
-          <InputLabel id="demo-simple-select-standard-label">TO</InputLabel>
+
           <Select
-            hiddenLabel
+            label="To"
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            // value={age}
-            // onChange={handleChange}
+            value={""}
+            onChange={(e) => console.log(e.target.value)}
+            options={[
+              "Option 1",
+              "Option 2",
+              "Option 3",
+            ]}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
           </Select>
         </FormControlAtom>
         <FormControlAtom variant="standard">
-          <InputLabel id="cc-label">CC</InputLabel>
           <Select
-            hiddenLabel
+            label="CC"
             labelId="cc-label"
             id="demo-simple-select"
+            value={""}
+            onChange={(e) => console.log(e.target.value)}
+            options={[
+              "Option 1",
+              "Option 2",
+              "Option 3",
+            ]}
           />
         </FormControlAtom>
         <FormControlAtom variant="standard">

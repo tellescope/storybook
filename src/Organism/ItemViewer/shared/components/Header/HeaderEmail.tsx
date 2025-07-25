@@ -13,8 +13,9 @@ import {
 } from "@mui/icons-material";
 import { Icon } from "../../../../../Atoms";
 import { Button } from "../../../../../components/atoms/button/button";
-import Switch from "../../../../../components/atoms/switch/switch";
+
 import Select from "../../../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../../../../../Molecules/Message/components";
 
 const transition = "all 0.3s ease-in-out";
 
@@ -85,39 +86,7 @@ export const HeaderEmail = ({
               Assign
             </Button>
           </Stack>
-          <Stack
-            display={"flex"}
-            flexDirection={"row"}
-            gap={1}
-            px={1}
-            borderRadius={1}
-            bgcolor={enableTeamChat ? "#DED3FE" : ""}
-            alignItems={"center"}
-            sx={{
-              transition,
-            }}
-          >
-            <Icon
-              icon={GroupsOutlined}
-              sx={{ color: enableTeamChat ? "#A754F5" : "black" }}
-              size="medium"
-            />
-            <Switch
-              checked={enableTeamChat}
-              onChange={(e) => setEnableTeamChat(e.target.checked)}
-              sx={{
-                "& .MuiSwitch-switchBase.Mui-checked": {
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "rgba(28, 122, 224, 0.04)",
-                  },
-                },
-                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                  backgroundColor: "#1C7AE0",
-                },
-              }}
-            />
-          </Stack>
+          <TeamChatSwitch checked={enableTeamChat} setChecked={setEnableTeamChat} />
         </Box>
         {!enableTeamChat && (
           <Box
@@ -133,7 +102,7 @@ export const HeaderEmail = ({
               sx={{
                 margin: 0,
               }}
-              onChange={() => {}}
+              onChange={() => { }}
               options={["Option 1", "Option 2", "Option 3"]}
             />
           </Box>
