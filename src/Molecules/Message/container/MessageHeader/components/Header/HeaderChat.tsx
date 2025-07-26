@@ -1,29 +1,37 @@
-import { Box, IconButton, Stack, Typography } from "@mui/material";
+import { Badge, Box, IconButton, Stack, Typography } from "@mui/material";
 
 import {
   InfoOutlined,
   CallOutlined,
   VideocamOutlined,
   CloseOutlined,
+  ChatBubbleOutline,
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
-  TextsmsOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import Select from "../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../../components";
+import { useState } from "react";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import { TeamChatSwitch } from "../../../../components";
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderSMS = ({
+export const HeaderChat = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
 }) => {
+
+  const [checked, setChecked] = useState(enableTeamChat);
+
+  const handleChange = (value: boolean) => {
+    setChecked(value);
+    setEnableTeamChat(value);
+  };
+
   return (
     <Box>
       <Box
@@ -71,47 +79,38 @@ export const HeaderSMS = ({
             alignItems={"center"}
           >
             <Icon
-              icon={TextsmsOutlined}
+              icon={ChatBubbleOutline}
               size="medium"
-              sx={{ color: "#A754F5" }}
+              sx={{ color: "#1C7AE0" }}
             />
-            <Typography variant="h6">+123 456 7890</Typography>
+            <Typography variant="h6">
+              +123 456 7890
+            </Typography>
             <Button
               appearence="outlined"
               size="small"
               sx={{
                 borderRadius: "10px",
                 textTransform: "none",
+                borderColor: "#CAC4D0",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  borderColor: "#CAC4D0",
+                },
               }}
               endIcon={<PersonAddAlt />}
             >
               Assign
             </Button>
           </Stack>
+
           <TeamChatSwitch
-            checked={enableTeamChat}
-            setChecked={setEnableTeamChat}
+            checked={checked}
+            setChecked={handleChange}
           />
+
         </Box>
-        {!enableTeamChat && (
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            sx={{
-              mr: 2,
-            }}
-          >
-            <Select
-              value={""}
-              label="From: +123 456 7890"
-              sx={{
-                margin: 0,
-              }}
-              onChange={() => { }}
-              options={["Option 1", "Option 2", "Option 3"]}
-            />
-          </Box>
-        )}
         {!enableTeamChat && (
           <Box mt={1} ml={1}>
             <Stack

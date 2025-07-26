@@ -10,10 +10,10 @@ import {
   AddOutlined,
   MailOutline,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import Select from "../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../../components";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import { TeamChatSwitch } from "../../../../components";
+import Select from "../../../../../../components/atoms/select/select";
 
 const transition = "all 0.3s ease-in-out";
 
@@ -78,6 +78,12 @@ export const HeaderEmail = ({
               sx={{
                 borderRadius: "10px",
                 textTransform: "none",
+                borderColor: "#CAC4D0",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  borderColor: "#CAC4D0",
+                },
               }}
               endIcon={<PersonAddAlt />}
             >

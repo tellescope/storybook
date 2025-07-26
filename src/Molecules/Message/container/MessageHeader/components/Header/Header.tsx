@@ -1,6 +1,6 @@
-import type { ChatInterface, IMessage } from "../../../types";
-import { HeaderType, EmptyHeaderType } from "../enums";
 
+import type { ChatInterface, IMessage } from "../../../../types";
+import { HeaderType, EmptyHeaderType } from "../enums";
 
 interface HeaderProps {
   content: IMessage[];

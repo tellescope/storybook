@@ -1,38 +1,29 @@
-import { Badge, Box, IconButton, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack, Typography } from "@mui/material";
 
 import {
   InfoOutlined,
   CallOutlined,
   VideocamOutlined,
   CloseOutlined,
-  ChatBubbleOutline,
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
+  GroupOutlined,
 } from "@mui/icons-material";
-import { useState } from "react";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import { TeamChatSwitch } from "../../../components";
-
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import { TeamChatSwitch } from "../../../../components";
+import Select from "../../../../../../components/atoms/select/select";
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderChat = ({
+export const HeaderMMS = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
 }) => {
-
-  const [checked, setChecked] = useState(enableTeamChat);
-
-  const handleChange = (value: boolean) => {
-    setChecked(value);
-    setEnableTeamChat(value);
-  };
-
   return (
     <Box>
       <Box
@@ -79,14 +70,8 @@ export const HeaderChat = ({
             gap={2}
             alignItems={"center"}
           >
-            <Icon
-              icon={ChatBubbleOutline}
-              size="medium"
-              sx={{ color: "#1C7AE0" }}
-            />
-            <Typography variant="h6">
-              +123 456 7890
-            </Typography>
+            <Icon icon={GroupOutlined} size="medium" sx={{ color: "#15B8A6" }} />
+            <Typography variant="h6">Chat Subject example</Typography>
             <Button
               appearence="outlined"
               size="small"
@@ -94,7 +79,7 @@ export const HeaderChat = ({
                 borderRadius: "10px",
                 textTransform: "none",
                 borderColor: "#CAC4D0",
-                color: "#CAC4D0",
+                color: "black",
                 "&:hover": {
                   backgroundColor: "transparent",
                   borderColor: "#CAC4D0",
@@ -105,13 +90,31 @@ export const HeaderChat = ({
               Assign
             </Button>
           </Stack>
-
           <TeamChatSwitch
-            checked={checked}
-            setChecked={handleChange}
+            checked={enableTeamChat}
+            setChecked={setEnableTeamChat}
           />
-
         </Box>
+        {!enableTeamChat && (
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            sx={{
+              mr: 2,
+            }}
+          >
+            <Select
+              value={["Option 1", "Option 2", "Option 3"]}
+
+              multiple
+              sx={{
+                margin: 0,
+              }}
+              onChange={() => { }}
+              options={["Option 1", "Option 2", "Option 3"]}
+            />
+          </Box>
+        )}
         {!enableTeamChat && (
           <Box mt={1} ml={1}>
             <Stack

@@ -1,1 +1,2 @@
-export * from "./components";
+export * from "./MessageBubble";
+export * from "./MessageText";

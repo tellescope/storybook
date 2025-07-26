@@ -8,16 +8,17 @@ import {
   PersonAddAlt,
   GroupAddOutlined,
   AddOutlined,
-  GroupOutlined,
+  TextsmsOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../../../Atoms";
-import { Button } from "../../../../../components/atoms/button/button";
-import Select from "../../../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../../../components";
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import { TeamChatSwitch } from "../../../../components";
+import Select from "../../../../../../components/atoms/select/select";
+
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderMMS = ({
+export const HeaderSMS = ({
   enableTeamChat,
   setEnableTeamChat,
 }: {
@@ -70,14 +71,24 @@ export const HeaderMMS = ({
             gap={2}
             alignItems={"center"}
           >
-            <Icon icon={GroupOutlined} size="medium" sx={{ color: "#15B8A6" }} />
-            <Typography variant="h6">Chat Subject example</Typography>
+            <Icon
+              icon={TextsmsOutlined}
+              size="medium"
+              sx={{ color: "#A754F5" }}
+            />
+            <Typography variant="h6">+123 456 7890</Typography>
             <Button
               appearence="outlined"
               size="small"
               sx={{
                 borderRadius: "10px",
                 textTransform: "none",
+                borderColor: "#CAC4D0",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  borderColor: "#CAC4D0",
+                },
               }}
               endIcon={<PersonAddAlt />}
             >
@@ -98,9 +109,8 @@ export const HeaderMMS = ({
             }}
           >
             <Select
-              value={["Option 1", "Option 2", "Option 3"]}
-
-              multiple
+              value={""}
+              label="From: +123 456 7890"
               sx={{
                 margin: 0,
               }}

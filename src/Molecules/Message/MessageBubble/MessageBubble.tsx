@@ -1,9 +1,8 @@
 import { Box } from "@mui/material";
-import { MessageContent } from "./components";
-
 import { useMessageItemStyles } from "./styles/maps";
-import type { IMessage } from "../../types";
 import { MessageOptions } from "../MessageOptions";
+import type { IMessage } from "../types";
+import { MessageText } from "./MessageText";
 
 interface MessageBubbleProps {
   message: IMessage;
@@ -14,7 +13,7 @@ export const MessageBubble = ({ message }: MessageBubbleProps) => {
 
   return (
     <Box sx={styles.root}>
-      <MessageContent message={message} />
+      <MessageText messageType={message.type} message={message} />
       <Box className="message-options" sx={styles.messageOptions}>
         <MessageOptions messageType={message.type} />
       </Box>

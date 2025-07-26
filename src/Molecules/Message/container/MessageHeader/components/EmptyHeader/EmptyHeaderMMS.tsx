@@ -9,10 +9,9 @@ import {
   AddOutlined,
   GroupAddOutlined,
 } from "@mui/icons-material";
-import { Button } from "../../../../../components/atoms/button/button";
-import { Icon } from "../../../../../Atoms";
-import Select from "../../../../../components/atoms/select/select";
-
+import { Icon } from "../../../../../../Atoms";
+import { Button } from "../../../../../../components/atoms/button/button";
+import Select from "../../../../../../components/atoms/select/select";
 
 export const EmptyHeaderMMS = () => {
   return (
