@@ -9,6 +9,7 @@ export interface ChatProps {
   content: IMessage[];
   enableTeamChat: boolean;
 }
+
 export const Messages = ({ content, enableTeamChat }: ChatProps) => {
   let lastDate: Date | null = null;
 
@@ -33,7 +34,7 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
               You must specify a subject to send a chat
             </Typography>
           </Box>
-        </Stack>
+        </Stack> 
       )}
     </Box>
   );

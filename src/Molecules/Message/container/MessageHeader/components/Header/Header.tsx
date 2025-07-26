@@ -15,6 +15,7 @@ export const MessageHeader = ({
   enableTeamChat,
   setEnableTeamChat,
 }: HeaderProps) => {
+
   if (content?.length > 0) {
     const HeaderComponent = HeaderType[chatInterface].Component;
     return (
