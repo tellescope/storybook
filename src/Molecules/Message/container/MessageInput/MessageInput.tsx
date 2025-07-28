@@ -1,72 +1,13 @@
 import { Box, InputBase, Stack } from "@mui/material";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { IconButton } from "../../../../components/atoms/button/icon-button";
 import { Icon } from "../../../../Atoms";
 import { AddCircleOutline, EmojiEmotionsOutlined, Mic } from "@mui/icons-material";
 import { Toolbar } from "../../components/Toolbar";
-import type { ChatInterface } from "../../types";
-import { useMessageInputStyles } from "./styles/maps";
+import { styles, useMessageInputStyles } from "./styles/maps";
 import { Send } from "../../Icons";
-import { styles } from "../MessageHeader";
+import { useMessageInput, type MessageInputProps } from "../../hooks/useMessageInput";
 
-// Simplified and grouped props
-interface InputConfig {
-  placeholder?: string;
-  maxLength?: number;
-  autoFocus?: boolean;
-  disabled?: boolean;
-  error?: boolean;
-}
-
-interface MessageInputProps {
-  enableTeamChat: boolean;
-  chatInterface: ChatInterface;
-  setChatInterface: (chatInterface: ChatInterface) => void;
-  onSubmit: (content: string) => void;
-  onInputChange?: (value: string) => void;
-  config?: InputConfig;
-}
-
-// Custom hook for better state management
-const useMessageInput = ({
-  onSubmit,
-  onInputChange,
-  config = {}
-}: Pick<MessageInputProps, 'onSubmit' | 'onInputChange'> & { config?: InputConfig }) => {
-  const { disabled = false, maxLength = 1000 } = config;
-  const [value, setValue] = useState("");
-  const [isComposing, setIsComposing] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleChange = useCallback((newValue: string) => {
-    if (maxLength && newValue.length > maxLength) return;
-    setValue(newValue);
-    onInputChange?.(newValue);
-  }, [maxLength, onInputChange]);
-
-  const handleSubmit = useCallback(() => {
-    const trimmedValue = value.trim();
-    if (!trimmedValue || disabled || isComposing) return;
-    
-    onSubmit(trimmedValue);
-    setValue("");
-    inputRef.current?.focus();
-  }, [value, disabled, isComposing, onSubmit]);
-
-  const canSubmit = value.trim().length > 0 && !disabled && !isComposing;
-
-  return {
-    value,
-    setValue: handleChange,
-    handleSubmit,
-    canSubmit,
-    inputRef,
-    isComposing,
-    setIsComposing,
-    characterCount: value.length,
-    remainingChars: maxLength - value.length
-  };
-};
 
 export const MessageInput = ({ 
   enableTeamChat, 
@@ -177,7 +118,7 @@ export const MessageInput = ({
             </Box>
           </Box>
           {/* Character counter for better UX */}
-          {maxLength && (
+          {/* {maxLength && (
             <Box sx={{ 
               display: 'flex', 
               justifyContent: 'flex-end', 
@@ -187,7 +128,7 @@ export const MessageInput = ({
             }}>
               {characterCount}/{maxLength}
             </Box>
-          )}
+          )} */}
         </Box>
       </Stack>
     </Box>

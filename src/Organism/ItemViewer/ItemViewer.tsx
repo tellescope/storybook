@@ -1,11 +1,19 @@
 import { useState } from "react";
 import type { ChatInterface, IMessage } from "../../Molecules";
-import { MessageContainer, MessageHeader, MessageInput, Messages } from "../../Molecules/Message/container";
+import { MessageContainer, MessageInput, Messages } from "../../Molecules/Message/container";
+import { MessageHeader, type HeaderFormData } from "../../Molecules/Message/MessageHeader";
 
 function ItemViewer({ content }: { content: IMessage[] }) {
     const [activateTeamChat, setActivateTeamChat] = useState(false);
-    const [contentData, setContentData] = useState<IMessage[]>([]);
+    const [contentData, setContentData] = useState<IMessage[]>(content);
     const [switchMode, setSwitchMode] = useState<ChatInterface>("CHAT");
+    const [headerFormData, setHeaderFormData] = useState<HeaderFormData>({
+        to: "",
+        cc: "",
+        from: "",
+        subject: "",
+        tags: []
+    });
 
     const handleActivateTeamChat = () => {
         setActivateTeamChat((prev) => !prev);
@@ -24,18 +32,48 @@ function ItemViewer({ content }: { content: IMessage[] }) {
         console.log(value);
     };
 
-    // Common props to reduce repetition
-    const commonProps = {
-        enableTeamChat: activateTeamChat,
-        chatInterface: switchMode
+    const handleHeaderFormChange = (field: keyof HeaderFormData, value: string | string[]) => {
+        setHeaderFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
     };
+
+    const submitToAPI = async () => {
+        const apiData = {
+            headerForm: headerFormData,
+            chatInterface: switchMode,
+            teamChatEnabled: activateTeamChat,
+            messages: contentData,
+            timestamp: new Date().toISOString()
+        };
+        
+        console.log('Submitting to API:', apiData);
+        
+        // Example API call:
+        // try {
+        //     const response = await fetch('/api/submit', {
+        //         method: 'POST',
+        //         headers: { 'Content-Type': 'application/json' },
+        //         body: JSON.stringify(apiData)
+        //     });
+        //     const result = await response.json();
+        //     console.log('API Response:', result);
+        // } catch (error) {
+        //     console.error('API Error:', error);
+        // }
+    };
+
 
     return (
         <MessageContainer>
             <MessageHeader
-                content={content}
-                {...commonProps}
+                content={contentData}
                 setEnableTeamChat={handleActivateTeamChat}
+                headerFormData={headerFormData}
+                onHeaderFormChange={handleHeaderFormChange}
+                chatInterface={switchMode}
+                enableTeamChat={activateTeamChat}
             />
             <Messages
                 content={contentData}
@@ -45,7 +83,7 @@ function ItemViewer({ content }: { content: IMessage[] }) {
                 enableTeamChat={false}
                 chatInterface={switchMode}
                 setChatInterface={setSwitchMode}
-                onSubmit={handleSubmit}
+                onSubmit={submitToAPI}
                 onInputChange={handleInputChange}
                 config={{
                     placeholder: "Ask me anything...",

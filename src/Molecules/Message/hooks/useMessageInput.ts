@@ -1,57 +1,54 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from "react";
+import type { ChatInterface } from "../types";
 
-export interface UseMessageInputOptions {
+export interface InputConfig {
+  placeholder?: string;
+  maxLength?: number;
+  autoFocus?: boolean;
+  disabled?: boolean;
+  error?: boolean;
+}
+
+export interface MessageInputProps {
+  enableTeamChat: boolean;
+  chatInterface: ChatInterface;
+  setChatInterface: (chatInterface: ChatInterface) => void;
   onSubmit: (content: string) => void;
   onInputChange?: (value: string) => void;
-  disabled?: boolean;
-  maxLength?: number;
-  validateInput?: (value: string) => string | null; // Returns error message or null
+  config?: InputConfig;
 }
 
 export const useMessageInput = ({
   onSubmit,
   onInputChange,
-  disabled = false,
-  maxLength = 1000,
-  validateInput
-}: UseMessageInputOptions) => {
+  config = {},
+}: Pick<MessageInputProps, "onSubmit" | "onInputChange"> & {
+  config?: InputConfig;
+}) => {
+  const { disabled = false, maxLength = 1000 } = config;
   const [value, setValue] = useState("");
   const [isComposing, setIsComposing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = useCallback((newValue: string) => {
-    // Length validation
-    if (maxLength && newValue.length > maxLength) return;
-    
-    // Custom validation
-    const validationError = validateInput?.(newValue) || null;
-    setError(validationError);
-    
-    setValue(newValue);
-    onInputChange?.(newValue);
-  }, [maxLength, onInputChange, validateInput]);
+  const handleChange = useCallback(
+    (newValue: string) => {
+      if (maxLength && newValue.length > maxLength) return;
+      setValue(newValue);
+      onInputChange?.(newValue);
+    },
+    [maxLength, onInputChange]
+  );
 
   const handleSubmit = useCallback(() => {
     const trimmedValue = value.trim();
-    if (!trimmedValue || disabled || isComposing || error) return;
-    
+    if (!trimmedValue || disabled || isComposing) return;
+
     onSubmit(trimmedValue);
     setValue("");
-    setError(null);
     inputRef.current?.focus();
-  }, [value, disabled, isComposing, error, onSubmit]);
+  }, [value, disabled, isComposing, onSubmit]);
 
-  const canSubmit = value.trim().length > 0 && !disabled && !isComposing && !error;
-
-  const focus = useCallback(() => {
-    inputRef.current?.focus();
-  }, []);
-
-  const clear = useCallback(() => {
-    setValue("");
-    setError(null);
-  }, []);
+  const canSubmit = value.trim().length > 0 && !disabled && !isComposing;
 
   return {
     value,
@@ -61,10 +58,7 @@ export const useMessageInput = ({
     inputRef,
     isComposing,
     setIsComposing,
-    error,
     characterCount: value.length,
     remainingChars: maxLength - value.length,
-    focus,
-    clear
   };
 };

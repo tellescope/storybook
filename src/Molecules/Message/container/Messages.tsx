@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage } from "../types";
 
 import { MessageBubble } from "../MessageBubble/MessageBubble";
-import { styles } from "./MessageHeader";
+import { styles } from "./MessageInput/styles/maps";
 import { DateSeparator } from "../components/DateSeparator";
 
 export interface ChatProps {

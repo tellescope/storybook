@@ -1,0 +1,180 @@
+import { Box, Stack, Typography } from "@mui/material";
+import {
+  InfoOutlined,
+  PersonAddAlt,
+  ChatBubbleOutline,
+  MailOutline,
+  TextsmsOutlined,
+  GroupOutlined,
+} from "@mui/icons-material";
+import { Icon } from "../../../Atoms";
+import { Button } from "../../../components/atoms/button/button";
+import Select from "../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../components";
+import { HeaderActions } from './HeaderActions';
+import { HeaderForm } from './HeaderForm';
+import type { HeaderContentProps } from './types';
+
+const CHAT_ICONS = {
+  CHAT: { icon: ChatBubbleOutline, color: "#1C7AE0" },
+  EMAIL: { icon: MailOutline, color: "#6466F1" },
+  SMS: { icon: TextsmsOutlined, color: "#A754F5" },
+  MMS: { icon: GroupOutlined, color: "#15B8A6" }
+};
+
+const getDisplayText = (chatInterface: string) => {
+  switch (chatInterface) {
+    case 'EMAIL':
+      return 'Email subject example';
+    case 'SMS':
+      return '+123 456 7890';
+    case 'MMS':
+      return 'Chat Subject example';
+    case 'CHAT':
+      return '+123 456 7890';
+    default:
+      return '';
+  }
+};
+
+const transition = "all 0.3s ease-in-out";
+
+export const HeaderContent = ({ 
+  chatInterface, 
+  enableTeamChat, 
+  setEnableTeamChat,
+  isEmpty,
+  headerFormData,
+  onHeaderFormChange
+}: HeaderContentProps) => {
+  const { icon: IconComponent, color } = CHAT_ICONS[chatInterface as keyof typeof CHAT_ICONS] || CHAT_ICONS.CHAT;
+  
+  return (
+    <Box>
+      {/* Top section with patient info and actions - only show when not empty */}
+      {!isEmpty && (
+        <Box
+          display="flex"
+          bgcolor={enableTeamChat ? "#F4F0FF" : "#E2E8F0"}
+          justifyContent="space-between"
+          alignItems="center"
+          p={2}
+          sx={{ transition }}
+        >
+          <Box display="flex" gap={2} alignItems="center">
+            <Typography variant="h5">Patient Name</Typography>
+            <InfoOutlined />
+            <Typography variant="caption" color="#1C7AE0">
+              Show all threads
+            </Typography>
+          </Box>
+          <HeaderActions />
+        </Box>
+      )}
+      
+      {/* Chat interface section */}
+      <Box 
+        p={2} 
+        bgcolor={enableTeamChat ? "#F4F0FF" : ""}
+        sx={{ transition }}
+      >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Stack direction="row" gap={2} alignItems="center">
+            <Icon icon={IconComponent} size="medium" sx={{ color }} />
+            {isEmpty ? (
+              <Button
+                appearence="outlined"
+                size="small"
+                sx={{ 
+                  borderRadius: "10px", 
+                  textTransform: "none",
+                  borderColor: "#CAC4D0",
+                  color: "black",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    borderColor: "#CAC4D0",
+                  },
+                }}
+                endIcon={<PersonAddAlt />}
+              >
+                Assign
+              </Button>
+            ) : (
+              <>
+                <Typography variant="h6">
+                  {getDisplayText(chatInterface)}
+                </Typography>
+                <Button
+                  appearence="outlined"
+                  size="small"
+                  sx={{
+                    borderRadius: "10px",
+                    textTransform: "none",
+                    borderColor: "#CAC4D0",
+                    color: "black",
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      borderColor: "#CAC4D0",
+                    },
+                  }}
+                  endIcon={<PersonAddAlt />}
+                >
+                  Assign
+                </Button>
+              </>
+            )}
+          </Stack>
+          
+          {/* Show actions for empty state */}
+          {isEmpty && <HeaderActions />}
+          
+          {/* Show team chat switch for non-empty state */}
+          {!isEmpty && (
+            <TeamChatSwitch 
+              checked={enableTeamChat} 
+              setChecked={setEnableTeamChat} 
+            />
+          )}
+        </Box>
+        
+        {/* Show additional form fields for non-empty SMS/EMAIL when team chat is disabled */}
+        {!isEmpty && !enableTeamChat && (chatInterface === 'SMS' || chatInterface === 'EMAIL') && (
+          <Box
+            display="flex"
+            flexDirection="column"
+            sx={{ mr: 2, mt: 2 }}
+          >
+            {chatInterface === 'SMS' && (
+              <Select
+                value=""
+                label="From: +123 456 7890"
+                sx={{ margin: 0 }}
+                onChange={() => {}}
+                options={["Option 1", "Option 2", "Option 3"]}
+              />
+            )}
+            {chatInterface === 'EMAIL' && (
+              <Select
+                value=""
+                label="CC"
+                sx={{ margin: 0 }}
+                onChange={() => {}}
+                options={["Option 1", "Option 2", "Option 3"]}
+              />
+            )}
+          </Box>
+        )}
+        
+        {/* Show form for empty state */}
+        {isEmpty && headerFormData && onHeaderFormChange && (
+          <HeaderForm 
+            headerFormData={headerFormData}
+            onHeaderFormChange={onHeaderFormChange}
+            chatInterface={chatInterface}
+            enableTeamChat={enableTeamChat}
+          />
+        )}
+      </Box>
+    </Box>
+  );
+};
