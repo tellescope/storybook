@@ -27,7 +27,14 @@ type FilterContextType = {
     reset: boolean;
     setReset: React.Dispatch<React.SetStateAction<boolean>>;
     openDetailSelectSort?: boolean;
-    openDetailSelectFilter?: boolean;
+    openDetailSelectFilter?: {
+        open: boolean,
+        index: number
+    };
+    setOpenDetailSelectSort: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenDetailSelectFilter: React.Dispatch<React.SetStateAction<{ open: boolean; index: number } | undefined>>;
+    hide: boolean;
+    setHide: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -98,28 +105,29 @@ interface TableTabsFiltersControlsProps {
     tabPanels?: { content: React.ReactNode }[];
     reset?: boolean;
     openDetailSelectSort?: boolean;
-    openDetailSelectFilter?: boolean;
+    openDetailSelectFilter?: {
+        open: boolean,
+        index: number
+    };
 }
 
 // Main component
-const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tabPanels, selectedFilters, selectedSorts, openSortMenu: openSort, reset: resetFilter, openDetailSelectSort = false, openDetailSelectFilter = false }) => {
+const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tabPanels, selectedFilters, selectedSorts, openSortMenu: openSort, reset: resetFilter, openDetailSelectSort: oDSS, openDetailSelectFilter: oDSF }) => {
     const [filterSelected, setFilterSelected] = useState<{ field: string; value: string | number | boolean; filterOption: string }[]>(selectedFilters || []);
     const [sortSelected, setSortSelected] = useState<{ field: string; order: 'ascending' | 'descending' }[]>(selectedSorts || []);
     const [openSortMenu, setOpenSortMenu] = useState<boolean>(openSort || false);
     const [reset, setReset] = useState<boolean>(resetFilter || false);
-
+    const [hide, setHide] = useState<boolean>(false);
+    const [openDSSort, setOpenDSSort] = useState<boolean>(oDSS || false);
+    const [openDSFilter, setOpenDSFilter] = useState<{ open: boolean; index: number } | undefined>(oDSF || { open: false, index: -1 });
 
     const handleAddFilter = (field: string) => {
         setFilterSelected(prev => [...prev, { field, value: "", filterOption: "contains" }]);
+        setOpenDSFilter({ open: true, index: filterSelected.length });
+        if (hide) {
+            setHide(false);
+        }
     };
-
-    const handleAddSort = (field: string) => {
-        setSortSelected(prev => [...prev, { field, order: 'ascending' }]);
-    };
-
-    const usedFields = filterSelected.map(filter => filter.field);
-    const availableFilterFields = availableSortFields.filter(field => !usedFields.includes(field.value));
-
 
     const contextValue: FilterContextType = {
         filterSelected,
@@ -131,9 +139,24 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
         handleAddFilter,
         reset: reset,
         setReset: setReset,
-        openDetailSelectSort,
-        openDetailSelectFilter
+        openDetailSelectSort: openDSSort,
+        openDetailSelectFilter: openDSFilter,
+        setOpenDetailSelectSort: setOpenDSSort,
+        setOpenDetailSelectFilter: setOpenDSFilter,
+        hide,
+        setHide,
     };
+
+    const handleAddSort = (field: string) => {
+        setSortSelected(prev => [...prev, { field, order: 'ascending' }]);
+        setOpenDSSort(true);
+    };
+
+    const usedFields = filterSelected.map(filter => filter.field);
+    const availableFilterFields = availableSortFields.filter(field => !usedFields.includes(field.value));
+
+    console.log(reset, hide, filterSelected.length > 0 || reset);
+
 
     return (
         <FilterContext.Provider value={contextValue}>
@@ -143,17 +166,29 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                 defaultTab={1}
                 tableControls={
                     <>
-                        <DetailSelectPending
-                            availableFilterFields={availableFilterFields}
-                            placeholder="Filter By..."
-                            onChangeFilter={handleAddFilter}
-                            buttonContent={
+                        {
+                            filterSelected.length > 0 || reset ? (
                                 <IconButton
                                     color="default"
                                     size="small"
                                     sx={{
                                         "& .MuiSvgIcon-root": {
                                             color: usedFields.length > 0 ? "info.main" : undefined
+                                        }
+                                    }}
+                                    onClick={() => {
+                                        // if (hide) {
+                                        //     setReset(false);
+                                        //     setHide(false);
+                                        // } else {
+                                        //     setHide(true);
+                                        // }
+                                        if (!hide) {
+                                            setReset(false);
+                                            setHide(true);
+                                        } else {
+                                            setHide(!hide);
+                                            // setReset(false);
                                         }
                                     }}
                                 >
@@ -167,9 +202,35 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                                         )
                                     }
                                 </IconButton>
-                            }
-                        />
-
+                            ) : (
+                                <DetailSelectPending
+                                    availableFilterFields={availableFilterFields}
+                                    placeholder="Filter By..."
+                                    onChangeFilter={handleAddFilter}
+                                    buttonContent={
+                                        <IconButton
+                                            color="default"
+                                            size="small"
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    color: usedFields.length > 0 ? "info.main" : undefined
+                                                }
+                                            }}
+                                        >
+                                            {
+                                                usedFields.length > 0 ? (
+                                                    <Badge sx={{ "& .MuiBadge-dot": { bgcolor: "#C85A15" } }} variant="dot">
+                                                        <FilterListIcon />
+                                                    </Badge>
+                                                ) : (
+                                                    <FilterListIcon />
+                                                )
+                                            }
+                                        </IconButton>
+                                    }
+                                />
+                            )
+                        }
 
                         {
                             sortSelected.length === 0 ? (
@@ -177,7 +238,9 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                                     availableFilterFields={availableSortFields}
                                     placeholder="Sort By..."
                                     onChangeFilter={handleAddSort}
-                                    onClose={() => setOpenSortMenu(false)}
+                                    onClose={() => {
+                                        setOpenSortMenu(false);
+                                    }}
                                     open={openSortMenu}
                                     buttonContent={
                                         <IconButton
@@ -186,6 +249,14 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                                             sx={{
                                                 "& .MuiSvgIcon-root": {
                                                     color: sortSelected.length > 0 ? "info.main" : undefined
+                                                }
+                                            }}
+                                            onClick={() => {
+                                                if (!hide) {
+                                                    setReset(false);
+                                                    setHide(false);
+                                                } else {
+                                                    setHide(!hide);
                                                 }
                                             }}
                                         >
@@ -208,6 +279,13 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                                     sx={{
                                         "& .MuiSvgIcon-root": {
                                             color: sortSelected.length > 0 ? "info.main" : undefined
+                                        }
+                                    }}
+                                    onClick={() => {
+                                        setHide(!hide);
+                                        if (hide) {
+                                            setOpenDSSort(true);
+                                            // setOpenSortMenu(true);
                                         }
                                     }}
                                 >
@@ -264,36 +342,14 @@ const availableSortFields = [
 ];
 
 const FilterSelected = () => {
-    const { filterSelected, setFilterSelected, sortSelected, setSortSelected, setOpenSortMenu, handleAddFilter, reset, setReset, openDetailSelectSort, openDetailSelectFilter } = useFilterContext();
+    const { filterSelected, setFilterSelected, sortSelected, setSortSelected, handleAddFilter, reset, setReset, openDetailSelectSort, openDetailSelectFilter, hide, setOpenDetailSelectSort, setOpenDetailSelectFilter } = useFilterContext();
 
     const usedFields = filterSelected.map(filter => filter.field);
     const availableFilterFields = availableSortFields.filter(field => !usedFields.includes(field.value));
 
     return (
-        <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center", width: "100%", justifyContent: "space-between", flexWrap: "wrap" }}>
+        <Stack sx={{ flexDirection: "row", gap: 1, alignItems: "center", width: "100%", justifyContent: "space-between", flexWrap: "wrap", display: hide ? "none" : "flex" }}>
             <Stack sx={{ flexDirection: "row", gap: 1, flexWrap: "wrap" }}>
-                {
-                    filterSelected.map((filter, index) => (
-                        <DetailSelect
-                            key={index}
-                            appearance="filter"
-                            filterOptions={filterOptions}
-                            field={filter.field}
-                            value={{ value: filter.value.toString(), filterOption: filter.filterOption.toString() }}
-                            onSetFilterOption={(value) => {
-                                const newFilter = [...filterSelected];
-                                newFilter[index].filterOption = value;
-                                setFilterSelected([...newFilter]);
-                            }}
-                            onSetFilterValue={(value) => {
-                                const newFilter = [...filterSelected];
-                                newFilter[index].value = value;
-                                setFilterSelected([...newFilter]);
-                            }}
-                            open={openDetailSelectFilter}
-                        />
-                    ))
-                }
                 {
                     sortSelected.length > 0 ? (
                         <DetailSelect
@@ -321,9 +377,35 @@ const FilterSelected = () => {
                             onDeleteSort={() => {
                                 setSortSelected([]);
                             }}
+                            onClose={() => {
+                                setOpenDetailSelectSort(false);
+                            }}
                             open={openDetailSelectSort}
                         />
                     ) : null
+                }
+                {
+                    filterSelected.map((filter, index) => (
+                        <DetailSelect
+                            key={index}
+                            appearance="filter"
+                            filterOptions={filterOptions}
+                            field={filter.field}
+                            value={{ value: filter.value.toString(), filterOption: filter.filterOption.toString() }}
+                            onSetFilterOption={(value) => {
+                                const newFilter = [...filterSelected];
+                                newFilter[index].filterOption = value;
+                                setFilterSelected([...newFilter]);
+                            }}
+                            onSetFilterValue={(value) => {
+                                const newFilter = [...filterSelected];
+                                newFilter[index].value = value;
+                                setFilterSelected([...newFilter]);
+                            }}
+                            open={index === openDetailSelectFilter?.index && openDetailSelectFilter?.open}
+                            onClose={() => setOpenDetailSelectFilter(undefined)}
+                        />
+                    ))
                 }
 
                 {
@@ -344,7 +426,7 @@ const FilterSelected = () => {
                         setFilterSelected([]);
                         if (sortSelected.length > 0) {
                             setSortSelected([]);
-                            setOpenSortMenu(true);
+
                         }
                     }} />
                 ) : null
@@ -352,6 +434,3 @@ const FilterSelected = () => {
         </Stack>
     );
 };
-
-
-

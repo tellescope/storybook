@@ -25,7 +25,7 @@ export const FilterSelected: Story = {
                 selectedFilters={[
                     { field: "name", value: "", filterOption: "contains" }
                 ]}
-                openDetailSelectFilter
+                openDetailSelectFilter={{ open: true, index: 0 }}
             />
         )
     }

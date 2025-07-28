@@ -94,7 +94,8 @@ const FilterMenuStyle = {
     },
     "& .MuiMenuItem-root": {
         padding: "4px 8px",
-    }
+    },
+
 };
 
 
@@ -197,10 +198,24 @@ function FilterMenu({ open, anchorEl, onClose, onChange, usedFields, placeholder
     const [searchTerm, setSearchTerm] = useState<string>("");
     const { availableFilterFields } = useContext(DetailSelectContext)!;
     const search = availableFilterFields.filter(f => f.label.toLowerCase().includes(searchTerm.toLowerCase()));
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(0);
+    useEffect(() => {
+        setHoveredIndex(0); // Reset hovered index when search term changes
+    }, [])
+
+    const handleClose = () => {
+        onClose()
+        const timeOut = setTimeout(() => {
+            setSearchTerm("");
+            clearTimeout(timeOut)
+        }, 150);
+    }
+
+
     return (
         <Menu
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             anchorEl={anchorEl}
             MenuListProps={{
                 disablePadding: true,
@@ -218,13 +233,13 @@ function FilterMenu({ open, anchorEl, onClose, onChange, usedFields, placeholder
                     border: "1px solid #0000001F",
                     borderRadius: "5px"
                 }
-
             }}
             elevation={1}
-            disableAutoFocusItem={true}
+        // disableAutoFocusItem={true}
 
         >
-            <MenuList sx={FilterMenuStyle} autoFocusItem={false}
+            <MenuList sx={FilterMenuStyle}
+            // autoFocusItem={false}
             >
                 <Input
                     autoFocus={true}
@@ -249,8 +264,20 @@ function FilterMenu({ open, anchorEl, onClose, onChange, usedFields, placeholder
                     onChange={(e) => setSearchTerm(e.target.value)}
                     value={searchTerm}
                 />
-                {search.map(f => (
-                    <MenuItem key={f.value} onClick={() => onChange(f.value)} selected={usedFields.includes(f.value)}>
+                {search.map((f, index) => (
+                    <MenuItem
+                        key={f.value}
+                        onClick={() => onChange(f.value)}
+                        selected={usedFields.includes(f.value)}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        // sx={{ "&:first-of-type": { backgroundColor: "rgba(0, 0, 0, 0.04)" } }}
+                        sx={{
+                            backgroundColor: hoveredIndex === index ? "rgba(0, 0, 0, 0.04)" : "transparent",
+                            "&:hover": {
+                                backgroundColor: "rgba(0, 0, 0, 0.04)",
+                            },
+                        }}
+                    >
                         <ListItemIcon>{f.icon}</ListItemIcon>
                         <ListItemText>{f.label}</ListItemText>
                     </MenuItem>
