@@ -1,9 +1,9 @@
 export interface HeaderFormData {
-  to: string;
+  to?: string;
   cc?: string;
   from?: string;
-  subject: string;
-  tags: string[];
+  subject?: string;
+  tags?: string[];
 }
 
 export interface HeaderFormProps {

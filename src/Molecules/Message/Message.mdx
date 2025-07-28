@@ -1,0 +1,295 @@
+import { Meta, Canvas, ArgTypes, Story } from "@storybook/addon-docs/blocks"
+import { Message } from './Message';
+import * as MessageStories from './Message.stories.tsx';
+
+<Meta of={MessageStories} />
+
+# Message Component
+
+A unified, feature-rich message component for displaying and composing chat messages with comprehensive configuration options and excellent developer experience.
+
+## Overview
+
+The Message component provides a complete solution for chat interfaces with:
+
+- **Unified API**: Single component with comprehensive configuration
+- **Type Safety**: Full TypeScript support with proper validation
+- **Error Handling**: Built-in error states and validation
+- **Loading States**: Support for various loading indicators
+- **Flexible Configuration**: Extensive customization options
+- **Accessibility**: ARIA labels and keyboard navigation support
+
+## Basic Usage
+
+The Message component accepts three main props: `messages`, `config`, and `callbacks`.
+
+<Canvas of={MessageStories.Default} />
+
+## Configuration
+
+The `config` prop allows you to customize the component's behavior and appearance:
+
+### Input Configuration
+
+```tsx
+config={{
+  input: {
+    placeholder: "Type a message...",
+    maxLength: 1000,
+    autoFocus: true,
+    showCharacterCount: true,
+    disabled: false,
+    error: false,
+    multiline: false
+  }
+}}
+```
+
+### Container Configuration
+
+```tsx
+config={{
+  container: {
+    width: "800px",
+    height: "600px",
+    maxWidth: "1200px",
+    minHeight: "400px"
+  }
+}}
+```
+
+### Header Configuration
+
+```tsx
+config={{
+  header: {
+    showForm: true,
+    formData: {
+      to: "recipient@example.com",
+      subject: "Important Message",
+      from: "sender@example.com"
+    },
+    showTeamChatToggle: true,
+    showInterfaceSelector: true
+  }
+}}
+```
+
+## Examples
+
+### Team Chat Interface
+
+<Canvas of={MessageStories.TeamChat} />
+
+
+## API Reference
+
+### Props
+
+<ArgTypes of={Message} />
+
+### MessageConfig
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `enableTeamChat` | `boolean` | `false` | Enables team chat functionality |
+| `chatInterface` | `"CHAT" \| "SMS" \| "EMAIL" \| "MMS"` | `"CHAT"` | The type of chat interface |
+| `input` | `InputConfig` | `{}` | Input field configuration |
+| `header` | `HeaderConfig` | `{}` | Header configuration |
+| `container` | `ContainerConfig` | `{}` | Container styling configuration |
+
+### MessageCallbacks
+
+| Callback | Type | Description |
+|----------|------|-------------|
+| `onMessageSubmit` | `(content: string) => void` | Called when a message is submitted |
+| `onInputChange` | `(value: string) => void` | Called when input value changes |
+| `onChatInterfaceChange` | `(interface: ChatInterface) => void` | Called when chat interface changes |
+| `onTeamChatToggle` | `(enabled: boolean) => void` | Called when team chat is toggled |
+| `onHeaderFormChange` | `(field: string, value: string \| string[]) => void` | Called when header form changes |
+| `onMessageReaction` | `(messageId: string, reaction: Reaction) => void` | Called when a message reaction is added |
+| `onMessageOptions` | `(messageId: string, action: string) => void` | Called when message options are used |
+
+### Error Handling
+
+The component provides built-in error handling with the following error types:
+
+- `VALIDATION`: Input validation errors
+- `SUBMISSION`: Message submission errors
+- `NETWORK`: Network-related errors
+
+```tsx
+const [error, setError] = useState<MessageError | null>(null);
+
+<Message
+  messages={messages}
+  config={config}
+  callbacks={callbacks}
+  error={error}
+/>
+```
+
+### Loading States
+
+The component supports various loading states:
+
+```tsx
+const [loading, setLoading] = useState<MessageLoadingState>({});
+
+<Message
+  messages={messages}
+  config={config}
+  callbacks={callbacks}
+  loading={{
+    isSubmitting: true,
+    isTyping: false,
+    isUploading: false
+  }}
+/>
+```
+
+## Migration Guide
+
+### From Legacy Components
+
+If you're migrating from the legacy Message components, here's how to update your code:
+
+**Before:**
+```tsx
+<MessageContainer>
+  <MessageHeader 
+    chatInterface={switchMode}
+    enableTeamChat={activateTeamChat}
+    setEnableTeamChat={handleActivateTeamChat}
+    headerFormData={headerFormData}
+    onHeaderFormChange={handleHeaderFormChange}
+  />
+  <Messages content={contentData} enableTeamChat={activateTeamChat} />
+  <MessageInput
+    enableTeamChat={false}
+    chatInterface={switchMode}
+    setChatInterface={setSwitchMode}
+    onSubmit={submitToAPI}
+    onInputChange={handleInputChange}
+    config={{...}}
+  />
+</MessageContainer>
+```
+
+**After:**
+```tsx
+<Message
+  messages={contentData}
+  config={{
+    enableTeamChat: activateTeamChat,
+    chatInterface: switchMode,
+    input: { placeholder: "Type a message...", maxLength: 500 }
+  }}
+  callbacks={{
+    onMessageSubmit: submitToAPI,
+    onInputChange: handleInputChange,
+    onChatInterfaceChange: setSwitchMode,
+    onTeamChatToggle: handleActivateTeamChat,
+    onHeaderFormChange: handleHeaderFormChange
+  }}
+/>
+```
+
+## Best Practices
+
+### 1. Error Handling
+
+Always provide error handling for message submission:
+
+```tsx
+const handleMessageSubmit = async (content: string) => {
+  try {
+    await submitMessage(content);
+  } catch (error) {
+    setError({
+      type: 'SUBMISSION',
+      message: 'Failed to send message. Please try again.'
+    });
+  }
+};
+```
+
+### 2. Loading States
+
+Provide loading states for better UX:
+
+```tsx
+const [loading, setLoading] = useState({ isSubmitting: false });
+
+const handleMessageSubmit = async (content: string) => {
+  setLoading({ isSubmitting: true });
+  try {
+    await submitMessage(content);
+  } finally {
+    setLoading({ isSubmitting: false });
+  }
+};
+```
+
+### 3. Validation
+
+Use the built-in validation or add custom validation:
+
+```tsx
+const handleMessageSubmit = async (content: string) => {
+  if (content.trim().length === 0) {
+    setError({
+      type: 'VALIDATION',
+      message: 'Message cannot be empty'
+    });
+    return;
+  }
+  
+  await submitMessage(content);
+};
+```
+
+### 4. Accessibility
+
+The component includes built-in accessibility features, but you can enhance them:
+
+```tsx
+<Message
+  messages={messages}
+  config={config}
+  callbacks={callbacks}
+  data-testid="chat-message-component"
+  className="custom-message-styles"
+/>
+```
+
+## Performance Considerations
+
+- The component uses `React.memo` for optimal re-rendering
+- Large message lists should be virtualized for better performance
+- Consider implementing pagination for very large message histories
+- Use `useCallback` for callback functions to prevent unnecessary re-renders
+
+## Testing
+
+The component includes `data-testid` attributes for testing:
+
+```tsx
+// Test the main component
+screen.getByTestId('message-component');
+
+// Test error states
+screen.getByTestId('message-error');
+
+// Test loading states
+screen.getByTestId('message-loading');
+```
+
+## Browser Support
+
+The component supports all modern browsers and includes:
+
+- Full TypeScript support
+- ES6+ features
+- CSS Grid and Flexbox
+- Modern React patterns (hooks, memo, etc.) 

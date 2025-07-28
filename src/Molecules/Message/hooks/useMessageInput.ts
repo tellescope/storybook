@@ -7,6 +7,8 @@ export interface InputConfig {
   autoFocus?: boolean;
   disabled?: boolean;
   error?: boolean;
+  showCharacterCount?: boolean;
+  multiline?: boolean;
 }
 
 export interface MessageInputProps {

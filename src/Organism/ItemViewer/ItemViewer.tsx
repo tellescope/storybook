@@ -1,13 +1,12 @@
 import { useState } from "react";
-import type { ChatInterface, IMessage } from "../../Molecules";
-import { MessageContainer, MessageInput, Messages } from "../../Molecules/Message/container";
-import { MessageHeader, type HeaderFormData } from "../../Molecules/Message/MessageHeader";
+import type { ChatInterface, IMessage, MessageConfig, MessageCallbacks } from "../../Molecules";
+import { Message } from "../../Molecules/Message/Message";
 
 function ItemViewer({ content }: { content: IMessage[] }) {
     const [activateTeamChat, setActivateTeamChat] = useState(false);
     const [contentData, setContentData] = useState<IMessage[]>(content);
     const [switchMode, setSwitchMode] = useState<ChatInterface>("CHAT");
-    const [headerFormData, setHeaderFormData] = useState<HeaderFormData>({
+    const [headerFormData, setHeaderFormData] = useState({
         to: "",
         cc: "",
         from: "",
@@ -15,8 +14,8 @@ function ItemViewer({ content }: { content: IMessage[] }) {
         tags: []
     });
 
-    const handleActivateTeamChat = () => {
-        setActivateTeamChat((prev) => !prev);
+    const handleActivateTeamChat = (enabled: boolean) => {
+        setActivateTeamChat(enabled);
     };
 
     const handleSubmit = (content: string) => {
@@ -32,14 +31,14 @@ function ItemViewer({ content }: { content: IMessage[] }) {
         console.log(value);
     };
 
-    const handleHeaderFormChange = (field: keyof HeaderFormData, value: string | string[]) => {
+    const handleHeaderFormChange = (field: string, value: string | string[]) => {
         setHeaderFormData(prev => ({
             ...prev,
             [field]: value
         }));
     };
 
-    const submitToAPI = async () => {
+    const submitToAPI = async (content: string) => {
         const apiData = {
             headerForm: headerFormData,
             chatInterface: switchMode,
@@ -64,35 +63,43 @@ function ItemViewer({ content }: { content: IMessage[] }) {
         // }
     };
 
+    // Configuration for the unified Message component
+    const config: MessageConfig = {
+        enableTeamChat: activateTeamChat,
+        chatInterface: switchMode,
+        input: {
+            placeholder: "Ask me anything...",
+            maxLength: 500,
+            autoFocus: true,
+            disabled: false
+        },
+        header: {
+            showForm: true,
+            formData: headerFormData
+        }
+    };
+
+    // Callbacks for the unified Message component
+    const callbacks: MessageCallbacks = {
+        onMessageSubmit: submitToAPI,
+        onInputChange: handleInputChange,
+        onChatInterfaceChange: setSwitchMode,
+        onTeamChatToggle: handleActivateTeamChat,
+        onHeaderFormChange: handleHeaderFormChange,
+        onMessageReaction: (messageId: string, reaction: any) => {
+            console.log('Message reaction:', messageId, reaction);
+        },
+        onMessageOptions: (messageId: string, action: string) => {
+            console.log('Message options:', messageId, action);
+        }
+    };
 
     return (
-        <MessageContainer>
-            <MessageHeader
-                content={contentData}
-                setEnableTeamChat={handleActivateTeamChat}
-                headerFormData={headerFormData}
-                onHeaderFormChange={handleHeaderFormChange}
-                chatInterface={switchMode}
-                enableTeamChat={activateTeamChat}
-            />
-            <Messages
-                content={contentData}
-                enableTeamChat={activateTeamChat}
-            />
-            <MessageInput
-                enableTeamChat={false}
-                chatInterface={switchMode}
-                setChatInterface={setSwitchMode}
-                onSubmit={submitToAPI}
-                onInputChange={handleInputChange}
-                config={{
-                    placeholder: "Ask me anything...",
-                    maxLength: 500,
-                    autoFocus: true,
-                    disabled: false
-                }}
-            />
-        </MessageContainer>
+        <Message
+            messages={contentData}
+            config={config}
+            callbacks={callbacks}
+        />
     );
 }
 
