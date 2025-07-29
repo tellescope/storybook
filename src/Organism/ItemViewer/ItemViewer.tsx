@@ -1,106 +1,115 @@
-import { useState } from "react";
-import type { ChatInterface, IMessage, MessageConfig, MessageCallbacks } from "../../Molecules";
-import { Message } from "../../Molecules/Message/Message";
+import React, { useState } from "react";
+import { Box } from "@mui/material";
 
-function ItemViewer({ content }: { content: IMessage[] }) {
-    const [activateTeamChat, setActivateTeamChat] = useState(false);
-    const [contentData, setContentData] = useState<IMessage[]>(content);
-    const [switchMode, setSwitchMode] = useState<ChatInterface>("CHAT");
-    const [headerFormData, setHeaderFormData] = useState({
-        to: "",
-        cc: "",
-        from: "",
-        subject: "",
-        tags: []
-    });
+import {
+  MessageContainer,
+  MessageInput,
+  Messages,
+  useMessageState,
+  type IMessage,
+  type MessageCallbacks,
+  type MessageConfig,
+  type MessageProps,
+} from "../../Molecules";
+import { fn } from "storybook/internal/test";
+import MessageHeader from "../../Molecules/Message/MessageHeader";
+import { mockMessages } from "../../data/mock";
 
-    const handleActivateTeamChat = (enabled: boolean) => {
-        setActivateTeamChat(enabled);
-    };
+/**
+ * Unified Message component for displaying and composing chat messages
+ *
+ * @example
+ * ```tsx
+ * <Message
+ *   messages={messages}
+ *   config={{ enableTeamChat: true }}
+ *   callbacks={{ onMessageSubmit: handleSubmit }}
+ * />
+ * ```
+ */
 
-    const handleSubmit = (content: string) => {
-        console.log(content);
-        // setContentData([...contentData, {
-        //     type: "INCOMING",
-        //     text: content,
-        //     createdAt: new Date(),
-        // }]);
-    };
+const defaultConfig: MessageConfig = {
+  enableTeamChat: false,
+  chatInterface: "CHAT",
+  input: {
+    disabled: false,
+    placeholder: "Type a message...",
+    maxLength: 1000,
+    autoFocus: true,
+    showCharacterCount: false,
+  },
+  container: {
+    width: "800px",
+    height: "600px",
+  },
+};
 
-    const handleInputChange = (value: string) => {
-        console.log(value);
-    };
+// Default callbacks
 
-    const handleHeaderFormChange = (field: string, value: string | string[]) => {
-        setHeaderFormData(prev => ({
-            ...prev,
-            [field]: value
-        }));
-    };
+export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
+  const [messages, setMessages] = useState<IMessage[]>(mockMessages);
+  const defaultCallbacks: MessageCallbacks = {
+    onMessageSubmit: fn(),
+    onInputChange: fn(),
+    onChatInterfaceChange: fn(),
+    onTeamChatToggle: fn(),
+    onHeaderFormChange: fn(),
+    onMessageReaction: fn(),
+    onMessageOptions: fn(),
+  };
+  const { state, actions } = useMessageState(
+    {
+      chatInterface: "CHAT",
+      enableTeamChat: false,
+      input: {
+        disabled: false,
+        placeholder: "Type a message...",
+        maxLength: 1000,
+        autoFocus: true,
+        showCharacterCount: false,
+      },
+      container: {
+        width: "800px",
+        height: "600px",
+      },
+    },
+    defaultCallbacks
+  );
 
-    const submitToAPI = async (content: string) => {
-        const apiData = {
-            headerForm: headerFormData,
-            chatInterface: switchMode,
-            teamChatEnabled: activateTeamChat,
-            messages: contentData,
-            timestamp: new Date().toISOString()
-        };
-        
-        console.log('Submitting to API:', apiData);
-        
-        // Example API call:
-        // try {
-        //     const response = await fetch('/api/submit', {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify(apiData)
-        //     });
-        //     const result = await response.json();
-        //     console.log('API Response:', result);
-        // } catch (error) {
-        //     console.error('API Error:', error);
-        // }
-    };
+  // Merge external loading state with internal state
+  const combinedError = state.error;
 
-    // Configuration for the unified Message component
-    const config: MessageConfig = {
-        enableTeamChat: activateTeamChat,
-        chatInterface: switchMode,
-        input: {
-            placeholder: "Ask me anything...",
-            maxLength: 500,
-            autoFocus: true,
-            disabled: false
-        },
-        header: {
-            showForm: true,
-            formData: headerFormData
-        }
-    };
-
-    // Callbacks for the unified Message component
-    const callbacks: MessageCallbacks = {
-        onMessageSubmit: submitToAPI,
-        onInputChange: handleInputChange,
-        onChatInterfaceChange: setSwitchMode,
-        onTeamChatToggle: handleActivateTeamChat,
-        onHeaderFormChange: handleHeaderFormChange,
-        onMessageReaction: (messageId: string, reaction: any) => {
-            console.log('Message reaction:', messageId, reaction);
-        },
-        onMessageOptions: (messageId: string, action: string) => {
-            console.log('Message options:', messageId, action);
-        }
-    };
-
-    return (
-        <Message
-            messages={contentData}
-            config={config}
-            callbacks={callbacks}
+  return (
+    <Box>
+      <MessageContainer>
+        {/* Header */}
+        <MessageHeader
+          chatInterface={state.chatInterface}
+          content={messages}
+          enableTeamChat={state.enableTeamChat}
+          setEnableTeamChat={actions.setEnableTeamChat}
+          headerFormData={state.headerFormData}
+          onHeaderFormChange={actions.setHeaderFormData}
         />
-    );
-}
 
-export default ItemViewer;
+        {/* Messages List */}
+        <Messages content={messages} enableTeamChat={state.enableTeamChat} />
+
+        {/* Input */}
+        <MessageInput
+          enableTeamChat={state.enableTeamChat}
+          chatInterface={state.chatInterface}
+          setChatInterface={actions.setChatInterface}
+          onSubmit={actions.submitMessage}
+          onInputChange={actions.setInputValue}
+          config={{
+            ...defaultConfig.input,
+            error: !!combinedError,
+          }}
+        />
+      </MessageContainer>
+    </Box>
+  );
+});
+
+ItemViewer.displayName = "ItemViewer";

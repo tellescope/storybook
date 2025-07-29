@@ -158,7 +158,7 @@ export const MessageInput = ({
             </Box>
           </Box>
           {/* Character counter for better UX */}
-          {showCharacterCount && maxLength && (
+          {/* {showCharacterCount && maxLength && (
             <Box sx={{ 
               display: 'flex', 
               justifyContent: 'flex-end', 
@@ -174,7 +174,7 @@ export const MessageInput = ({
                 {characterCount}/{maxLength}
               </Typography>
             </Box>
-          )}
+          )} */}
         </Box>
       </Stack>
     </Box>

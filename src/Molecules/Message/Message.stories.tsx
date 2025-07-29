@@ -75,7 +75,7 @@ const defaultConfig: MessageConfig = {
     placeholder: "Type a message...",
     maxLength: 1000,
     autoFocus: true,
-    showCharacterCount: true
+    showCharacterCount: false
   },
   container: {
     width: "800px",
@@ -96,7 +96,7 @@ const defaultCallbacks: MessageCallbacks = {
 
 export const Default: Story = {
   args: {
-    messages: [],
+    messages: mockMessages,
     config: defaultConfig,
     callbacks: defaultCallbacks
   },
@@ -104,28 +104,6 @@ export const Default: Story = {
     docs: {
       description: {
         story: "Basic message component with default configuration. Shows a chat interface with message history and input field."
-      }
-    }
-  }
-};
-
-export const TeamChat: Story = {
-  args: {
-    messages: mockMessages,
-    config: {
-      ...defaultConfig,
-      enableTeamChat: true,
-      header: {
-        showTeamChatToggle: true,
-        showInterfaceSelector: true
-      }
-    },
-    callbacks: defaultCallbacks
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Message component with team chat enabled. Includes team chat toggle and additional interface options."
       }
     }
   }
