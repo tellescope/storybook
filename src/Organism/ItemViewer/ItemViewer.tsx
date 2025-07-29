@@ -6,13 +6,16 @@ import {
   MessageInput,
   Messages,
   useMessageState,
-  type IMessage,
-  type MessageConfig,
-  type MessageProps,
-  type ChatInterface,
+  MessageHeader,
 } from "../../Molecules";
-import MessageHeader from "../../Molecules/Message/MessageHeader";
+
 import { mockMessages } from "../../data/mock";
+import type {
+  ChatInterface,
+  IMessage,
+  MessageProps,
+  MessageType,
+} from "../../Molecules/Message";
 
 /**
  * Unified Message component for displaying and composing chat messages
@@ -27,21 +30,21 @@ import { mockMessages } from "../../data/mock";
  * ```
  */
 
-const defaultConfig: MessageConfig = {
-  enableTeamChat: false,
-  chatInterface: "CHAT",
-  input: {
-    disabled: false,
-    placeholder: "Type a message...",
-    maxLength: 1000,
-    autoFocus: true,
-    showCharacterCount: false,
-  },
-  container: {
-    width: "800px",
-    height: "600px",
-  },
-};
+// const defaultConfig: MessageConfig = {
+//   enableTeamChat: false,
+//   chatInterface: "CHAT",
+//   input: {
+//     disabled: false,
+//     placeholder: "Type a message...",
+//     maxLength: 1000,
+//     autoFocus: true,
+//     showCharacterCount: false,
+//   },
+//   container: {
+//     width: "800px",
+//     height: "600px",
+//   },
+// };
 
 // Default callbacks
 
@@ -50,24 +53,21 @@ export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
   const [chatInterface, setChatInterface] = useState<ChatInterface>("CHAT");
   const [messages, setMessages] = useState<IMessage[]>(mockMessages);
 
-  const { state, actions } = useMessageState(
-    {
-      chatInterface: "CHAT",
-      enableTeamChat: false,
-      input: {
-        disabled: false,
-        placeholder: "Type a message...",
-        maxLength: 1000,
-        autoFocus: true,
-        showCharacterCount: false,
-      },
-      container: {
-        width: "800px",
-        height: "600px",
-      },
+  const { state, actions } = useMessageState({
+    chatInterface: "CHAT",
+    enableTeamChat: false,
+    input: {
+      disabled: false,
+      placeholder: "Type a message...",
+      maxLength: 1000,
+      autoFocus: true,
+      showCharacterCount: false,
     },
-    
-  );
+    container: {
+      width: "800px",
+      height: "600px",
+    },
+  });
 
   // Merge external loading state with internal state
   const combinedError = state.error;
@@ -113,7 +113,7 @@ export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
           onSubmit={handleSubmit}
           onInputChange={handleInputChange}
           config={{
-            ...defaultConfig.input,
+            placeholder: "Type a message...",
             error: !!combinedError,
           }}
         />

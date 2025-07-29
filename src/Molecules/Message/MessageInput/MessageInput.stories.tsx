@@ -72,12 +72,16 @@ const MessageInputWithState = (props: MessageInputProps) => {
 };
 
 export const Default: Story = {
-  args: {},
+  render: (args) => <MessageInputWithState {...args} />,
+  args: {
+    chatInterface: 'CHAT',
+  },
 };
 
-export const WithTeamChat: Story = {
+export const SMSInterface: Story = {
+  render: (args) => <MessageInputWithState {...args} />,
   args: {
-    enableTeamChat: true,
+    chatInterface: 'SMS',
   },
 };
 
@@ -88,12 +92,7 @@ export const EmailInterface: Story = {
   },
 };
 
-export const SMSInterface: Story = {
-  render: (args) => <MessageInputWithState {...args} />,
-  args: {
-    chatInterface: 'SMS',
-  },
-};
+
 
 export const MMSInterface: Story = {
   render: (args) => <MessageInputWithState {...args} />,

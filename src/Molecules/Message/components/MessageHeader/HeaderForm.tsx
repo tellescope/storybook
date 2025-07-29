@@ -1,8 +1,8 @@
 import { Box, Stack } from "@mui/material";
-import { FormControlAtom, Icon } from "../../../Atoms";
-import { Button } from "../../../components/atoms/button/button";
-import { Input } from "../../../components/atoms/input/input";
-import Select from "../../../components/atoms/select/select";
+import { FormControlAtom, Icon } from "../../../../Atoms";
+import { Button } from "../../../../components/atoms/button/button";
+import { Input } from "../../../../components/atoms/input/input";
+import Select from "../../../../components/atoms/select/select";
 import { AddOutlined, GroupAddOutlined } from "@mui/icons-material";
 import type { HeaderFormProps } from './types';
 
@@ -24,7 +24,7 @@ export const HeaderForm = ({
                 label="To"
                 labelId="email-to-select-label"
                 id="email-to-select"
-                value={headerFormData.to}
+                value={headerFormData.to || ""}
                 onChange={(e) => onHeaderFormChange('to', e.target.value as string)}
                 options={[
                   "Option 1",
@@ -76,7 +76,7 @@ export const HeaderForm = ({
                 options={["Option 1", "Option 2", "Option 3"]}
               />
               <Select
-                value={headerFormData.to}
+                value={headerFormData.to || ""}
                 label="To"
                 labelId="sms-to-select-label"
                 id="sms-to-select"
@@ -93,7 +93,7 @@ export const HeaderForm = ({
             <Stack display={"flex"} flexDirection={"column"}>
               <FormControlAtom variant="standard">
                 <Select
-                  value={headerFormData.to}
+                  value={headerFormData.to || ""}
                   label="To"
                   labelId="chat-to-select-label"
                   id="chat-to-select"

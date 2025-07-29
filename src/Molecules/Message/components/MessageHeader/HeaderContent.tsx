@@ -7,10 +7,10 @@ import {
   TextsmsOutlined,
   GroupOutlined,
 } from "@mui/icons-material";
-import { Icon } from "../../../Atoms";
-import { Button } from "../../../components/atoms/button/button";
-import Select from "../../../components/atoms/select/select";
-import { TeamChatSwitch } from "../components";
+import { Icon } from "../../../../Atoms";
+import { Button } from "../../../../components/atoms/button/button";
+import Select from "../../../../components/atoms/select/select";
+import { TeamChatSwitch } from "../TeamChatSwitch";
 import { HeaderActions } from './HeaderActions';
 import { HeaderForm } from './HeaderForm';
 import type { HeaderContentProps } from './types';

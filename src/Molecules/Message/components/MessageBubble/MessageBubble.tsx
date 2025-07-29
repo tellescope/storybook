@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useMessageItemStyles } from "./styles/maps";
-import { MessageOptions } from "../MessageOptions";
-import type { IMessage } from "../types";
+import { MessageOptions } from "../../MessageOptions";
+import type { IMessage } from "../../types";
 import { MessageText } from "./MessageText";
 
 interface MessageBubbleProps {

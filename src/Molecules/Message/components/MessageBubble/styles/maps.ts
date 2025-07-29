@@ -1,4 +1,4 @@
-import type { IMessage, MessageType } from "../../types";
+import type { IMessage, MessageType } from "../../../types";
 import { Box, styled, Typography } from "@mui/material";
 
 
