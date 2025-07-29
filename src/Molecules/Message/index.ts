@@ -1,6 +1,6 @@
 export * from "./hooks/useMessageState";
 export * from "./container";
-export * from "./components";
+export * from "./MessageItem";
 export {
   type IMessage,
   type MessageType,

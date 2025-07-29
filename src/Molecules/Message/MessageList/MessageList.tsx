@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import type { IMessage } from "../types";
 
-import { MessageBubble } from "../components/MessageBubble/MessageBubble";
+import { MessageBubble } from "../MessageItem/MessageBubble/MessageBubble";
 import { styles } from "../MessageInput/styles/maps";
-import { DateSeparator } from "../components/DateSeparator";
+import { DateSeparator } from "../MessageItem/DateSeparator";
 
 export interface ChatProps {
   content: IMessage[];
@@ -84,7 +84,16 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
           );
         })
       ) : (
-        <Stack sx={styles.emptyContainer}>
+        <Stack 
+          sx={{
+            ...styles.emptyContainer,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+            minHeight: "200px"
+          }}
+        >
           <Box sx={styles.emptyMessageBox}>
             <Typography variant="body2" fontWeight={600} color="text.secondary">
               You must specify a subject to send a chat
