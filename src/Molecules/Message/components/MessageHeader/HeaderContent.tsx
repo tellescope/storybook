@@ -6,49 +6,52 @@ import {
   MailOutline,
   TextsmsOutlined,
   GroupOutlined,
+  AddOutlined,
+  GroupAddOutlined,
 } from "@mui/icons-material";
 import { Icon } from "../../../../Atoms";
 import { Button } from "../../../../components/atoms/button/button";
 import Select from "../../../../components/atoms/select/select";
 import { TeamChatSwitch } from "../TeamChatSwitch";
-import { HeaderActions } from './HeaderActions';
-import { HeaderForm } from './HeaderForm';
-import type { HeaderContentProps } from './types';
+import { HeaderActions } from "./HeaderActions";
+import { HeaderForm } from "./HeaderForm";
+import type { HeaderContentProps } from "./types";
 
 const CHAT_ICONS = {
   CHAT: { icon: ChatBubbleOutline, color: "#1C7AE0" },
   EMAIL: { icon: MailOutline, color: "#6466F1" },
   SMS: { icon: TextsmsOutlined, color: "#A754F5" },
-  MMS: { icon: GroupOutlined, color: "#15B8A6" }
+  MMS: { icon: GroupOutlined, color: "#15B8A6" },
 };
 
 const getDisplayText = (chatInterface: string) => {
   switch (chatInterface) {
-    case 'EMAIL':
-      return 'Email subject example';
-    case 'SMS':
-      return '+123 456 7890';
-    case 'MMS':
-      return 'Chat Subject example';
-    case 'CHAT':
-      return '+123 456 7890';
+    case "EMAIL":
+      return "Email subject example";
+    case "SMS":
+      return "+123 456 7890";
+    case "MMS":
+      return "Chat Subject example";
+    case "CHAT":
+      return "+123 456 7890";
     default:
-      return '';
+      return "";
   }
 };
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderContent = ({ 
-  chatInterface, 
-  enableTeamChat, 
+export const HeaderContent = ({
+  chatInterface,
+  enableTeamChat,
   setEnableTeamChat,
   isEmpty,
   headerFormData,
-  onHeaderFormChange
+  onHeaderFormChange,
 }: HeaderContentProps) => {
-  const { icon: IconComponent, color } = CHAT_ICONS[chatInterface as keyof typeof CHAT_ICONS] || CHAT_ICONS.CHAT;
-  
+  const { icon: IconComponent, color } =
+    CHAT_ICONS[chatInterface as keyof typeof CHAT_ICONS] || CHAT_ICONS.CHAT;
+
   return (
     <Box>
       {/* Top section with patient info and actions - only show when not empty */}
@@ -71,13 +74,9 @@ export const HeaderContent = ({
           <HeaderActions />
         </Box>
       )}
-      
+
       {/* Chat interface section */}
-      <Box 
-        p={2} 
-        bgcolor={enableTeamChat ? "#F4F0FF" : ""}
-        sx={{ transition }}
-      >
+      <Box p={3} bgcolor={enableTeamChat ? "#F4F0FF" : ""} sx={{ transition }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Stack direction="row" gap={2} alignItems="center">
             <Icon icon={IconComponent} size="medium" sx={{ color }} />
@@ -85,8 +84,8 @@ export const HeaderContent = ({
               <Button
                 appearence="outlined"
                 size="small"
-                sx={{ 
-                  borderRadius: "10px", 
+                sx={{
+                  borderRadius: "10px",
                   textTransform: "none",
                   borderColor: "#CAC4D0",
                   color: "black",
@@ -124,55 +123,90 @@ export const HeaderContent = ({
               </>
             )}
           </Stack>
-          
+
           {/* Show actions for empty state */}
           {isEmpty && <HeaderActions />}
-          
+
           {/* Show team chat switch for non-empty state */}
           {!isEmpty && (
-            <TeamChatSwitch 
-              checked={enableTeamChat} 
-              setChecked={setEnableTeamChat} 
+            <TeamChatSwitch
+              checked={enableTeamChat}
+              setChecked={setEnableTeamChat}
             />
           )}
         </Box>
-        
+
         {/* Show additional form fields for non-empty SMS/EMAIL when team chat is disabled */}
-        {!isEmpty && !enableTeamChat && (chatInterface === 'SMS' || chatInterface === 'EMAIL') && (
-          <Box
-            display="flex"
-            flexDirection="column"
-            sx={{ mr: 2, mt: 2 }}
-          >
-            {chatInterface === 'SMS' && (
+        {!isEmpty && !enableTeamChat && (
+          <Box display="flex" flexDirection="column" sx={{ mt: 2 }}>
+            {chatInterface === "SMS" && (
               <Select
-                value=""
+                value={headerFormData?.from || ""}
                 label="From: +123 456 7890"
                 sx={{ margin: 0 }}
-                onChange={() => {}}
+                onChange={(e) =>
+                  onHeaderFormChange?.("from", e.target.value as string)
+                }
                 options={["Option 1", "Option 2", "Option 3"]}
               />
             )}
-            {chatInterface === 'EMAIL' && (
+            {chatInterface === "EMAIL" && (
               <Select
-                value=""
+                value={headerFormData?.cc || ""}
                 label="CC"
                 sx={{ margin: 0 }}
-                onChange={() => {}}
+                onChange={(e) =>
+                  onHeaderFormChange?.("cc", e.target.value as string)
+                }
+                options={["Option 1", "Option 2", "Option 3"]}
+              />
+            )}
+            {chatInterface === "MMS" && (
+              <Select
+                value={Array.isArray(headerFormData?.cc) ? headerFormData.cc : []}
+                label="CC"
+                sx={{ margin: 0 }}
+                multiple
+                onChange={(e) =>
+                  onHeaderFormChange?.("cc", e.target.value as string[])
+                }
                 options={["Option 1", "Option 2", "Option 3"]}
               />
             )}
           </Box>
         )}
-        
+
         {/* Show form for empty state */}
         {isEmpty && headerFormData && onHeaderFormChange && (
-          <HeaderForm 
+          <HeaderForm
             headerFormData={headerFormData}
             onHeaderFormChange={onHeaderFormChange}
             chatInterface={chatInterface}
             enableTeamChat={enableTeamChat}
           />
+        )}
+        {!enableTeamChat && (
+          <Box mt={chatInterface == "SMS" && !isEmpty ? 2 : 1}>
+            <Stack
+              display={"flex"}
+              flexDirection={"row"}
+              gap={2}
+              alignItems={"center"}
+            >
+              <Icon icon={GroupAddOutlined} size="medium" />
+              <Button
+                appearence="outlined"
+                size="small"
+                color="secondary"
+                sx={{
+                  textTransform: "none",
+                }}
+                startIcon={<AddOutlined />}
+              >
+                Tag
+              </Button>
+            </Stack>
+          </Box>
         )}
       </Box>
     </Box>

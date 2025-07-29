@@ -75,6 +75,7 @@ export const useMessageState = (
   const handleChatInterfaceChange = useCallback((newInterface: ChatInterface) => {
     setChatInterface(newInterface);
     setError(null);
+    setHeaderFormData({});
     callbacks?.onChatInterfaceChange?.(newInterface);
   }, [callbacks]);
 

@@ -9,117 +9,151 @@ import {
   MessageHeader,
 } from "../../Molecules";
 
+import type { MessageProps, IMessage } from "../../Molecules/Message";
 import { mockMessages } from "../../data/mock";
-import type {
-  ChatInterface,
-  IMessage,
-  MessageProps,
-  MessageType,
-} from "../../Molecules/Message";
 
 /**
  * Unified Message component for displaying and composing chat messages
  *
  * @example
  * ```tsx
- * <Message
+ * <ItemViewer
  *   messages={messages}
  *   config={{ enableTeamChat: true }}
  *   callbacks={{ onMessageSubmit: handleSubmit }}
  * />
  * ```
  */
+export const ItemViewer: React.FC<MessageProps> = React.memo(
+  ({
+    messages: externalMessages,
+    config = {},
+    callbacks: externalCallbacks,
+    loading: externalLoading,
+    error: externalError,
+    className,
+    "data-testid": dataTestId,
+  }) => {
+    // Internal state management
+    const [messages, setMessages] = useState<IMessage[]>(
+      externalMessages || mockMessages
+    );
+    const [loading, setLoading] = useState({ isSubmitting: false });
+    const [error, setError] = useState<string | null>(null);
 
-// const defaultConfig: MessageConfig = {
-//   enableTeamChat: false,
-//   chatInterface: "CHAT",
-//   input: {
-//     disabled: false,
-//     placeholder: "Type a message...",
-//     maxLength: 1000,
-//     autoFocus: true,
-//     showCharacterCount: false,
-//   },
-//   container: {
-//     width: "800px",
-//     height: "600px",
-//   },
-// };
+    // Track all form state
+    const [headerFormData, setHeaderFormData] = useState<any>({});
+    const [chatInterface, setChatInterface] = useState<any>("CHAT");
+    const [teamChatEnabled, setTeamChatEnabled] = useState(false);
+    const [inputValue, setInputValue] = useState("");
 
-// Default callbacks
+    // Use the centralized state management hook
+    const { state, actions } = useMessageState(config, {
+      onMessageSubmit: async (content: string) => {
+        setLoading({ isSubmitting: true });
+        setError(null);
 
-export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
-  const [enableTeamChat, setEnableTeamChat] = useState(false);
-  const [chatInterface, setChatInterface] = useState<ChatInterface>("CHAT");
-  const [messages, setMessages] = useState<IMessage[]>(mockMessages);
+        try {
+          // Simulate API call
+          await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const { state, actions } = useMessageState({
-    chatInterface: "CHAT",
-    enableTeamChat: false,
-    input: {
-      disabled: false,
-      placeholder: "Type a message...",
-      maxLength: 1000,
-      autoFocus: true,
-      showCharacterCount: false,
-    },
-    container: {
-      width: "800px",
-      height: "600px",
-    },
-  });
+          // Add new message
+          const newMessage: IMessage = {
+            type: "OUTGOING",
+            text: content,
+            createdAt: new Date(),
+          };
 
-  // Merge external loading state with internal state
-  const combinedError = state.error;
+          setMessages((prev) => [...prev, newMessage]);
+          console.log("Message sent:", content);
 
-  const handleSubmit = (value: string) => {
-    console.log("value", value);
-  };
+          // Call external callback if provided
+          externalCallbacks?.onMessageSubmit?.(content);
+        } catch (err) {
+          const errorMessage =
+            err instanceof Error ? err.message : "Failed to send message";
+          setError(errorMessage);
+          console.error("API Error:", errorMessage);
+        } finally {
+          setLoading({ isSubmitting: false });
+        }
+      },
+      onInputChange: (value: string) => {
+        setInputValue(value);
+        externalCallbacks?.onInputChange?.(value);
+      },
+      onHeaderFormChange: (field, value) => {
+        setHeaderFormData((prev: any) => ({ ...prev, [field]: value }));
+        externalCallbacks?.onHeaderFormChange?.(field, value);
+      },
+      onChatInterfaceChange: (newInterface) => {
+        setChatInterface(newInterface);
+        // Reset header form data when chat interface changes
+        setHeaderFormData({});
+        externalCallbacks?.onChatInterfaceChange?.(newInterface);
+      },
+      onTeamChatToggle: (enabled) => {
+        setTeamChatEnabled(enabled);
+        externalCallbacks?.onTeamChatToggle?.(enabled);
+      },
+      onMessageReaction: (messageId, reaction) => {
+        externalCallbacks?.onMessageReaction?.(messageId, reaction);
+      },
+      onMessageOptions: (messageId, action) => {
+        externalCallbacks?.onMessageOptions?.(messageId, action);
+      },
+    });
 
-  const handleInputChange = (value: string) => {
-    console.log("value", value);
-  };
+    // Merge external loading and error states with internal state
+    const combinedLoading = {
+      ...state.loading,
+      ...loading,
+      ...externalLoading,
+    };
+    const combinedError = error || state.error || externalError;
 
-  const handleChatInterfaceChange = (value: ChatInterface) => {
-    console.log("value", value);
-    setChatInterface(value);
-  };
+    return (
+      <Box
+        className={className}
+        data-testid={dataTestId}
+        sx={{
+          width: config.container?.width || "100%",
+          height: config.container?.height || "auto",
+          maxWidth: config.container?.maxWidth,
+          minHeight: config.container?.minHeight,
+        }}
+      >
+        <MessageContainer>
+          {/* Header */}
+          <MessageHeader
+            chatInterface={state.chatInterface}
+            content={messages}
+            enableTeamChat={state.enableTeamChat}
+            setEnableTeamChat={actions.setEnableTeamChat}
+            headerFormData={state.headerFormData}
+            onHeaderFormChange={actions.setHeaderFormData}
+          />
 
-  const handleTeamChatToggle = (value: boolean) => {
-    setEnableTeamChat(value);
-  };
+          {/* Messages List */}
+          <Messages content={messages} enableTeamChat={state.enableTeamChat} />
 
-  return (
-    <Box>
-      <MessageContainer>
-        {/* Header */}
-        <MessageHeader
-          chatInterface={chatInterface}
-          content={messages}
-          enableTeamChat={enableTeamChat}
-          setEnableTeamChat={handleTeamChatToggle}
-          headerFormData={state.headerFormData}
-          onHeaderFormChange={actions.setHeaderFormData}
-        />
-
-        {/* Messages List */}
-        <Messages content={messages} enableTeamChat={enableTeamChat} />
-
-        {/* Input */}
-        <MessageInput
-          enableTeamChat={enableTeamChat}
-          chatInterface={chatInterface}
-          setChatInterface={handleChatInterfaceChange}
-          onSubmit={handleSubmit}
-          onInputChange={handleInputChange}
-          config={{
-            placeholder: "Type a message...",
-            error: !!combinedError,
-          }}
-        />
-      </MessageContainer>
-    </Box>
-  );
-});
+          {/* Input */}
+          <MessageInput
+            enableTeamChat={state.enableTeamChat}
+            chatInterface={state.chatInterface}
+            setChatInterface={actions.setChatInterface}
+            onSubmit={actions.submitMessage}
+            onInputChange={actions.setInputValue}
+            config={{
+              ...config.input,
+              error: !!combinedError,
+              disabled: combinedLoading.isSubmitting,
+            }}
+          />
+        </MessageContainer>
+      </Box>
+    );
+  }
+);
 
 ItemViewer.displayName = "ItemViewer";

@@ -1,8 +1,9 @@
+import type { ChatInterface } from '../../types';
 import { HeaderContent } from './HeaderContent';
 import type { HeaderFormData } from './types';
 
 interface MessageHeaderProps {
-  chatInterface: string;
+  chatInterface: ChatInterface;
   content?: any;
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;

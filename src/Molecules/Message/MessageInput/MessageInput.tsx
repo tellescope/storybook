@@ -49,8 +49,8 @@ export const MessageInput = ({
     inputRef,
     isComposing,
     setIsComposing,
-    characterCount,
-    remainingChars
+    // characterCount,
+    // remainingChars
   } = useMessageInput({ onSubmit, onInputChange, config });
 
   // Auto-focus on mount if specified

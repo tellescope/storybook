@@ -115,7 +115,7 @@ export const styles: IChatStyles = {
     py: 0.5,
   },
   inputContainer: (enableTeamChat: boolean) => ({
-    p: 2,
+    p: 3,
     alignItems: "center",
     gap: 2,
     display: enableTeamChat ? "flex" : "block",

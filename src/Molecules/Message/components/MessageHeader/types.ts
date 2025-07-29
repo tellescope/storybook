@@ -1,3 +1,5 @@
+import type { ChatInterface } from "../../types";
+
 export interface HeaderFormData {
   to?: string;
   cc?: string;
@@ -14,7 +16,7 @@ export interface HeaderFormProps {
 }
 
 export interface HeaderContentProps {
-  chatInterface: string;
+  chatInterface: ChatInterface;
   enableTeamChat: boolean;
   setEnableTeamChat: (value: boolean) => void;
   isEmpty: boolean;

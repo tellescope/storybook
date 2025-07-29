@@ -13,7 +13,7 @@ export const useMessageItemStyles = ({
     display: "flex",
     justifyContent: "space-between",
     flexDirection: messageType === "INCOMING" ? "row" : "row-reverse",
-    px: 2,
+    px: 3,
     py: 1,
     alignItems: "flex-start",
     bgcolor: "transparent",
