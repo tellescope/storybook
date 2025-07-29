@@ -1,14 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
-import {
-  InfoOutlined,
-  PersonAddAlt,
-  ChatBubbleOutline,
-  MailOutline,
-  TextsmsOutlined,
-  GroupOutlined,
-  AddOutlined,
-  GroupAddOutlined,
-} from "@mui/icons-material";
+import { InfoOutlined, PersonAddAlt, ChatBubbleOutline, MailOutline, TextsmsOutlined, GroupOutlined, AddOutlined, GroupAddOutlined } from "@mui/icons-material";
 import { Icon } from "../../../../Atoms";
 import { Button } from "../../../../components/atoms/button/button";
 import Select from "../../../../components/atoms/select/select";
@@ -16,6 +7,7 @@ import { TeamChatSwitch } from "../TeamChatSwitch";
 import { HeaderActions } from "./HeaderActions";
 import { HeaderForm } from "./HeaderForm";
 import type { HeaderContentProps } from "./types";
+import TranslateIcon from "@mui/icons-material/Translate";
 
 const CHAT_ICONS = {
   CHAT: { icon: ChatBubbleOutline, color: "#1C7AE0" },
@@ -33,7 +25,7 @@ const getDisplayText = (chatInterface: string) => {
     case "MMS":
       return "Chat Subject example";
     case "CHAT":
-      return "+123 456 7890";
+      return "Email subject example";
     default:
       return "";
   }
@@ -41,29 +33,14 @@ const getDisplayText = (chatInterface: string) => {
 
 const transition = "all 0.3s ease-in-out";
 
-export const HeaderContent = ({
-  chatInterface,
-  enableTeamChat,
-  setEnableTeamChat,
-  isEmpty,
-  headerFormData,
-  onHeaderFormChange,
-}: HeaderContentProps) => {
-  const { icon: IconComponent, color } =
-    CHAT_ICONS[chatInterface as keyof typeof CHAT_ICONS] || CHAT_ICONS.CHAT;
+export const HeaderContent = ({ chatInterface, enableTeamChat, setEnableTeamChat, isEmpty, headerFormData, onHeaderFormChange }: HeaderContentProps) => {
+  const { icon: IconComponent, color } = CHAT_ICONS[chatInterface as keyof typeof CHAT_ICONS] || CHAT_ICONS.CHAT;
 
   return (
     <Box>
       {/* Top section with patient info and actions - only show when not empty */}
       {!isEmpty && (
-        <Box
-          display="flex"
-          bgcolor={enableTeamChat ? "#F4F0FF" : "#E2E8F0"}
-          justifyContent="space-between"
-          alignItems="center"
-          p={2}
-          sx={{ transition }}
-        >
+        <Box display="flex" bgcolor={enableTeamChat ? "#F4F0FF" : "#E2E8F0"} justifyContent="space-between" alignItems="center" p={2} sx={{ transition }}>
           <Box display="flex" gap={2} alignItems="center">
             <Typography variant="h5">Patient Name</Typography>
             <InfoOutlined />
@@ -78,7 +55,7 @@ export const HeaderContent = ({
       {/* Chat interface section */}
       <Box p={3} bgcolor={enableTeamChat ? "#F4F0FF" : ""} sx={{ transition }}>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Stack direction="row" gap={2} alignItems="center">
+          <Stack direction="row" gap={3} alignItems="center">
             <Icon icon={IconComponent} size="medium" sx={{ color }} />
             {isEmpty ? (
               <Button
@@ -100,9 +77,8 @@ export const HeaderContent = ({
               </Button>
             ) : (
               <>
-                <Typography variant="h6">
-                  {getDisplayText(chatInterface)}
-                </Typography>
+                <TranslateIcon />
+                <Typography variant="h5">{getDisplayText(chatInterface)}</Typography>
                 <Button
                   appearence="outlined"
                   size="small"
@@ -128,12 +104,7 @@ export const HeaderContent = ({
           {isEmpty && <HeaderActions />}
 
           {/* Show team chat switch for non-empty state */}
-          {!isEmpty && (
-            <TeamChatSwitch
-              checked={enableTeamChat}
-              setChecked={setEnableTeamChat}
-            />
-          )}
+          {!isEmpty && <TeamChatSwitch checked={enableTeamChat} setChecked={setEnableTeamChat} />}
         </Box>
 
         {/* Show additional form fields for non-empty SMS/EMAIL when team chat is disabled */}
@@ -144,9 +115,7 @@ export const HeaderContent = ({
                 value={headerFormData?.from || ""}
                 label="From: +123 456 7890"
                 sx={{ margin: 0 }}
-                onChange={(e) =>
-                  onHeaderFormChange?.("from", e.target.value as string)
-                }
+                onChange={(e) => onHeaderFormChange?.("from", e.target.value as string)}
                 options={["Option 1", "Option 2", "Option 3"]}
               />
             )}
@@ -155,9 +124,7 @@ export const HeaderContent = ({
                 value={headerFormData?.cc || ""}
                 label="CC"
                 sx={{ margin: 0 }}
-                onChange={(e) =>
-                  onHeaderFormChange?.("cc", e.target.value as string)
-                }
+                onChange={(e) => onHeaderFormChange?.("cc", e.target.value as string)}
                 options={["Option 1", "Option 2", "Option 3"]}
               />
             )}
@@ -167,9 +134,7 @@ export const HeaderContent = ({
                 label="CC"
                 sx={{ margin: 0 }}
                 multiple
-                onChange={(e) =>
-                  onHeaderFormChange?.("cc", e.target.value as string[])
-                }
+                onChange={(e) => onHeaderFormChange?.("cc", e.target.value as string[])}
                 options={["Option 1", "Option 2", "Option 3"]}
               />
             )}
@@ -178,21 +143,11 @@ export const HeaderContent = ({
 
         {/* Show form for empty state */}
         {isEmpty && headerFormData && onHeaderFormChange && (
-          <HeaderForm
-            headerFormData={headerFormData}
-            onHeaderFormChange={onHeaderFormChange}
-            chatInterface={chatInterface}
-            enableTeamChat={enableTeamChat}
-          />
+          <HeaderForm headerFormData={headerFormData} onHeaderFormChange={onHeaderFormChange} chatInterface={chatInterface} enableTeamChat={enableTeamChat} />
         )}
         {!enableTeamChat && (
           <Box mt={chatInterface == "SMS" && !isEmpty ? 2 : 1}>
-            <Stack
-              display={"flex"}
-              flexDirection={"row"}
-              gap={2}
-              alignItems={"center"}
-            >
+            <Stack display={"flex"} flexDirection={"row"} gap={2} alignItems={"center"}>
               <Icon icon={GroupAddOutlined} size="medium" />
               <Button
                 appearence="outlined"
