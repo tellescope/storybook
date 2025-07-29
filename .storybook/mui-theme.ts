@@ -22,6 +22,13 @@ declare module '@mui/material/Select' {
     }
 }
 
+declare module '@mui/material/Typography' {
+    interface TypographyPropsVariantOverrides {
+        custom: true;
+    }
+    
+}
+
 
 export const theme = createTheme({
     palette: {
