@@ -1,1 +1,0 @@
-export type ChatInterface = "CHAT" | "SMS" | "EMAIL" | "MMS";
