@@ -3,9 +3,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { IconButton } from '../button/icon-button';
 
 
+interface AppbarSearchProps {
+    placeholder?: string;
+}
 
-
-export const AppbarSearch = () => {
+export const AppbarSearch = ({ placeholder = "label" }: AppbarSearchProps) => {
 
     return (
         <Stack
@@ -23,8 +25,8 @@ export const AppbarSearch = () => {
         >
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
-                placeholder="Label"
-                inputProps={{ 'aria-label': 'Label' }}
+                placeholder={placeholder}
+                inputProps={{ 'aria-label': placeholder }}
             />
             <IconButton type="button" sx={{ p: '10px' }} aria-label="search" color="secondary">
                 <SearchIcon />

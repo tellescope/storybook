@@ -15,6 +15,7 @@ const SingleSelect = ({ children, appearance = "enabled" }: SingleSelectProps) =
             color: "primary.main",
             alignItems: "center",
             flexDirection: "row",
+            maxWidth: "456px",
             ...(appearance === "enabled" && {
                 backgroundColor: "transparent",
                 '&:hover': {
