@@ -7,11 +7,10 @@ import {
   Messages,
   useMessageState,
   type IMessage,
-  type MessageCallbacks,
   type MessageConfig,
   type MessageProps,
+  type ChatInterface,
 } from "../../Molecules";
-import { fn } from "storybook/internal/test";
 import MessageHeader from "../../Molecules/Message/MessageHeader";
 import { mockMessages } from "../../data/mock";
 
@@ -47,16 +46,10 @@ const defaultConfig: MessageConfig = {
 // Default callbacks
 
 export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
+  const [enableTeamChat, setEnableTeamChat] = useState(false);
+  const [chatInterface, setChatInterface] = useState<ChatInterface>("CHAT");
   const [messages, setMessages] = useState<IMessage[]>(mockMessages);
-  const defaultCallbacks: MessageCallbacks = {
-    onMessageSubmit: fn(),
-    onInputChange: fn(),
-    onChatInterfaceChange: fn(),
-    onTeamChatToggle: fn(),
-    onHeaderFormChange: fn(),
-    onMessageReaction: fn(),
-    onMessageOptions: fn(),
-  };
+
   const { state, actions } = useMessageState(
     {
       chatInterface: "CHAT",
@@ -73,35 +66,52 @@ export const ItemViewer: React.FC<MessageProps> = React.memo(() => {
         height: "600px",
       },
     },
-    defaultCallbacks
+    
   );
 
   // Merge external loading state with internal state
   const combinedError = state.error;
+
+  const handleSubmit = (value: string) => {
+    console.log("value", value);
+  };
+
+  const handleInputChange = (value: string) => {
+    console.log("value", value);
+  };
+
+  const handleChatInterfaceChange = (value: ChatInterface) => {
+    console.log("value", value);
+    setChatInterface(value);
+  };
+
+  const handleTeamChatToggle = (value: boolean) => {
+    setEnableTeamChat(value);
+  };
 
   return (
     <Box>
       <MessageContainer>
         {/* Header */}
         <MessageHeader
-          chatInterface={state.chatInterface}
+          chatInterface={chatInterface}
           content={messages}
-          enableTeamChat={state.enableTeamChat}
-          setEnableTeamChat={actions.setEnableTeamChat}
+          enableTeamChat={enableTeamChat}
+          setEnableTeamChat={handleTeamChatToggle}
           headerFormData={state.headerFormData}
           onHeaderFormChange={actions.setHeaderFormData}
         />
 
         {/* Messages List */}
-        <Messages content={messages} enableTeamChat={state.enableTeamChat} />
+        <Messages content={messages} enableTeamChat={enableTeamChat} />
 
         {/* Input */}
         <MessageInput
-          enableTeamChat={state.enableTeamChat}
-          chatInterface={state.chatInterface}
-          setChatInterface={actions.setChatInterface}
-          onSubmit={actions.submitMessage}
-          onInputChange={actions.setInputValue}
+          enableTeamChat={enableTeamChat}
+          chatInterface={chatInterface}
+          setChatInterface={handleChatInterfaceChange}
+          onSubmit={handleSubmit}
+          onInputChange={handleInputChange}
           config={{
             ...defaultConfig.input,
             error: !!combinedError,

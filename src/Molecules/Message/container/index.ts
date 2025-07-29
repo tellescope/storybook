@@ -1,3 +1,3 @@
 export * from "./MessageContainer";
-export * from "./Messages";
-export * from "./MessageInput/MessageInput";
+export * from "../MessageList/MessageList";
+export * from "../MessageInput/MessageInput";

@@ -14,7 +14,7 @@ import type {
  */
 export const useMessageState = (
   config: MessageConfig = {},
-  callbacks: MessageCallbacks
+  callbacks?: MessageCallbacks
 ) => {
   // Core state
   const [chatInterface, setChatInterface] = useState<ChatInterface>(
@@ -75,19 +75,19 @@ export const useMessageState = (
   const handleChatInterfaceChange = useCallback((newInterface: ChatInterface) => {
     setChatInterface(newInterface);
     setError(null);
-    callbacks.onChatInterfaceChange?.(newInterface);
+    callbacks?.onChatInterfaceChange?.(newInterface);
   }, [callbacks]);
 
   const handleTeamChatToggle = useCallback((enabled: boolean) => {
     setEnableTeamChat(enabled);
     setError(null);
-    callbacks.onTeamChatToggle?.(enabled);
+    callbacks?.onTeamChatToggle?.(enabled);
   }, [callbacks]);
 
   const handleInputChange = useCallback((value: string) => {
     setInputValue(value);
     setError(null);
-    callbacks.onInputChange?.(value);
+    callbacks?.onInputChange?.(value);
   }, [callbacks]);
 
   const handleHeaderFormChange = useCallback((
@@ -97,7 +97,7 @@ export const useMessageState = (
     const newFormData = { ...headerFormData, [field]: value };
     setHeaderFormData(newFormData);
     setError(null);
-    callbacks.onHeaderFormChange?.(field, value);
+    callbacks?.onHeaderFormChange?.(field, value);
   }, [headerFormData, callbacks]);
 
   const handleMessageSubmit = useCallback(async (content: string) => {
@@ -120,7 +120,7 @@ export const useMessageState = (
     setError(null);
 
     try {
-      await callbacks.onMessageSubmit(content);
+      await callbacks?.onMessageSubmit(content);
       setInputValue("");
     } catch (err) {
       setError({
@@ -134,11 +134,11 @@ export const useMessageState = (
   }, [validateInput, validateHeaderForm, headerFormData, callbacks]);
 
   const handleMessageReaction = useCallback((messageId: string, reaction: any) => {
-    callbacks.onMessageReaction?.(messageId, reaction);
+    callbacks?.onMessageReaction?.(messageId, reaction);
   }, [callbacks]);
 
   const handleMessageOptions = useCallback((messageId: string, action: string) => {
-    callbacks.onMessageOptions?.(messageId, action);
+    callbacks?.onMessageOptions?.(messageId, action);
   }, [callbacks]);
 
   // Memoized actions object

@@ -1,12 +1,12 @@
-import { Box, InputBase, Stack, Typography } from "@mui/material";
+import { Box, InputBase, Stack } from "@mui/material";
 import { useCallback, useEffect } from "react";
-import { IconButton } from "../../../../components/atoms/button/icon-button";
-import { Icon } from "../../../../Atoms";
+import { IconButton } from "../../../components/atoms/button/icon-button";
+import { Icon } from "../../../Atoms";
 import { AddCircleOutline, EmojiEmotionsOutlined, Mic } from "@mui/icons-material";
-import { Toolbar } from "../../components/Toolbar";
+import { Toolbar } from "../MessageToolbar/MessageToolbar";
 import { styles, useMessageInputStyles } from "./styles/maps";
-import { Send } from "../../Icons";
-import { useMessageInput, type MessageInputProps } from "../../hooks/useMessageInput";
+import { Send } from "../Icons";
+import { useMessageInput, type MessageInputProps } from "../hooks/useMessageInput";
 
 /**
  * MessageInput component for composing and sending messages
