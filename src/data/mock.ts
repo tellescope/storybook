@@ -2,80 +2,17 @@ import type { IMessage } from "../Molecules";
 
 export const mockMessages: IMessage[] = [
   {
-    type: "OUTGOING",
-    text: "Hello world!",
-    avatar: "https://example.com/avatar.jpg",
-    isTranslated: true,
-    scheduledTime: null,
-    reactions: [
-      {
-        icon: "😎",
-        count: 1,
-      },
-      {
-        icon: "🙈",
-        count: 1,
-      },
-    ],
-  },
-  {
     type: "INCOMING",
-    text: "Hello world!",
-    avatar: "https://example.com/avatar.jpg",
+    text: "Welcome! Send a message to see sample messages with different features.",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    createdAt: new Date(Date.now() - 60000), // 1 minute ago
     isTranslated: false,
-    scheduledTime: null,
-  },
-  {
-    type: "INCOMING",
-    text: "Hello world!",
-    avatar: "https://example.com/avatar.jpg",
-    isTranslated: true,
-    scheduledTime: null,
-  },
-    {
-    type: "INCOMING",
-    text: "Hello world!",
-    avatar: "https://example.com/avatar.jpg",
-    isTranslated: false,
-    reactions: [
-      {
-        icon: "😎",
-        count: 1,
-      },
-      {
-        icon: "🙈",
-        count: 1,
-      },
-    ],
-    scheduledTime: null,
-     image: {
-        fileName: "image.jpg",
-        url: "https://picsum.photos/200/300",
-    },
   },
   {
     type: "OUTGOING",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    text: "Hello! I'm ready to test the message features.",
     avatar: "https://avatar.iran.liara.run/public",
-    isTranslated: false,
-    scheduledTime: new Date(),
-  },
-    {
-    type: "TEAM_CHAT",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    avatar: "",
-    role: "Nutritionist",
-    isTranslated: false,
-    scheduledTime: null,
-    reactions: [
-      {
-        icon: "😎",
-        count: 1,
-      },
-      {
-        icon: "🙈",
-        count: 1,
-      },
-    ],
+    createdAt: new Date(Date.now() - 30000), // 30 seconds ago
+    role: "User",
   },
 ];
