@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import ThumbsUpIcon from "../../../assets/thumbs-up.svg";
 import ThumbsDownIcon from "../../../assets/thumbs-down.svg";
 import ReturnIcon from "../../../assets/back.svg";
@@ -73,20 +73,27 @@ export const Use: StoryObj = {
         <Button
           color="inherit"
           sx={{
-            color: "rgba(0, 0, 0, 0.12)",
-            fontSize: "0.875rem",
-            fontWeight: 500,
-            textTransform: "capitalize",
-            width: "fit-content",
-            padding: "0px 8px",
-            minWidth: "fit-content",
+            borderRadius: "8px",
+            height: "36px",
+            maxHeight: "36px",
+            marginLeft: "8px",
+            minWidth: "63px",
+            maxWidth: "63px",
           }}
         >
-          Use
-        </Button>
-        <IconButton aria-label="unlike">
+          <Typography
+            sx={{
+              color: "rgba(0, 0, 0, 0.12)",
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              textTransform: "capitalize",
+              paddingRight: "8px",
+            }}
+          >
+            Use
+          </Typography>
           <img src={ArrowUpIcon} alt="arrow" />
-        </IconButton>
+        </Button>
       </Box>
     );
   },
