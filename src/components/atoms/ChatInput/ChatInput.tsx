@@ -1,0 +1,58 @@
+import React from "react";
+import { IconButton, InputBase, Paper } from "@mui/material";
+import SentIcon from "@mui/icons-material/Send";
+
+interface ChatInputProps {
+  value: string;
+  placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSend: () => void;
+  disabled?: boolean;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({
+  value,
+  onChange,
+  onSend,
+  placeholder = "Type a message...",
+  disabled = false,
+}) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSend();
+  };
+  return (
+    <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+      <Paper
+        sx={{
+          p: "4px, 8px",
+          display: "flex",
+          alignItems: "center",
+          borderRadius: 2,
+          boxShadow: 1,
+          bgcolor: "Background.paper",
+        }}
+      >
+        <InputBase
+          sx={{ ml: 1, flex: 1, caretColor: "#FF5722" }}
+          placeholder={placeholder}
+          inputProps={{ "aria-label": "chat input" }}
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+        />
+
+        <IconButton
+          type="submit"
+          sx={{ p: "10px" }}
+          aria-label="send"
+          disabled={disabled || !value.trim()}
+        >
+          <SentIcon color={value.trim() ? "primary" : "disabled"} />
+        </IconButton>
+      </Paper>
+    </form>
+  );
+};
+
+export default ChatInput;
