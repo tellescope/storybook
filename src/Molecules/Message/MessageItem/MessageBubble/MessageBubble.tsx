@@ -15,7 +15,7 @@ export const MessageBubble = ({ message }: MessageBubbleProps) => {
     <Box sx={styles.root}>
       <MessageText messageType={message.type} message={message} />
       <Box className="message-options" sx={styles.messageOptions}>
-        <MessageOptions messageType={message.type} />
+        <MessageOptions createdAt={message.createdAt || new Date()} messageType={message.type} />
       </Box>
     </Box>
   );
