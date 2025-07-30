@@ -9,6 +9,7 @@ import type { MessageType } from "../types";
 interface MessageOptionsProps {
   haveUnreadMessages?: boolean;
   messageType: MessageType;
+  createdAt: Date;
 }
 
 const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
@@ -30,6 +31,7 @@ const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
 export const MessageOptions = ({
   haveUnreadMessages,
   messageType,
+  createdAt,
 }: MessageOptionsProps) => {
   return (
     <Box>
@@ -50,7 +52,7 @@ export const MessageOptions = ({
           justifyContent={"flex-end"}
         >
           <Typography color={"black"} variant="caption">
-            9:00 AM
+            {new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </Typography>
           <Box
             bgcolor={haveUnreadMessages ? "#EFF0F2" : "transparent"}
