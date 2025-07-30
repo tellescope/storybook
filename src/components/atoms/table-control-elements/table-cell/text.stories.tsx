@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import TableCell from './table-cell';
 import type { ComponentProps } from 'react';
 import { Typography } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 
 type StoryProps = ComponentProps<typeof TableCell> & {
     hasValue: boolean;
@@ -16,7 +17,7 @@ const meta = {
         },
     },
     argTypes: {
-        icon: {
+        iconPosition: {
             options: ["none", 'left', 'right'],
             control: { type: 'select' },
         },
@@ -31,13 +32,13 @@ type Story = StoryObj<StoryProps>;
 
 export const Text: Story = {
     args: {
-        icon: 'none',
+        iconPosition: 'none',
         hasValue: true,
     },
     render: (args) => {
         const { hasValue, ...rest } = args as StoryProps;
         return (
-            <TableCell {...rest} >
+            <TableCell {...rest} icon={<StarIcon />}>
                 {
                     hasValue ?
                         <Typography variant="body2">Chompy</Typography>

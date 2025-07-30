@@ -23,6 +23,10 @@ const TableHead: FC<TableHeadProps> = ({ icon, checkbox, small, children, sx, ..
                     <CheckBox
                         color="primary"
                         size={small ? "small" : "medium"}
+                        sx={{
+                            height: small ? "24px" : undefined,
+                            width: small ? "24px" : undefined,
+                        }}
                     />
                 }
 

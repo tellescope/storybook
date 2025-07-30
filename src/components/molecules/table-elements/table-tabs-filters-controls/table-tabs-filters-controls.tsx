@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type FC, type ReactNode } from "react";
 import TabBar from "../../tabs/tab-bar";
-import { Badge, Box, Stack, Typography } from "@mui/material";
+import { Badge, Box, Stack } from "@mui/material";
 import { IconButton } from "../../../atoms/button/icon-button";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
@@ -54,7 +54,6 @@ const getTabPanels = (newContent?: { content: ReactNode }[]) => {
         {
             content: (
                 <Box sx={{ p: 1 }}>
-                    <Typography>All Contact Tab</Typography>
                     {panels[0]?.content ?? <></>}
                 </Box>
             )

@@ -126,10 +126,6 @@ const Sidebar = ({ expanded = false, bgColor }: { expanded?: boolean, bgColor?: 
                         justifyContent: "center",
                         userSelect: "none",
                         height: 48,
-                        ":hover": {
-                            background: "#fff",
-                            cursor: "pointer"
-                        },
                         position: "sticky",
                         top: 0,
                         zIndex: 1,
@@ -153,10 +149,6 @@ const Sidebar = ({ expanded = false, bgColor }: { expanded?: boolean, bgColor?: 
                         key={index}
                         sx={{
                             height: 48,
-                            ":hover": {
-                                background: "#fff",
-                                cursor: "pointer"
-                            },
                             padding: collapsed ? 1.5 : undefined,
                             transition: "0.2s",
                         }}

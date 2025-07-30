@@ -6,10 +6,11 @@ import Sidebar from "./sidebar";
 interface AppbarSidebarProps {
     color?: "standard" | "transitional";
     expanded?: boolean;
+    children?: React.ReactNode;
 }
 
 
-const AppbarSidebar: FC<AppbarSidebarProps> = ({ color = "standard", expanded = false }) => {
+const AppbarSidebar: FC<AppbarSidebarProps> = ({ color = "standard", expanded = false, children }) => {
     const bgColor = color === "standard" ? "#E3E2E9" : "#F5F5F5";
     return (
         <Stack sx={{
@@ -17,9 +18,7 @@ const AppbarSidebar: FC<AppbarSidebarProps> = ({ color = "standard", expanded = 
             overflow: "hidden",
             borderRadius: "28px ",
         }}>
-
             <Appbar bgColor={bgColor} />
-
             <Stack sx={{
                 flexDirection: "row",
             }}>
@@ -35,7 +34,9 @@ const AppbarSidebar: FC<AppbarSidebarProps> = ({ color = "standard", expanded = 
                         borderRadius: "28px",
                         background: "#fff",
                         height: "100%",
+                        padding: "24px"
                     }}>
+                        {children}
                     </Stack>
                 </Stack>
             </Stack>

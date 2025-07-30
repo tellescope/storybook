@@ -3,6 +3,7 @@ import TableCell from './table-cell';
 import { useEffect, useState, type ComponentProps } from 'react';
 import SelectBase from "../../select/select";
 import { MenuItem } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 
 type StoryProps = ComponentProps<typeof TableCell> & {
     hasValue: boolean;
@@ -18,7 +19,7 @@ const meta = {
         },
     },
     argTypes: {
-        icon: {
+        iconPosition: {
             options: ["none", 'left', 'right'],
             control: { type: 'select' },
         },
@@ -33,7 +34,7 @@ type Story = StoryObj<StoryProps>;
 
 export const Select: Story = {
     args: {
-        icon: 'none',
+        iconPosition: 'none',
         hasValue: true,
     },
     render: (args) => {
@@ -45,7 +46,7 @@ export const Select: Story = {
         }, [hasValue]);
 
         return (
-            <TableCell  {...rest}>
+            <TableCell  {...rest} icon={<StarIcon />} >
                 <SelectBase
                     multiple={true}
                     appearance="table"
