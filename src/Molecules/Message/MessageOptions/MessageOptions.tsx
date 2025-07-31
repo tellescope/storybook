@@ -10,11 +10,15 @@ interface MessageOptionsProps {
   haveUnreadMessages?: boolean;
   messageType: MessageType;
   createdAt: Date;
+  messageId: string;
+  isEmojiPickerActive: boolean;
+  onAddReactionClick: (messageId: string, buttonElement: HTMLElement, messageType: string) => void;
 }
 
-const ButttonIcon = ({ icon }: { icon: React.ReactNode }) => {
+const ButttonIcon = ({ icon, onClick }: { icon: React.ReactNode; onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void }) => {
   return (
     <IconButton
+      onClick={onClick}
       sx={{
         padding: "8px",
         transition: "all 0.2s ease-in-out",
@@ -32,7 +36,14 @@ export const MessageOptions = ({
   haveUnreadMessages,
   messageType,
   createdAt,
+  messageId,
+  isEmojiPickerActive,
+  onAddReactionClick,
 }: MessageOptionsProps) => {
+  const handleAddReactionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onAddReactionClick(messageId, event.currentTarget, messageType);
+  };
+
   return (
     <Box>
       <Box
@@ -72,7 +83,7 @@ export const MessageOptions = ({
             <MarkEmailUnreadOutlined sx={{ color: "#3C82F6" }} />
           </Box>
         </Box>
-        <Box>
+        <Box position="relative">
           <Box
             display={"flex"}
             alignItems={"center"}
@@ -82,7 +93,7 @@ export const MessageOptions = ({
           >
             <ButttonIcon icon={<Nice />} />
             <ButttonIcon icon={<Nice />} />
-            <ButttonIcon icon={<AddReactionOutlined />} />
+            <ButttonIcon icon={<AddReactionOutlined />} onClick={handleAddReactionClick} />
           </Box>
         </Box>
       </Box>

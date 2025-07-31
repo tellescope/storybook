@@ -14,7 +14,7 @@ interface EmojiPickerProps {
  */
 
 const EmojiPickerComponent: React.FC<EmojiPickerProps> = ({ onEmojiSelect }) => {
-  return <Picker lazyLoadEmojis previewConfig={{ showPreview: false }} skinTonesDisabled onEmojiClick={(e) => console.log(e)} />;
+  return <Picker lazyLoadEmojis previewConfig={{ showPreview: false }} skinTonesDisabled onEmojiClick={onEmojiSelect} />;
 };
 
 export const EmojiPicker = React.memo(EmojiPickerComponent);
