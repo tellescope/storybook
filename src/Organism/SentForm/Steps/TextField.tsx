@@ -8,17 +8,17 @@ export const TextField = () => {
       <Box pt={"48px"}>
         <Stack gap={"12px"}>
           <Typography variant="h5">What would you like to be called?</Typography>
-          {/* <FormControlAtom variant="outlined" fullWidth> */}
+          <FormControlAtom variant="outlined" fullWidth>
             <Input
               appearance="distinct"
               size="medium"
-              label="What would you like to be called?"
-              // sx={{
-              //   backgroundColor: "white",
-              //   width: "100%",
-              // }}
+              label="Okeanos Withburga"
+              sx={{
+                backgroundColor: "white",
+                width: "100%",
+              }}
             />
-          {/* </FormControlAtom> */}
+          </FormControlAtom>
           <Typography color="text.secondary" variant="caption">
             The location is where you're treatment supplies will be shipped, if prescibed
           </Typography>

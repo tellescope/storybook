@@ -31,12 +31,12 @@ export const NumberField = () => {
               inputMode="numeric"
               size="medium"
               label="Enter a number between 1 and 10"
-              // sx={{
-              //   backgroundColor: "white",
-              //   width: "100%",
-              // }}
               value={value}
               onChange={handleChange}
+              sx={{
+                backgroundColor: "white",
+                width: "100%",
+              }}
             />
           </FormControlAtom>
           <Typography color="text.secondary" variant="caption">
