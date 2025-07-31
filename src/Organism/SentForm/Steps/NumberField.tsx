@@ -25,16 +25,16 @@ export const NumberField = () => {
           <Typography variant="h5">Enter a number between 1 and 10</Typography>
           <FormControlAtom variant="outlined" fullWidth>
             <Input
-              appearance="outlined"
+              appearance="distinct"
               type="number"
               placeholder="1-10"
               inputMode="numeric"
-              size="small"
-              hiddenLabel
-              sx={{
-                backgroundColor: "white",
-                width: "100%",
-              }}
+              size="medium"
+              label="Enter a number between 1 and 10"
+              // sx={{
+              //   backgroundColor: "white",
+              //   width: "100%",
+              // }}
               value={value}
               onChange={handleChange}
             />
