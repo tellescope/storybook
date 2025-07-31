@@ -24,7 +24,13 @@ export const AppbarSearch = ({ placeholder = "label" }: AppbarSearchProps) => {
             }}
         >
             <InputBase
-                sx={{ ml: 1, flex: 1 }}
+                sx={{
+                    pl: "16px",
+                    flex: 1,
+                    ".MuiInputBase-input::placeholder": {
+                        color: "#000 !important"
+                    }
+                }}
                 placeholder={placeholder}
                 inputProps={{ 'aria-label': placeholder }}
             />

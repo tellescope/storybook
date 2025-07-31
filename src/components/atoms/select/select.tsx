@@ -49,7 +49,6 @@ const Select: FC<SelectProps> = ({
 }) => {
     const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
 
-
     const renderValue = (selected: string | string[]) => {
         if (multiple && Array.isArray(selected)) {
             return (
@@ -60,7 +59,7 @@ const Select: FC<SelectProps> = ({
                         gap: 1,
                         overflowX: 'auto',
                         overflowY: 'hidden',
-                        maxWidth: '100%',
+                        maxWidth: "calc(100% - 40px)",
                         paddingRight: appearance === 'table' ? "40px" : undefined,
                         // Hide scrollbar for all major browsers
                         "&::-webkit-scrollbar": {
@@ -87,6 +86,9 @@ const Select: FC<SelectProps> = ({
                                         name: label
                                     }
                                 } as SelectChangeEvent<string | string[]>);
+                            }}
+                            sx={{
+                                textTransform: "capitalize",
                             }}
                         />
                     ))}
@@ -191,16 +193,20 @@ const Select: FC<SelectProps> = ({
 
     const { sx } = FormControlProps || {}
 
+
     return (
         <FormControl
             fullWidth
             variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
-            sx={(theme) => ({ ...getSx(theme), ...sx })}
+            {...FormControlProps}
+            sx={(theme) => {
+                return { ...getSx(theme), ...sx };
+            }}
             error={error}
             disabled={disabled}
             size={size}
             hiddenLabel={hiddenLabel}
-            {...FormControlProps}
+
         >
             {!hiddenLabel ? <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel> : null}
 

@@ -14,17 +14,21 @@ const meta = {
     component: TableCell,
     parameters: {
         controls: {
-            exclude: ["children", "StackProps"]
+            exclude: ["children", "StackProps", "Icon"]
         },
     },
     argTypes: {
         iconPosition: {
             options: ["none", 'left', 'right'],
             control: { type: 'select' },
+            name: 'icon',
         },
         hasValue: {
             control: { type: 'boolean' },
         },
+        icon: {
+            name: 'Icon',
+        }
     },
 } satisfies Meta<StoryProps>;
 

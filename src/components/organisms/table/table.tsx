@@ -3,17 +3,22 @@ import TableTabsFiltersControls from "../../molecules/table-elements/table-tabs-
 import AppbarSidebar from "../appbar-sidebar/appbar-sidebar";
 import TableCellRow from "../../molecules/table-elements/table-cell-row/table-cell-row";
 import TableHead from "../../atoms/table-control-elements/table-head/table-head";
-import TableCell from "../../atoms/table-control-elements/table-cell/table-cell";
+import TableCell, { type TableCellProps } from "../../atoms/table-control-elements/table-cell/table-cell";
 import CheckBox from "../../atoms/checkbox/checkbox";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import Select from "../../atoms/select/select";
 import TableFooter from '../../atoms/table-control-elements/table-footer/table-footer';
 import AddIcon from '@mui/icons-material/Add';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-const Table = () => {
+interface TableProps {
+    color?: "standard" | "transitional";
+    expanded?: boolean;
+}
+
+const Table: FC<TableProps> = (props) => {
     return (
-        <AppbarSidebar>
+        <AppbarSidebar {...props}>
             <TableTabsFiltersControls
                 tabPanels={[
                     {
@@ -33,22 +38,10 @@ export default Table
 
 
 export const TableContent = () => {
-    const [value, setValue] = useState<string | string[]>([]);
-    const ParentRef = useRef<HTMLDivElement>(null);
-    const childRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        if (ParentRef.current && childRef.current) {
-            childRef.current.style.width = `${ParentRef.current.clientWidth}px !important`;
-        }
-    }, [ParentRef]);
 
-    console.log('====================================');
-    console.log(ParentRef.current, childRef.current);
-    console.log('====================================');
+
     return (
-        <Stack sx={{
-            // p: 2
-        }}>
+        <Stack>
             <TableContainer sx={{
                 maxHeight: "calc(100vh - 64px - 48px - 36px - 16px - 16px - 32px)",
                 scrollbarWidth: "none",
@@ -56,7 +49,7 @@ export const TableContent = () => {
                 msOverflowStyle: "none",
             }}>
                 <MuiTable stickyHeader aria-label="sticky table">
-                    <TableRow >
+                    <TableRow>
                         <TableHead checkbox small sx={{
                             borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
                         }}>Name</TableHead>
@@ -76,88 +69,20 @@ export const TableContent = () => {
                     {
                         Array.from({ length: 20 }).map((_, index) => (
                             <TableCellRow key={index}>
-                                <TableCell width={"25%"}>
+                                <TableCell width={"20%"}>
                                     <CheckBox size="small" sx={{
                                         height: "24px",
                                         width: "24px",
                                     }} /> Chompy
                                 </TableCell>
-                                <TableCell width={"25%"} ref={ParentRef}>
-                                    <Select
-                                        multiple={true}
-                                        appearance="table"
-                                        value={value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                        size="medium"
-                                        FormControlProps={{
-                                            ref: childRef
-                                        }}
-                                    >
-                                        <MenuItem value="Organization" key="Organization">Organization</MenuItem>
-                                        <MenuItem value="Synt to Healthie" key="Synt to Healthie">Synt to Healthie</MenuItem>
-                                        <MenuItem value="Content campaign" key="Content campaign">Content campaign</MenuItem>
-                                        <MenuItem value="Chip 1" key="Chip 1">Chip 1</MenuItem>
-                                        <MenuItem value="Chip 2" key="Chip 2">Chip 2</MenuItem>
-                                        <MenuItem value="Chip 3" key="Chip 3">Chip 3</MenuItem>
-                                    </Select>
-                                </TableCell>
-                                <TableCell width={"25%"}>
-                                    <Select
-                                        multiple={true}
-                                        appearance="table"
-                                        value={value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                        size="medium"
-                                        sx={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <MenuItem value="Organization" key="Organization">Organization</MenuItem>
-                                        <MenuItem value="Synt to Healthie" key="Synt to Healthie">Synt to Healthie</MenuItem>
-                                        <MenuItem value="Content campaign" key="Content campaign">Content campaign</MenuItem>
-                                        <MenuItem value="Chip 1" key="Chip 1">Chip 1</MenuItem>
-                                        <MenuItem value="Chip 2" key="Chip 2">Chip 2</MenuItem>
-                                        <MenuItem value="Chip 3" key="Chip 3">Chip 3</MenuItem>
-                                    </Select>
-                                </TableCell>
-                                <TableCell width={"25%"} iconPosition="left" icon={<CalendarMonthIcon />}>
-                                    <Select
-                                        multiple={true}
-                                        appearance="table"
-                                        value={value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                        size="medium"
-                                        sx={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <MenuItem value="Organization" key="Organization">Organization</MenuItem>
-                                        <MenuItem value="Synt to Healthie" key="Synt to Healthie">Synt to Healthie</MenuItem>
-                                        <MenuItem value="Content campaign" key="Content campaign">Content campaign</MenuItem>
-                                        <MenuItem value="Chip 1" key="Chip 1">Chip 1</MenuItem>
-                                        <MenuItem value="Chip 2" key="Chip 2">Chip 2</MenuItem>
-                                        <MenuItem value="Chip 3" key="Chip 3">Chip 3</MenuItem>
-                                    </Select>
-                                </TableCell>
-                                <TableCell width={"25%"}>
-                                    <Select
-                                        multiple={true}
-                                        appearance="table"
-                                        value={value}
-                                        onChange={(e) => setValue(e.target.value)}
-                                        size="medium"
-                                        sx={{
-                                            width: "100%",
-                                        }}
-                                    >
-                                        <MenuItem value="Organization" key="Organization">Organization</MenuItem>
-                                        <MenuItem value="Synt to Healthie" key="Synt to Healthie">Synt to Healthie</MenuItem>
-                                        <MenuItem value="Content campaign" key="Content campaign">Content campaign</MenuItem>
-                                        <MenuItem value="Chip 1" key="Chip 1">Chip 1</MenuItem>
-                                        <MenuItem value="Chip 2" key="Chip 2">Chip 2</MenuItem>
-                                        <MenuItem value="Chip 3" key="Chip 3">Chip 3</MenuItem>
-                                    </Select>
-                                </TableCell>
+                                {
+                                    Array.from({ length: 4 }).map((_, idx) => {
+                                        if (idx === 2) {
+                                            return <TableCellWithSelect key={idx} withIcon />;
+                                        }
+                                        return <TableCellWithSelect key={idx} />;
+                                    })
+                                }
                             </TableCellRow>
                         ))
                     }
@@ -201,8 +126,69 @@ export const TableContent = () => {
                     </MuiTableFooter>
                 </MuiTable>
             </TableContainer>
-
         </Stack>
     )
 }
 
+const TableCellWithSelect = ({ withIcon }: { withIcon?: boolean }) => {
+    const [value, setValue] = useState<string | string[]>([]);
+
+    const props: Partial<TableCellProps> = {
+        iconPosition: "left",
+        icon: <CalendarMonthIcon />
+    };
+
+    const parentRef = useRef<HTMLDivElement>(null);
+    const childRef = useRef<HTMLDivElement>(null);
+    const [width, setWidth] = useState<string | number>("100%");
+    // useEffect(() => {
+    //     if (parentRef.current && childRef.current) {
+    //         setWidth(parentRef.current.clientWidth);
+    //         // childRef.current.style.width = `${parentRef.current.clientWidth}px !important`;
+    //     }
+    // }, []);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (parentRef.current) {
+                setWidth(parentRef.current.clientWidth);
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    return (
+        <TableCell ref={parentRef} {...(withIcon ? props : {})} width={"20%"} >
+            <Select
+                multiple
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                size="medium"
+                sx={{
+                    width: width,
+                    "& .MuiInputBase-root ": {
+                        width: "100% !important",
+                    }
+                }}
+                ref={childRef}
+                appearance="table"
+                FormControlProps={{
+                    sx: {
+                        minWidth: "100% !important",
+                    }
+                }}
+            >
+                <MenuItem value="rice">Rice</MenuItem>
+                <MenuItem value="nom">Nom</MenuItem>
+                <MenuItem value="bobba">Bobba</MenuItem>
+                <MenuItem value="chompy">Chompy</MenuItem>
+                <MenuItem value="fungi">Fungi</MenuItem>
+                <MenuItem value="bok">Bok</MenuItem>
+                <MenuItem value="choy">Choy</MenuItem>
+            </Select>
+        </TableCell>
+    );
+};
