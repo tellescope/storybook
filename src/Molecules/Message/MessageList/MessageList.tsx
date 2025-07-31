@@ -17,7 +17,6 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
   const [activeEmojiPicker, setActiveEmojiPicker] = useState<string | null>(null);
   const [emojiPickerPosition, setEmojiPickerPosition] = useState<{ x: number; y: number; messageType: string } | null>(null);
   const emojiPickerRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   let lastDate: Date | null = null;
 
   const handleEmojiSelect = (emoji: any) => {
@@ -45,45 +44,6 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
       }
     }
   };
-
-  const handleMessageMouseLeave = () => {
-    // Close emoji picker when mouse leaves the message with a small delay
-    if (activeEmojiPicker) {
-      setTimeout(() => {
-        // Check if mouse is over the emoji picker area
-        const emojiPickerElement = emojiPickerRef.current;
-        if (emojiPickerElement) {
-          const rect = emojiPickerElement.getBoundingClientRect();
-          
-          const isOverEmojiPicker = 
-            mousePosition.x >= rect.left && 
-            mousePosition.x <= rect.right && 
-            mousePosition.y >= rect.top && 
-            mousePosition.y <= rect.bottom;
-          
-          if (!isOverEmojiPicker) {
-            setActiveEmojiPicker(null);
-            setEmojiPickerPosition(null);
-          }
-        } else {
-          setActiveEmojiPicker(null);
-          setEmojiPickerPosition(null);
-        }
-      }, 150); // Small delay to prevent immediate closing
-    }
-  };
-
-  // Track mouse position
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
 
   // Handle click outside to close emoji picker
   useEffect(() => {
@@ -174,7 +134,6 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
                   messageId={messageId}
                   isEmojiPickerActive={activeEmojiPicker === messageId}
                   onAddReactionClick={handleAddReactionClick}
-                  onMessageMouseLeave={handleMessageMouseLeave}
                 />
               </React.Fragment>
             );
@@ -203,22 +162,11 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
       {activeEmojiPicker && emojiPickerPosition && (
         <Box
           ref={emojiPickerRef}
-          onMouseEnter={() => {
-            // Keep picker open when mouse enters the emoji picker
-          }}
-          onMouseLeave={() => {
-            // Close picker when mouse leaves the emoji picker
-            setTimeout(() => {
-              setActiveEmojiPicker(null);
-              setEmojiPickerPosition(null);
-            }, 100);
-          }}
           sx={{
             position: 'fixed',
             left: emojiPickerPosition.x,
             top: emojiPickerPosition.y,
             zIndex: 1000,
-            padding: '8px', // Add padding to make it easier to move mouse to
           }}
         >
           <EmojiPicker onEmojiSelect={handleEmojiSelect} />

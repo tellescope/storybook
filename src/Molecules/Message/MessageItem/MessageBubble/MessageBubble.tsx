@@ -3,43 +3,24 @@ import { useMessageItemStyles } from "./styles/maps";
 import { MessageOptions } from "../../MessageOptions";
 import type { IMessage } from "../../types";
 import { MessageText } from "./MessageText";
-import { useState } from "react";
 
 interface MessageBubbleProps {
   message: IMessage;
   messageId: string;
   isEmojiPickerActive: boolean;
   onAddReactionClick: (messageId: string, buttonElement: HTMLElement, messageType: string) => void;
-  onMessageMouseLeave?: () => void;
 }
 
 export const MessageBubble = ({ 
   message, 
   messageId, 
   isEmojiPickerActive, 
-  onAddReactionClick,
-  onMessageMouseLeave
+  onAddReactionClick
 }: MessageBubbleProps) => {
   const styles = useMessageItemStyles({ messageType: message.type });
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    if (onMessageMouseLeave) {
-      onMessageMouseLeave();
-    }
-  };
 
   return (
-    <Box 
-      sx={styles.root}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Box sx={styles.root}>
       <MessageText messageType={message.type} message={message} />
       <Box className="message-options" sx={styles.messageOptions}>
         <MessageOptions 
