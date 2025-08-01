@@ -3,7 +3,7 @@ import {
   MarkEmailUnreadOutlined,
   AddReactionOutlined,
 } from "@mui/icons-material";
-import { Nice } from "../Icons";
+import { Checkmark, Eye, HandsUp } from "../Icons";
 import type { MessageType } from "../types";
 
 interface MessageOptionsProps {
@@ -12,10 +12,20 @@ interface MessageOptionsProps {
   createdAt: Date;
   messageId: string;
   isEmojiPickerActive: boolean;
-  onAddReactionClick: (messageId: string, buttonElement: HTMLElement, messageType: string) => void;
+  onAddReactionClick: (
+    messageId: string,
+    buttonElement: HTMLElement,
+    messageType: string
+  ) => void;
 }
 
-const ButttonIcon = ({ icon, onClick }: { icon: React.ReactNode; onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void }) => {
+const ButttonIcon = ({
+  icon,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}) => {
   return (
     <IconButton
       onClick={onClick}
@@ -40,7 +50,9 @@ export const MessageOptions = ({
   isEmojiPickerActive,
   onAddReactionClick,
 }: MessageOptionsProps) => {
-  const handleAddReactionClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAddReactionClick = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     onAddReactionClick(messageId, event.currentTarget, messageType);
   };
 
@@ -63,7 +75,10 @@ export const MessageOptions = ({
           justifyContent={"flex-end"}
         >
           <Typography color={"black"} variant="caption">
-            {new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            {new Date(createdAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </Typography>
           <Box
             bgcolor={haveUnreadMessages ? "#EFF0F2" : "transparent"}
@@ -91,9 +106,13 @@ export const MessageOptions = ({
             borderRadius={"100px"}
             padding={"0"}
           >
-            <ButttonIcon icon={<Nice />} />
-            <ButttonIcon icon={<Nice />} />
-            <ButttonIcon icon={<AddReactionOutlined />} onClick={handleAddReactionClick} />
+            <ButttonIcon icon={<Checkmark />} />
+            <ButttonIcon icon={<HandsUp />} />
+            <ButttonIcon icon={<Eye />} />
+            <ButttonIcon
+              icon={<AddReactionOutlined />}
+              onClick={handleAddReactionClick}
+            />
           </Box>
         </Box>
       </Box>
