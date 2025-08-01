@@ -116,7 +116,7 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
     const [sortSelected, setSortSelected] = useState<{ field: string; order: 'ascending' | 'descending' }[]>(selectedSorts || []);
     const [openSortMenu, setOpenSortMenu] = useState<boolean>(openSort || false);
     const [reset, setReset] = useState<boolean>(resetFilter || false);
-    const [hide, setHide] = useState<boolean>(false);
+    const [hide, setHide] = useState<boolean>(true);
     const [openDSSort, setOpenDSSort] = useState<boolean>(oDSS || false);
     const [openDSFilter, setOpenDSFilter] = useState<{ open: boolean; index: number } | undefined>(oDSF || { open: false, index: -1 });
 
@@ -153,9 +153,6 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
 
     const usedFields = filterSelected.map(filter => filter.field);
     const availableFilterFields = availableSortFields.filter(field => !usedFields.includes(field.value));
-
-    console.log(reset, hide, filterSelected.length > 0 || reset);
-
 
     return (
         <FilterContext.Provider value={contextValue}>

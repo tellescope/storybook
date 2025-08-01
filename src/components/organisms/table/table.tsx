@@ -1,15 +1,17 @@
 import { Stack, Table as MuiTable, TableRow, MenuItem, TableContainer, TableFooter as MuiTableFooter, } from '@mui/material';
-import TableTabsFiltersControls from "../../molecules/table-elements/table-tabs-filters-controls/table-tabs-filters-controls";
+import TableTabsFiltersControls, { useFilterContext } from "../../molecules/table-elements/table-tabs-filters-controls/table-tabs-filters-controls";
 import AppbarSidebar from "../appbar-sidebar/appbar-sidebar";
 import TableCellRow from "../../molecules/table-elements/table-cell-row/table-cell-row";
 import TableHead from "../../atoms/table-control-elements/table-head/table-head";
 import TableCell, { type TableCellProps } from "../../atoms/table-control-elements/table-cell/table-cell";
 import CheckBox from "../../atoms/checkbox/checkbox";
-import { useEffect, useRef, useState, type FC } from "react";
+import { useState, type FC } from "react";
 import Select from "../../atoms/select/select";
 import TableFooter from '../../atoms/table-control-elements/table-footer/table-footer';
 import AddIcon from '@mui/icons-material/Add';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { data } from './data';
+
 
 interface TableProps {
     color?: "standard" | "transitional";
@@ -39,14 +41,18 @@ export default Table
 
 export const TableContent = () => {
 
-
+    // Remove the first value of the object (i.e., skip the first property)
+    const rowValues = Object.entries(data[0]).map(ele => ele[1]).slice(1);
+    console.log(rowValues, "Object.entries(row).map(ele => ele[1]) without first value");
+    const { hide } = useFilterContext();
     return (
         <Stack>
             <TableContainer sx={{
-                maxHeight: "calc(100vh - 64px - 48px - 36px - 16px - 16px - 32px)",
+                maxHeight: `calc(100vh - 64px - 48px - 36px - 16px - 16px - ${hide ? 0 : 32}px)`,
                 scrollbarWidth: "none",
                 "&::-webkit-scrollbar": { display: "none" },
                 msOverflowStyle: "none",
+                overflowX: "auto",
             }}>
                 <MuiTable stickyHeader aria-label="sticky table">
                     <TableRow>
@@ -67,20 +73,20 @@ export const TableContent = () => {
                         }}>Tags</TableHead>
                     </TableRow>
                     {
-                        Array.from({ length: 20 }).map((_, index) => (
+                        data.map((row, index) => (
                             <TableCellRow key={index}>
-                                <TableCell width={"20%"}>
+                                <TableCell width={"20%"} sx={{ minWidth: 200, textTransform: "capitalize" }}>
                                     <CheckBox size="small" sx={{
                                         height: "24px",
                                         width: "24px",
-                                    }} /> Chompy
+                                    }} /> {row.name}
                                 </TableCell>
                                 {
-                                    Array.from({ length: 4 }).map((_, idx) => {
+                                    Object.entries(row).map(ele => ele).slice(1).map((ele, idx) => {
                                         if (idx === 2) {
-                                            return <TableCellWithSelect key={idx} withIcon />;
+                                            return <TableCellWithSelect key={idx} withIcon data={ele[1]} name={ele[0]} />;
                                         }
-                                        return <TableCellWithSelect key={idx} />;
+                                        return <TableCellWithSelect key={idx} data={ele[1]} name={ele[0]} />;
                                     })
                                 }
                             </TableCellRow>
@@ -130,65 +136,141 @@ export const TableContent = () => {
     )
 }
 
-const TableCellWithSelect = ({ withIcon }: { withIcon?: boolean }) => {
-    const [value, setValue] = useState<string | string[]>([]);
+const TableCellWithSelect = ({ withIcon, data, name }: { withIcon?: boolean, data: string | string[], name: string }) => {
+
 
     const props: Partial<TableCellProps> = {
         iconPosition: "left",
-        icon: <CalendarMonthIcon />
+        icon: <CalendarMonthIcon />,
+        sx: {
+            "& .MuiFormControl-root": {
+                // This is to ensure the select takes full width without icon
+                minWidth: "calc(100% - 50px) !important",
+            },
+            paddingRight: "0 !important",
+            minWidth: "200px",
+        }
     };
 
-    const parentRef = useRef<HTMLDivElement>(null);
-    const childRef = useRef<HTMLDivElement>(null);
-    const [width, setWidth] = useState<string | number>("100%");
-    // useEffect(() => {
-    //     if (parentRef.current && childRef.current) {
-    //         setWidth(parentRef.current.clientWidth);
-    //         // childRef.current.style.width = `${parentRef.current.clientWidth}px !important`;
-    //     }
-    // }, []);
+    console.log("name", name, "data", data,);
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (parentRef.current) {
-                setWidth(parentRef.current.clientWidth);
-            }
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     return (
-        <TableCell ref={parentRef} {...(withIcon ? props : {})} width={"20%"} >
-            <Select
-                multiple
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                size="medium"
-                sx={{
-                    width: width,
-                    "& .MuiInputBase-root ": {
-                        width: "100% !important",
-                    }
-                }}
-                ref={childRef}
-                appearance="table"
-                FormControlProps={{
-                    sx: {
-                        minWidth: "100% !important",
-                    }
-                }}
-            >
-                <MenuItem value="rice">Rice</MenuItem>
-                <MenuItem value="nom">Nom</MenuItem>
-                <MenuItem value="bobba">Bobba</MenuItem>
-                <MenuItem value="chompy">Chompy</MenuItem>
-                <MenuItem value="fungi">Fungi</MenuItem>
-                <MenuItem value="bok">Bok</MenuItem>
-                <MenuItem value="choy">Choy</MenuItem>
-            </Select>
+        <TableCell  {...(withIcon ? props : {})} width={"20%"} sx={{ minWidth: 200 }} >
+            <SelectMenubasedOnCols name={name} data={data} />
         </TableCell>
     );
 };
+
+
+const SelectMenubasedOnCols = ({ name, data }: { name: string, data: string | string[] }) => {
+    const [value, setValue] = useState<string | string[]>(data);
+    return (
+        <>
+            {
+                name === "careTeam" ? (
+                    <Select
+                        multiple
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        size="medium"
+                        sx={{
+                            width: `100%`,
+                            "& .MuiInputBase-root ": {
+                                width: "100% !important",
+                            }
+                        }}
+                        appearance="table"
+                        FormControlProps={{
+                            sx: {
+                                minWidth: "auto !important",
+                            }
+                        }}
+                    >
+                        <MenuItem value="rice">Rice</MenuItem>
+                        <MenuItem value="nom">Nom</MenuItem>
+                        <MenuItem value="bobba">Bobba</MenuItem>
+                        <MenuItem value="chompy">Chompy</MenuItem>
+                        <MenuItem value="fungi">Fungi</MenuItem>
+                        <MenuItem value="bok">Bok</MenuItem>
+                        <MenuItem value="choy">Choy</MenuItem>
+                    </Select>
+                ) : null
+            }
+            {
+                name === "shareWith" ? (
+                    <Select
+                        multiple
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        size="medium"
+                        sx={{
+                            width: `100%`,
+                            "& .MuiInputBase-root ": {
+                                width: "100% !important",
+                            }
+                        }}
+                        appearance="table"
+                        FormControlProps={{
+                            sx: {
+                                minWidth: "auto !important",
+                            }
+                        }}
+                    >
+                        <MenuItem value="organization">Organization</MenuItem>
+                    </Select>
+                ) : null
+            }
+            {
+                name === "journeys" ? (
+                    <Select
+                        multiple
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        size="medium"
+                        sx={{
+                            width: `100%`,
+                            "& .MuiInputBase-root ": {
+                                width: "100% !important",
+                            }
+                        }}
+                        appearance="table"
+                        FormControlProps={{
+                            sx: {
+                                minWidth: "auto !important",
+                            }
+                        }}
+                    >
+                        <MenuItem value="synt to healthie">Synt to Healthie</MenuItem>
+                        <MenuItem value="content campaign">Content campaign</MenuItem>
+                    </Select>
+                ) : null
+            }
+            {
+                name === "tags" ? (
+                    <Select
+                        multiple
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        size="medium"
+                        sx={{
+                            width: `100%`,
+                            "& .MuiInputBase-root ": {
+                                width: "100% !important",
+                            }
+                        }}
+                        appearance="table"
+                        FormControlProps={{
+                            sx: {
+                                minWidth: "auto !important",
+                            }
+                        }}
+                    >
+                        <MenuItem value="added to tellescope">Added to Tellescope</MenuItem>
+
+                    </Select>
+                ) : null
+            }
+        </>
+    )
+}

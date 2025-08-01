@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type FC, type ReactNode } from 'react';
 import {
     FormControl, Select as MuiSelect,
     Chip, Stack,
@@ -49,50 +49,100 @@ const Select: FC<SelectProps> = ({
 }) => {
     const isCustomVariant = appearance === 'patientForm' || appearance === 'table';
 
+    const parentRef = useRef<HTMLDivElement>(null);
+    const childRef = useRef<HTMLDivElement>(null);
+    const [width, setWidth] = useState<string | number>("200");
+    const [isResizing, setIsResizing] = useState<boolean | null>(null);
+    // const { expanded } = useAppbarSidebarContext();
+    // const previousExpanded = useRef(expanded);
+
+    useEffect(() => {
+        let resizeTimeout: ReturnType<typeof setTimeout>;
+
+        const handleResize = () => {
+            setIsResizing(true);
+            clearTimeout(resizeTimeout);
+
+            resizeTimeout = setTimeout(() => {
+                if (parentRef.current) {
+                    const newWidth = parentRef.current.clientWidth;
+
+                    setWidth(newWidth);
+                }
+                setIsResizing(false);
+            }, 300);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Set initial width
+        if (parentRef.current) {
+            setWidth(parentRef.current.clientWidth);
+        }
+
+        return () => {
+            clearTimeout(resizeTimeout);
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+
+
     const renderValue = (selected: string | string[]) => {
         if (multiple && Array.isArray(selected)) {
             return (
-                <Stack
-                    component="div"
-                    sx={{
-                        flexDirection: "row",
-                        gap: 1,
-                        overflowX: 'auto',
-                        overflowY: 'hidden',
-                        maxWidth: "calc(100% - 40px)",
-                        paddingRight: appearance === 'table' ? "40px" : undefined,
-                        // Hide scrollbar for all major browsers
-                        "&::-webkit-scrollbar": {
-                            display: "none"
-                        },
-                        "-ms-overflow-style": "none", // IE and Edge
-                        "scrollbarWidth": "none", // Firefox
-                    }}
-                >
-                    {selected.map((val: string) => (
-                        <Chip
-                            disabled={disabled}
-                            key={val}
-                            label={val}
-                            size="small"
-                            clickable
-                            onMouseDown={(e) => e.stopPropagation()}
-                            onDelete={(e) => {
-                                e.stopPropagation();
-                                const filtered = selected.filter((item) => item !== val);
-                                onChange({
-                                    target: {
-                                        value: filtered,
-                                        name: label
-                                    }
-                                } as SelectChangeEvent<string | string[]>);
-                            }}
-                            sx={{
-                                textTransform: "capitalize",
-                            }}
-                        />
-                    ))}
-                </Stack>
+                !isResizing && (
+                    <Stack
+                        component="div"
+                        ref={childRef}
+                        sx={{
+                            flexDirection: "row",
+                            gap: 1,
+                            overflowX: 'auto',
+                            overflowY: 'hidden',
+                            maxWidth: `${(width as number) - 40}px !important`,
+                            paddingRight: appearance === 'table' ? "40px" : undefined,
+                            // Hide scrollbar for all major browsers
+                            "&::-webkit-scrollbar": {
+                                display: "none"
+                            },
+                            "-ms-overflow-style": "none", // IE and Edge
+                            opacity: isResizing !== null ? 0 : 1,
+                            animation: isResizing !== null ? 'fadeInOpacity 0.3s forwards' : undefined,
+                            '@keyframes fadeInOpacity': {
+                                from: { opacity: 0 },
+                                to: { opacity: 1 }
+                            },
+                            borderRadius: "4px",
+                        }}
+                    >
+                        {selected.map((val: string) => (
+                            <Chip
+                                disabled={disabled}
+                                key={val}
+                                label={val}
+                                size="small"
+                                clickable
+                                onMouseDown={(e) => e.stopPropagation()}
+                                onDelete={(e) => {
+                                    e.stopPropagation();
+                                    const filtered = selected.filter((item) => item !== val);
+                                    onChange({
+                                        target: {
+                                            value: filtered,
+                                            name: label
+                                        }
+                                    } as SelectChangeEvent<string | string[]>);
+                                }}
+                                sx={{
+                                    textTransform: "capitalize",
+                                    maxWidth: "100%",
+                                }}
+                            />
+                        ))}
+                    </Stack>
+                )
+
             );
         }
         return selected;
@@ -206,7 +256,7 @@ const Select: FC<SelectProps> = ({
             disabled={disabled}
             size={size}
             hiddenLabel={hiddenLabel}
-
+            ref={parentRef}
         >
             {!hiddenLabel ? <InputLabel variant={isCustomVariant ? "outlined" : appearance}>{label}</InputLabel> : null}
 

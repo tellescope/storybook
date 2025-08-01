@@ -17,6 +17,7 @@ const meta = {
     },
     args: {
         color: "standard",
+        expanded: true,
     }
 } satisfies Meta<typeof Table>;
 

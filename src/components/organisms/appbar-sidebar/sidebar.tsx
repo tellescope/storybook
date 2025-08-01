@@ -20,6 +20,7 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import ShareIcon from '@mui/icons-material/Share';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import TableChartIcon from '@mui/icons-material/TableChart';
+import { useAppbarSidebarContext } from "./context";
 
 
 const COLLAPSED_WIDTH = 48;
@@ -104,8 +105,9 @@ const sidebarItems = [
     }
 ];
 
-const Sidebar = ({ expanded = false, bgColor }: { expanded?: boolean, bgColor?: string }) => {
-    const [collapsed, setCollapsed] = useState(expanded);
+const Sidebar = () => {
+    const { bgColor: contextBgColor, expanded: contextExpanded, setExpanded } = useAppbarSidebarContext()
+    const [collapsed, setCollapsed] = useState(!contextExpanded);
 
     return (
         <Stack>
@@ -129,9 +131,12 @@ const Sidebar = ({ expanded = false, bgColor }: { expanded?: boolean, bgColor?: 
                         position: "sticky",
                         top: 0,
                         zIndex: 1,
-                        background: bgColor,
+                        background: contextBgColor,
                     }}
-                    onClick={() => setCollapsed((prev) => !prev)}
+                    onClick={() => {
+                        setCollapsed((prev) => !prev);
+                        setExpanded(!contextExpanded);
+                    }}
                 >
                     <ListItemIcon sx={{
                         justifyContent: "center",

@@ -8,8 +8,10 @@ import AccessAlarmOutlinedIcon from '@mui/icons-material/AccessAlarmOutlined';
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import CallIcon from '@mui/icons-material/Call';
+import { useAppbarSidebarContext } from "./context";
 
-const Appbar = ({ bgColor }: { bgColor: string }) => {
+const Appbar = () => {
+    const { bgColor: contextBgColor } = useAppbarSidebarContext()
     return (
         <MUIAppbar position="sticky" sx={{
             boxShadow: "none",
@@ -19,7 +21,7 @@ const Appbar = ({ bgColor }: { bgColor: string }) => {
             justifyContent: "space-between",
             padding: "8px 24px",
             flexDirection: "row",
-            background: bgColor,
+            background: contextBgColor,
         }}>
             <img src="logo.png" alt="Logo" width={154} height={32} />
             <Stack sx={{
