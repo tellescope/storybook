@@ -12,11 +12,38 @@ export default meta;
 type Story = StoryObj<typeof ChatInput>;
 
 export const Default: Story = {
+  argTypes: {
+    value: {
+      table: {
+        disable: true,
+      },
+    },
+    placeholder: {
+      table: {
+        disable: true,
+      },
+    },
+    disabled: {
+      table: {
+        disable: true,
+      },
+    },
+    onChange: {
+      table: {
+        disable: true,
+      },
+    },
+    onSend: {
+      table: {
+        disable: true,
+      },
+    },
+  },
   render: () => {
     const [message, setMessage] = useState("");
 
     const handleSend = () => {
-      alert("Sending message: ${message}");
+      alert(`Sending message: ${message}`);
       setMessage(" ");
     };
 

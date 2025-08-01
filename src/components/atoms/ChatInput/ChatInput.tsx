@@ -14,13 +14,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
   value,
   onChange,
   onSend,
-  placeholder = "Type a message...",
+  placeholder = "Ask a question about this chat...",
   disabled = false,
 }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSend();
   };
+
   return (
     <form onSubmit={handleSubmit} style={{ width: "100%" }}>
       <Paper
@@ -29,8 +30,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           display: "flex",
           alignItems: "center",
           borderRadius: 2,
-          boxShadow: 1,
-          bgcolor: "Background.paper",
+          boxShadow: "none",
         }}
       >
         <InputBase
