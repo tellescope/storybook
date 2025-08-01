@@ -1,10 +1,12 @@
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import React from "react";
+
 interface EmojiPickerProps {
   onEmojiSelect: (emoji: any) => void;
 }
 
-export const EmojiPicker: React.FC<EmojiPickerProps> = ({
+const EmojiPickerComponent: React.FC<EmojiPickerProps> = ({
   onEmojiSelect,
 }) => {
   return (
@@ -16,3 +18,5 @@ export const EmojiPicker: React.FC<EmojiPickerProps> = ({
     />
   );
 };
+
+export const EmojiPicker = React.memo(EmojiPickerComponent);

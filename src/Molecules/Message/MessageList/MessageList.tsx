@@ -38,7 +38,16 @@ export const Messages = ({ content, enableTeamChat }: ChatProps) => {
       
       if (containerRect) {
         const x = messageType === "INCOMING" ? rect.right - 350 : rect.left; // Adjust width as needed
-        const y = rect.bottom + 10;
+        
+        // Check available space
+        const pickerHeight = 400; // Approximate height of emoji picker
+        const spaceBelow = window.innerHeight - rect.bottom;
+        const spaceAbove = rect.top;
+
+        // If not enough space below, position above the button
+        const y = spaceBelow >= pickerHeight + 10 
+          ? rect.bottom + 10 
+          : rect.top - pickerHeight - 10;
         
         setEmojiPickerPosition({ x, y, messageType });
       }
