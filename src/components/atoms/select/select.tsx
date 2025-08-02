@@ -220,7 +220,7 @@ const Select: FC<SelectProps> = ({
                     }
                 },
                 ".MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.MuiInputBase-input": {
-                    paddingRight: "0 !important",
+                    paddingRight: "0",
                     paddingY: "4px",
 
                 },

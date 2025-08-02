@@ -20,7 +20,7 @@ type DetailSelectContextType = {
     valueSort?: SortItem;
     buttonContent?: ReactNode;
     placeholder?: string;
-    onClose?: () => void;
+    onClose?: (field: string) => void;
 };
 
 const DetailSelectContext = createContext<DetailSelectContextType | undefined>(undefined);
@@ -37,7 +37,7 @@ type StateProps = {
     value?: SortItem;
     buttonContent?: ReactNode;
     placeholder?: string;
-    onClose?: () => void;
+    onClose?: (field: string) => void;
 };
 
 
@@ -107,7 +107,7 @@ function DetailSelectFilter() {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => setAnchorEl(e.currentTarget);
     const handleClose = () => {
         setAnchorEl(null);
-        onClose?.();
+        onClose?.(sort);
     };
 
     const handleChangeValue = (field: string) => {
@@ -127,7 +127,7 @@ function DetailSelectFilter() {
             }
         }
         else {
-            handleClose();
+            setAnchorEl(null);
         }
     }, [open]);
 

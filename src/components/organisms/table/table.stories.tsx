@@ -34,7 +34,7 @@ export const ContactsList: Story = {
                     }
                 `}
             </style>
-            <Table {...args} />
+            <Table {...args} expanded={false} />
         </>
     )
 };

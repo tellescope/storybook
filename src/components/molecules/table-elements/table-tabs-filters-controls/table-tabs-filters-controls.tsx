@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type FC, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type FC, type ReactNode } from "react";
 import TabBar from "../../tabs/tab-bar";
 import { Badge, Box, Stack } from "@mui/material";
 import { IconButton } from "../../../atoms/button/icon-button";
@@ -154,6 +154,12 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
     const usedFields = filterSelected.map(filter => filter.field);
     const availableFilterFields = availableSortFields.filter(field => !usedFields.includes(field.value));
 
+    useEffect(() => {
+        if (hide && sortSelected.length > 0) {
+            setHide(false);
+        }
+    }, [sortSelected.length]);
+
     return (
         <FilterContext.Provider value={contextValue}>
             <TabBar
@@ -248,11 +254,9 @@ const TableTabsFiltersControls: FC<TableTabsFiltersControlsProps> = ({ tabs, tab
                                                 }
                                             }}
                                             onClick={() => {
-                                                if (!hide) {
+                                                if (!hide && reset) {
                                                     setReset(false);
-                                                    setHide(false);
-                                                } else {
-                                                    setHide(!hide);
+                                                    setHide(true);
                                                 }
                                             }}
                                         >

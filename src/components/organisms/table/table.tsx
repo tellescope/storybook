@@ -40,11 +40,8 @@ export default Table
 
 
 export const TableContent = () => {
-
-    // Remove the first value of the object (i.e., skip the first property)
-    const rowValues = Object.entries(data[0]).map(ele => ele[1]).slice(1);
-    console.log(rowValues, "Object.entries(row).map(ele => ele[1]) without first value");
     const { hide } = useFilterContext();
+    console.log(hide, "hide : hide...");
     return (
         <Stack>
             <TableContainer sx={{
@@ -137,8 +134,6 @@ export const TableContent = () => {
 }
 
 const TableCellWithSelect = ({ withIcon, data, name }: { withIcon?: boolean, data: string | string[], name: string }) => {
-
-
     const props: Partial<TableCellProps> = {
         iconPosition: "left",
         icon: <CalendarMonthIcon />,
@@ -152,11 +147,8 @@ const TableCellWithSelect = ({ withIcon, data, name }: { withIcon?: boolean, dat
         }
     };
 
-    console.log("name", name, "data", data,);
-
-
     return (
-        <TableCell  {...(withIcon ? props : {})} width={"20%"} sx={{ minWidth: 200 }} >
+        <TableCell  {...(withIcon ? props : { sx: { minWidth: 200, paddingRight: "0 !important", "& .MuiSelect-select.MuiSelect-standard.MuiSelect-multiple.MuiInputBase-input": { paddingRight: "16px !important" } } })} width={"20%"} >
             <SelectMenubasedOnCols name={name} data={data} />
         </TableCell>
     );
