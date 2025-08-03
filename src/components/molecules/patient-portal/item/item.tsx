@@ -21,7 +21,7 @@ export interface PortalTypeConfig {
   statusText?: (completed?: boolean) => string;
 }
 
-export interface PatientPortalProps {
+export interface ItemPortalProps {
   type: PortalType;
   completed?: boolean;
   title: string;
@@ -56,7 +56,7 @@ const PORTAL_TYPE_CONFIG: Record<PortalType, PortalTypeConfig> = {
 };
 
 // Sub-components for better organization
-const PortalIcon = ({ type, hasNewMessage }: { type: PortalType; hasNewMessage?: boolean }) => {
+const ItemIcon = ({ type, hasNewMessage }: { type: PortalType; hasNewMessage?: boolean }) => {
   const config = PORTAL_TYPE_CONFIG[type];
   
   return (
@@ -164,7 +164,7 @@ const PortalAvatar = ({ src, show }: { src?: string; show?: boolean }) => {
   );
 };
 
-export const PatientPortal = ({
+export const ItemPortal = ({
   type,
   completed = false,
   title,
@@ -176,7 +176,7 @@ export const PatientPortal = ({
   hasNewMessage = false,
   onClick,
   sx,
-}: PatientPortalProps) => {
+}: ItemPortalProps) => {
   const config = PORTAL_TYPE_CONFIG[type];
   const hasStatusOrDateTime = config.showStatus || config.showDateTime;
 
@@ -200,7 +200,7 @@ export const PatientPortal = ({
       }}
     >
       <Stack direction="row" alignItems="center" gap={2}>
-        <PortalIcon type={type} hasNewMessage={hasNewMessage} />
+        <ItemIcon type={type} hasNewMessage={hasNewMessage} />
         
         <Box
           display="flex"

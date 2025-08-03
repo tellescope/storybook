@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { PatientPortal } from "./patient-portal";
+import { ItemPortal } from "./item";
 import { Box } from "@mui/material";
 
-const meta: Meta<typeof PatientPortal> = {
-  title: "Molecules/PatientPortal",
-  component: PatientPortal,
+const meta: Meta<typeof ItemPortal> = {
+  title: "Molecules/PatientPortal/Item",
+  component: ItemPortal,
   parameters: {
     layout: "padded",
   },
@@ -30,7 +30,7 @@ const meta: Meta<typeof PatientPortal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PatientPortal>;
+type Story = StoryObj<typeof ItemPortal>;
 
 export const Form: Story = {
   args: {
@@ -47,7 +47,7 @@ export const Form: Story = {
       bgcolor="#f0f0f0"
       height="100vh"
     >
-      <PatientPortal {...args} />
+      <ItemPortal {...args} />
     </Box>
   ),
 };
@@ -67,7 +67,7 @@ export const Link: Story = {
       bgcolor="#f0f0f0"
       height="100vh"
     >
-      <PatientPortal {...args} />
+      <ItemPortal {...args} />
     </Box>
   ),
 };
@@ -87,7 +87,7 @@ export const Appointment: Story = {
       bgcolor="#f0f0f0"
       height="100vh"
     >
-      <PatientPortal {...args} />
+      <ItemPortal {...args} />
     </Box>
   ),
 };
@@ -113,7 +113,7 @@ export const Message: Story = {
       bgcolor="#f0f0f0"
       height="100vh"
     >
-      <PatientPortal {...args} />
+      <ItemPortal {...args} />
     </Box>
   ),
 };
@@ -138,7 +138,7 @@ export const MessageWithoutNewIndicator: Story = {
       bgcolor="#f0f0f0"
       height="100vh"
     >
-      <PatientPortal {...args} />
+      <ItemPortal {...args} />
     </Box>
   ),
 };
@@ -154,18 +154,18 @@ export const AllVariants: Story = {
       height="100vh"
       py={4}
     >
-      <PatientPortal
+      <ItemPortal
         type="form"
         completed={false}
         title="Complete Registration"
       />
-      <PatientPortal type="link" completed={true} title="Review care plan" />
-      <PatientPortal
+      <ItemPortal type="link" completed={true} title="Review care plan" />
+      <ItemPortal
         type="appointment"
         completed={true}
         title="Schedule your appointment"
       />
-      <PatientPortal
+      <ItemPortal
         type="message"
         completed={false}
         title="New message from your doctor"
@@ -176,7 +176,7 @@ export const AllVariants: Story = {
         avatarSrc="https://via.placeholder.com/80"
         hasNewMessage={true}
       />
-      <PatientPortal
+      <ItemPortal
         type="message"
         completed={true}
         title="Read message from your doctor"
