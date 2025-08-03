@@ -22,6 +22,9 @@ const meta: Meta<typeof PatientPortal> = {
     badgeCount: {
       control: { type: "number" },
     },
+    hasNewMessage: {
+      control: { type: "boolean" },
+    },
     onClick: { action: "clicked" },
   },
 };
@@ -99,6 +102,32 @@ export const Message: Story = {
     dateTime: "3/5/2025 1:00 PM",
     doctorName: "Dr. John Doe",
     avatarSrc: "https://via.placeholder.com/80",
+    hasNewMessage: true,
+  },
+  render: (args) => (
+    <Box
+      px={10}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      bgcolor="#f0f0f0"
+      height="100vh"
+    >
+      <PatientPortal {...args} />
+    </Box>
+  ),
+};
+
+export const MessageWithoutNewIndicator: Story = {
+  args: {
+    type: "message",
+    completed: true,
+    title: "Read message from your doctor",
+    badge: false,
+    dateTime: "Yesterday 3:00 PM",
+    doctorName: "Dr. Sarah Smith",
+    avatarSrc: "https://via.placeholder.com/80",
+    hasNewMessage: false,
   },
   render: (args) => (
     <Box
@@ -138,13 +167,24 @@ export const AllVariants: Story = {
       />
       <PatientPortal
         type="message"
-        completed={true}
-        title="Message from your doctor"
+        completed={false}
+        title="New message from your doctor"
         badge={true}
         badgeCount={3}
         dateTime="3/5/2025 1:00 PM"
         doctorName="Dr. John Doe"
         avatarSrc="https://via.placeholder.com/80"
+        hasNewMessage={true}
+      />
+      <PatientPortal
+        type="message"
+        completed={true}
+        title="Read message from your doctor"
+        badge={false}
+        dateTime="Yesterday 3:00 PM"
+        doctorName="Dr. Sarah Smith"
+        avatarSrc="https://via.placeholder.com/80"
+        hasNewMessage={false}
       />
     </Box>
   ),

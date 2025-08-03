@@ -30,6 +30,7 @@ export interface PatientPortalProps {
   dateTime?: string;
   doctorName?: string;
   avatarSrc?: string;
+  hasNewMessage?: boolean;
   onClick?: () => void;
   sx?: any;
 }
@@ -55,9 +56,29 @@ const PORTAL_TYPE_CONFIG: Record<PortalType, PortalTypeConfig> = {
 };
 
 // Sub-components for better organization
-const PortalIcon = ({ type }: { type: PortalType }) => {
+const PortalIcon = ({ type, hasNewMessage }: { type: PortalType; hasNewMessage?: boolean }) => {
   const config = PORTAL_TYPE_CONFIG[type];
-  return <>{config.icon}</>;
+  
+  return (
+    <Box position="relative" display="inline-flex" alignItems="center">
+      {config.icon}
+      {type === "message" && hasNewMessage && (
+        <Box
+          position="absolute"
+          top={-2}
+          right={-2}
+          width={8}
+          height={8}
+          borderRadius="50%"
+          bgcolor="error.main"
+          sx={{
+            border: '1px solid white',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+    </Box>
+  );
 };
 
 const PortalStatus = ({ 
@@ -152,6 +173,7 @@ export const PatientPortal = ({
   dateTime,
   doctorName,
   avatarSrc,
+  hasNewMessage = false,
   onClick,
   sx,
 }: PatientPortalProps) => {
@@ -178,7 +200,7 @@ export const PatientPortal = ({
       }}
     >
       <Stack direction="row" alignItems="center" gap={2}>
-        <PortalIcon type={type} />
+        <PortalIcon type={type} hasNewMessage={hasNewMessage} />
         
         <Box
           display="flex"
