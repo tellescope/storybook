@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Badge, Box } from "@mui/material";
 import { Page } from "../../atoms/Page/Page";
 import { SuggestedAction } from "../../atoms/SuggestedAction/SuggestedAction";
 import BulbActiveIcon from "../../../assets/bulb-active.svg";
@@ -24,8 +24,16 @@ export const SuggestedActions: React.FC<SuggestedActionsProps> = ({
         paddingBottom: "8px",
       }}
     >
-      {<img src={expanded ? BulbActiveIcon : BulbIcon} />}
+      {!expanded ? (
+        <Badge color="error" variant="dot">
+          <img src={BulbIcon} />
+        </Badge>
+      ) : (
+        <img src={BulbActiveIcon} />
+      )}
+
       <Page truncated={true} />
+
       {expanded && (
         <>
           <SuggestedAction truncated={true} />

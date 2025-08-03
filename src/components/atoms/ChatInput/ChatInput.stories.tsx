@@ -44,7 +44,7 @@ export const Default: Story = {
 
     const handleSend = () => {
       alert(`Sending message: ${message}`);
-      setMessage(" ");
+      setMessage("");
     };
 
     return (

@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import SendChatButton from "./SendChatButton";
+import SentChat from "./SentChat";
 
-const meta: Meta<typeof SendChatButton> = {
-  title: "Atoms/Send Chat Button",
-  component: SendChatButton,
+const meta: Meta<typeof SentChat> = {
+  title: "Atoms/Sent Chat",
+  component: SentChat,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof SendChatButton>;
+type Story = StoryObj<typeof SentChat>;
 
 export const Default: Story = {
   args: {
@@ -24,6 +24,6 @@ export const Default: Story = {
     },
   },
   render: (args) => {
-    return <SendChatButton {...args} />;
+    return <SentChat {...args} />;
   },
 };

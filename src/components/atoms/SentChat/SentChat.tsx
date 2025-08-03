@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-interface SendChatButtonProps {
+interface SentChatProps {
   message: string;
 }
 
-const SendChatButton: React.FC<SendChatButtonProps> = ({ message = "" }) => {
+const SentChat: React.FC<SentChatProps> = ({ message = "" }) => {
   return (
     <Box
       component="div"
@@ -25,4 +25,4 @@ const SendChatButton: React.FC<SendChatButtonProps> = ({ message = "" }) => {
   );
 };
 
-export default SendChatButton;
+export default SentChat;

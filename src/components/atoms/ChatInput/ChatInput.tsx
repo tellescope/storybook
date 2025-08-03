@@ -3,10 +3,10 @@ import { IconButton, InputBase, Paper } from "@mui/material";
 import SentIcon from "@mui/icons-material/Send";
 
 interface ChatInputProps {
-  value: string;
+  value?: string;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSend: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSend?: () => void;
   disabled?: boolean;
 }
 
@@ -18,8 +18,10 @@ const ChatInput: React.FC<ChatInputProps> = ({
   disabled = false,
 }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSend();
+    if (onSend) {
+      e.preventDefault();
+      onSend();
+    }
   };
 
   return (
@@ -46,9 +48,9 @@ const ChatInput: React.FC<ChatInputProps> = ({
           type="submit"
           sx={{ p: "10px" }}
           aria-label="send"
-          disabled={disabled || !value.trim()}
+          disabled={disabled || !value?.trim()}
         >
-          <SentIcon color={value.trim() ? "primary" : "disabled"} />
+          <SentIcon color={value?.trim() ? "primary" : "disabled"} />
         </IconButton>
       </Paper>
     </form>

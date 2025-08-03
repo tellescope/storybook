@@ -11,6 +11,7 @@ export const AttachedFile: React.FC<any> = () => {
         border: "solid 1px rgba(0, 0, 0, 0.12)",
         borderRadius: "16px",
         maxWidth: "56px",
+        height: "56px",
         position: "relative",
         padding: "8px",
       }}
