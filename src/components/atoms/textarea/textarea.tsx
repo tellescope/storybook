@@ -2,11 +2,12 @@ import { type FC } from 'react';
 import { Input, type InputProps } from '../input/input';
 
 type TextareaProps = Omit<InputProps, 'appearance' | "size"> & {
-    appearance: 'standard' | 'filled' | 'outlined' | "patientForm";
+    rows?: number;
+    appearance: 'standard' | 'filled' | 'outlined' | "patientForm" | "distinct";
 };
 
 const Textarea: FC<TextareaProps> = (props) => {
-    const { appearance, sx, ...rest } = props
+    const { appearance, sx, rows, ...rest } = props
     if (appearance === "patientForm") {
         return (
             <Input
@@ -15,7 +16,7 @@ const Textarea: FC<TextareaProps> = (props) => {
                 appearance="distinct"
                 hiddenLabel
                 maxRows={9}
-                rows={9}
+                rows={rows || 9}
                 sx={{
                     width: "14rem",
                     ...sx
@@ -30,7 +31,7 @@ const Textarea: FC<TextareaProps> = (props) => {
             appearance={appearance}
             multiline
             maxRows={9}
-            rows={9}
+            rows={rows || 9}
             sx={{
                 width: "14rem",
                 ...sx
