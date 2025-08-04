@@ -150,6 +150,25 @@ const Select: FC<SelectProps> = ({
 
 
     const getSx = (theme: Theme) => {
+        if (appearance === 'standard') {
+            return {
+                '& .MuiInputLabel-root': {
+                    color: "#b8b8b8",
+                },
+                '& .MuiInput-underline:after': {
+                    borderBottomColor: '#b8b8b8',
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#b8b8b8',
+                },
+                // // '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+                // //     borderBottomColor: '#EFF0F2',
+                // // },
+                '&:hover .MuiInputLabel-root': {
+                    color: '#b8b8b8',
+                },
+            };
+        }
         if (appearance === 'patientForm') {
             return {
                 '& .MuiInputLabel-outlined, & .MuiOutlinedInput-notchedOutline > legend': {
@@ -249,9 +268,7 @@ const Select: FC<SelectProps> = ({
             fullWidth
             variant={appearance === "patientForm" ? "outlined" : appearance === "table" ? "standard" : appearance}
             {...FormControlProps}
-            sx={(theme) => {
-                return { ...getSx(theme), ...sx };
-            }}
+            sx={(theme) => ({ ...getSx(theme) })}
             error={error}
             disabled={disabled}
             size={size}
